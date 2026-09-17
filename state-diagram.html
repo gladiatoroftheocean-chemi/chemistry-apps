@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>状態変化と状態図シミュレーション</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Sans+JP:wght@400;700;900&display=swap');
+        body { font-family: 'Inter', 'Noto Sans JP', sans-serif; background-color: #f8fafc; }
+        
+        input[type=range] {
+            -webkit-appearance: none; width: 100%; background: transparent; margin: 10px 0;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; height: 24px; width: 24px; border-radius: 50%;
+            background: #ffffff; border: 3px solid #0284c7; cursor: pointer;
+            margin-top: -8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); transition: transform 0.1s;
+        }
+        input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%; height: 8px; cursor: pointer; background: #cbd5e1;
+            border-radius: 4px; box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+        }
+        input[type=range]:focus { outline: none; }
+        
+        canvas { display: block; }
+        .glass-panel { background: #ffffff; border-radius: 24px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); border: 1px solid #e2e8f0; }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-6 text-slate-800 flex flex-col items-center">
+
+    <div class="w-full max-w-6xl mb-6 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div>
+            <h1 class="text-2xl md:text-3xl font-black text-slate-800 tracking-tight">状態図と分子の運動</h1>
+            <p class="text-sm text-slate-500 mt-1 font-medium">教科書の状態図とミクロな粒子の振る舞いを連動して観察しよう</p>
+        </div>
+        
+        <div class="flex bg-slate-100 p-1 rounded-xl border border-slate-200">
+            <button id="btn-water" class="px-6 py-2 rounded-lg font-bold text-sm transition-all duration-300 bg-white text-sky-600 shadow-sm" onclick="setSubstance('water')">水 (H₂O)</button>
+            <button id="btn-co2" class="px-6 py-2 rounded-lg font-bold text-sm transition-all duration-300 text-slate-500 hover:text-slate-700" onclick="setSubstance('co2')">二酸化炭素 (CO₂)</button>
+        </div>
+    </div>
+
+    <div class="w-full max-w-6xl flex flex-col lg:flex-row gap-6 items-stretch">
+
+        <!-- 左ペイン: ミクロな視点 (シミュレーション) -->
+        <div class="flex-none lg:w-[360px] glass-panel p-6 flex flex-col items-center relative overflow-hidden">
+            <div class="w-full flex justify-between items-center mb-4 z-10">
+                <h2 class="text-lg font-bold text-slate-700">容器内の分子</h2>
+                <span id="state-badge" class="px-3 py-1 rounded-full text-xs font-black tracking-widest text-white transition-colors duration-300 bg-slate-400">状態</span>
+            </div>
+            
+            <div id="state-bg-label" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-7xl font-black text-slate-200 opacity-30 pointer-events-none transition-all duration-500 whitespace-nowrap">
+                STATE
+            </div>
+
+            <div class="relative w-[280px] h-[480px] bg-white border-x-4 border-b-4 border-slate-300 rounded-b-xl overflow-hidden shadow-inner mt-2 z-10" id="canvas-container">
+                <div id="temp-glow" class="absolute inset-0 bg-red-500 opacity-0 transition-opacity duration-300 pointer-events-none mix-blend-multiply"></div>
+                <div id="pressure-indicator" class="absolute top-2 left-1/2 -translate-x-1/2 text-xs font-bold text-slate-400 font-mono text-center">
+                    Volume<br>↓
+                </div>
+                <canvas id="sim-canvas"></canvas>
+            </div>
+        </div>
+
+        <!-- 右ペイン: マクロな視点 (状態図とコントロール) -->
+        <div class="flex-1 flex flex-col gap-6 w-full">
+            
+            <!-- コントロールパネル -->
+            <div class="glass-panel p-6">
+                <div class="flex justify-between items-end mb-6">
+                    <h2 class="text-lg font-bold text-slate-700">環境の操作 (グラフ上の位置)</h2>
+                    <div class="flex gap-2">
+                        <button onclick="setPreset('normal')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold transition-colors">常温・常圧</button>
+                        <button onclick="setPreset('triple')" class="px-3 py-1.5 bg-sky-50 hover:bg-sky-100 text-sky-700 rounded-lg text-xs font-bold transition-colors">三重点</button>
+                        <button onclick="setPreset('critical')" class="px-3 py-1.5 bg-purple-50 hover:bg-purple-100 text-purple-700 rounded-lg text-xs font-bold transition-colors">臨界点</button>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- 温度スライダー -->
+                    <div>
+                        <div class="flex justify-between items-end mb-1">
+                            <label class="font-bold text-slate-600 flex items-center gap-2">
+                                <span class="text-rose-500 text-xl">🌡️</span> 温度
+                            </label>
+                            <div class="font-mono font-black text-2xl text-slate-800" style="font-variant-numeric: tabular-nums;">
+                                <span id="temp-val">0.0</span><span class="text-sm text-slate-500 ml-1 font-sans">℃</span>
+                            </div>
+                        </div>
+                        <!-- スライダーはビジュアル座標(0-100)で制御し、実数に変換して表示 -->
+                        <input type="range" id="temp-slider" min="0" max="100" value="50" step="0.1">
+                        <div class="flex justify-between text-xs text-slate-400 font-medium">
+                            <span>低温</span><span>高温</span>
+                        </div>
+                    </div>
+
+                    <!-- 圧力スライダー -->
+                    <div>
+                        <div class="flex justify-between items-end mb-1">
+                            <label class="font-bold text-slate-600 flex items-center gap-2">
+                                <span class="text-sky-500 text-xl">⚖️</span> 圧力
+                            </label>
+                            <div class="text-right flex flex-col items-end">
+                                <div class="font-mono font-black text-2xl text-sky-600 leading-none" style="font-variant-numeric: tabular-nums;" id="press-atm-val">
+                                    1.00 <span class="text-sm font-sans">atm</span>
+                                </div>
+                                <div class="font-mono font-bold text-sm text-slate-400 mt-1" id="press-pa-val">
+                                    ( 1.013 × 10⁵ Pa )
+                                </div>
+                            </div>
+                        </div>
+                        <input type="range" id="press-slider" min="0" max="100" value="40" step="0.1">
+                        <div class="flex justify-between text-xs text-slate-400 font-medium">
+                            <span>真空に近い</span><span>高圧</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 状態図グラフ -->
+            <div class="glass-panel p-4 flex-1 relative min-h-[400px]">
+                <canvas id="chart-canvas"></canvas>
+            </div>
+            
+        </div>
+    </div>
+
+    <script>
+        // --- 汎用数学・補間関数 ---
+        function interpolate(x, points) {
+            if (x <= points[0][0]) return points[0][1];
+            if (x >= points[points.length-1][0]) return points[points.length-1][1];
+            for (let i = 0; i < points.length - 1; i++) {
+                if (x >= points[i][0] && x <= points[i+1][0]) {
+                    let ratio = (x - points[i][0]) / (points[i+1][0] - points[i][0]);
+                    return points[i][1] + ratio * (points[i+1][1] - points[i][1]);
+                }
+            }
+            return 0;
+        }
+
+        // 2次ベジェ曲線の点群生成
+        function genBezier(p0, p1, p2, steps = 30) {
+            let pts = [];
+            for(let i=0; i<=steps; i++) {
+                let t = i / steps;
+                let x = (1-t)*(1-t)*p0[0] + 2*(1-t)*t*p1[0] + t*t*p2[0];
+                let y = (1-t)*(1-t)*p0[1] + 2*(1-t)*t*p1[1] + t*t*p2[1];
+                pts.push({vx: x, vy: y});
+            }
+            return pts;
+        }
+
+        // 曲線の vy から vx を取得（融解曲線の境界判定用）
+        function getVxFromCurve(curve, vy) {
+            if (vy <= curve[0].vy) return curve[0].vx;
+            if (vy >= curve[curve.length-1].vy) return curve[curve.length-1].vx;
+            for(let i=0; i<curve.length-1; i++) {
+                let minVy = Math.min(curve[i].vy, curve[i+1].vy);
+                let maxVy = Math.max(curve[i].vy, curve[i+1].vy);
+                if (vy >= minVy && vy <= maxVy) {
+                    let ratio = (vy - curve[i].vy) / (curve[i+1].vy - curve[i].vy);
+                    return curve[i].vx + ratio * (curve[i+1].vx - curve[i].vx);
+                }
+            }
+            return curve[0].vx;
+        }
+
+        function getVyFromCurve(curve, vx) {
+            if (vx <= curve[0].vx) return curve[0].vy;
+            if (vx >= curve[curve.length-1].vx) return curve[curve.length-1].vy;
+            for(let i=0; i<curve.length-1; i++) {
+                if (vx >= curve[i].vx && vx <= curve[i+1].vx) {
+                    let ratio = (vx - curve[i].vx) / (curve[i+1].vx - curve[i].vx);
+                    return curve[i].vy + ratio * (curve[i+1].vy - curve[i].vy);
+                }
+            }
+            return curve[0].vy;
+        }
+
+        // --- 物質のメタデータ定義 (ビジュアル座標 0-100 ベース) ---
+        const substances = {
+            water: {
+                id: 'water',
+                // 座標(vx, vy)
+                triple: { vx: 30, vy: 20, t: 0.01, p: 0.006, pa: '6.078×10²' },
+                normal: { vx: 29, vy: 40, t: 100, p: 1.0, pa: '1.013×10⁵' }, // 常圧(1atm)のライン
+                critical: { vx: 90, vy: 85, t: 374, p: 218, pa: '2.208×10⁷' },
+                
+                // 温度マッピング [実際の温度T, vx]
+                tMap: [[-20, 0], [0, 29], [0.01, 30], [100, 60], [374, 90], [450, 100]],
+                // 圧力マッピング [実際の圧力P(atm), vy]  ※対数で補間
+                pMap: [[1e-4, 0], [0.006, 20], [1.0, 40], [218, 85], [1000, 100]],
+
+                // 曲線の定義
+                subPoints: genBezier([0, 5], [15, 12], [30, 20]),
+                vaporPoints: genBezier([30, 20], [70, 35], [90, 85]), // 三重点から臨界点へ
+                meltPoints: genBezier([30, 20], [29, 40], [24, 100]), // 負の傾き(加圧融解)
+                
+                colorSolid: '#fef08a', colorLiquid: '#bae6fd', colorGas: '#fecaca', colorSuper: '#e9d5ff'
+            },
+            co2: {
+                id: 'co2',
+                triple: { vx: 50, vy: 40, t: -56.6, p: 5.1, pa: '5.268×10⁵' },
+                normal: { vx: 30, vy: 20, t: -78.5, p: 1.0, pa: '1.013×10⁵' },
+                critical: { vx: 90, vy: 85, t: 31.1, p: 72.8, pa: '7.395×10⁶' },
+                
+                tMap: [[-100, 0], [-78.5, 30], [-56.6, 50], [31.1, 90], [60, 100]],
+                pMap: [[0.1, 0], [1.0, 20], [5.1, 40], [72.8, 85], [200, 100]],
+
+                subPoints: genBezier([0, 5], [20, 12], [50, 40]),
+                vaporPoints: genBezier([50, 40], [75, 60], [90, 85]),
+                meltPoints: genBezier([50, 40], [53, 70], [56, 100]), // 正の傾き
+                
+                colorSolid: '#fef08a', colorLiquid: '#bae6fd', colorGas: '#fecaca', colorSuper: '#e9d5ff'
+            }
+        };
+
+        // --- 状態管理 ---
+        let currentSubst = 'water';
+        let currentVx = 29; // デフォルト常温付近
+        let currentVy = 40; // デフォルト1atm
+        let currentState = 'Liquid';
+        let pistonY = 200;
+        let targetPistonY = 200;
+
+        const tempSlider = document.getElementById('temp-slider');
+        const pressSlider = document.getElementById('press-slider');
+        
+        // 値の相互変換
+        function vxToTemp(vx) { return interpolate(vx, substances[currentSubst].tMap.map(p => [p[1], p[0]])); }
+        function vyToPress(vy) {
+            let map = substances[currentSubst].pMap;
+            if (vy <= map[0][1]) return map[0][0];
+            if (vy >= map[map.length-1][1]) return map[map.length-1][0];
+            for (let i = 0; i < map.length - 1; i++) {
+                if (vy >= map[i][1] && vy <= map[i+1][1]) {
+                    let ratio = (vy - map[i][1]) / (map[i+1][1] - map[i][1]);
+                    let logP1 = Math.log10(map[i][0]);
+                    let logP2 = Math.log10(map[i+1][0]);
+                    return Math.pow(10, logP1 + ratio * (logP2 - logP1));
+                }
+            }
+            return 1.0;
+        }
+        function formatPaString(pAtm) {
+            let pa = pAtm * 1.013e5;
+            let exp = Math.floor(Math.log10(pa));
+            let mantissa = pa / Math.pow(10, exp);
+            return `${mantissa.toFixed(3)} × 10<sup class="text-sm">${exp}</sup>`;
+        }
+
+        // 状態の判定 (ビジュアル座標ベースで判定)
+        function determineState(vx, vy) {
+            const m = substances[currentSubst];
+            
+            // 臨界点超過
+            if (vx >= m.critical.vx && vy >= m.critical.vy) return 'Supercritical';
+            // 三重点の超近傍（スナップ）
+            if (Math.abs(vx - m.triple.vx) < 1.5 && Math.abs(vy - m.triple.vy) < 1.5) return 'Triple';
+
+            let subVy = getVyFromCurve(m.subPoints, vx);
+            let vaporVy = getVyFromCurve(m.vaporPoints, vx);
+            let meltVx = getVxFromCurve(m.meltPoints, vy);
+
+            if (vx < m.triple.vx) {
+                // 昇華領域
+                return vy >= subVy ? 'Solid' : 'Gas';
+            } else {
+                if (vx >= m.critical.vx) return vy >= m.critical.vy ? 'Supercritical' : 'Gas';
+                
+                // 水とCO2で融解曲線の左右関係が変わるが、meltVxとの比較で一意に決まる
+                if (vx < meltVx) {
+                    return 'Solid';
+                } else {
+                    return vy >= vaporVy ? 'Liquid' : 'Gas';
+                }
+            }
+        }
+
+        // --- UIとグラフの更新 ---
+        function updateUI() {
+            const m = substances[currentSubst];
+            let T = vxToTemp(currentVx);
+            let P = vyToPress(currentVy);
+            currentState = determineState(currentVx, currentVy);
+
+            document.getElementById('temp-val').textContent = T.toFixed(1);
+            document.getElementById('press-atm-val').innerHTML = `${P >= 0.01 ? P.toFixed(2) : P.toExponential(1)} <span class="text-sm font-sans">atm</span>`;
+            document.getElementById('press-pa-val').innerHTML = `( ${formatPaString(P)} Pa )`;
+
+            let badge = document.getElementById('state-badge');
+            let bgLabel = document.getElementById('state-bg-label');
+            if (currentState === 'Solid') {
+                badge.textContent = '🧊 固体'; badge.className = 'px-3 py-1 rounded-full text-xs font-black tracking-widest text-white transition-colors duration-300 bg-amber-500';
+                bgLabel.textContent = 'SOLID';
+                targetPistonY = 380;
+            } else if (currentState === 'Liquid') {
+                badge.textContent = '💧 液体'; badge.className = 'px-3 py-1 rounded-full text-xs font-black tracking-widest text-white transition-colors duration-300 bg-sky-500';
+                bgLabel.textContent = 'LIQUID';
+                targetPistonY = 360; // 固体より少し体積が大きい(水の場合は例外だが表現上)
+            } else if (currentState === 'Gas') {
+                badge.textContent = '💨 気体'; badge.className = 'px-3 py-1 rounded-full text-xs font-black tracking-widest text-white transition-colors duration-300 bg-rose-500';
+                bgLabel.textContent = 'GAS';
+                let vol = Math.min(420, Math.max(60, 420 - (T+273)/P * 0.5)); 
+                targetPistonY = 480 - vol;
+            } else if (currentState === 'Supercritical') {
+                badge.textContent = '🌀 超臨界状態'; badge.className = 'px-3 py-1 rounded-full text-xs font-black tracking-widest text-white transition-colors duration-300 bg-purple-500';
+                bgLabel.textContent = 'SUPERCRITICAL';
+                targetPistonY = 80;
+            } else {
+                badge.textContent = '✨ 三重点(共存)'; badge.className = 'px-3 py-1 rounded-full text-xs font-black tracking-widest text-white transition-colors duration-300 bg-teal-500';
+                bgLabel.textContent = 'TRIPLE';
+                targetPistonY = 240;
+            }
+
+            // グラフの現在地マーカー更新
+            phaseChart.data.datasets[0].data[0] = {x: currentVx, y: currentVy};
+            phaseChart.update();
+        }
+
+        tempSlider.addEventListener('input', (e) => { currentVx = parseFloat(e.target.value); updateUI(); });
+        pressSlider.addEventListener('input', (e) => { currentVy = parseFloat(e.target.value); updateUI(); });
+
+        function setPreset(type) {
+            const m = substances[currentSubst];
+            if (type === 'normal') {
+                currentVx = currentSubst === 'water' ? 37.5 : 87.2; // 25.0℃になるビジュアル座標
+                currentVy = m.normal.vy; // 常圧(1 atm)
+            } else if (type === 'triple') {
+                currentVx = m.triple.vx; currentVy = m.triple.vy;
+            } else if (type === 'critical') {
+                currentVx = m.critical.vx; currentVy = m.critical.vy;
+            }
+            tempSlider.value = currentVx;
+            pressSlider.value = currentVy;
+            updateUI();
+        }
+
+        function setSubstance(subst) {
+            currentSubst = subst;
+            if (subst === 'water') {
+                document.getElementById('btn-water').className = 'px-6 py-2 rounded-lg font-bold text-sm transition-all duration-300 bg-white text-sky-600 shadow-sm';
+                document.getElementById('btn-co2').className = 'px-6 py-2 rounded-lg font-bold text-sm transition-all duration-300 text-slate-500 hover:text-slate-700';
+            } else {
+                document.getElementById('btn-co2').className = 'px-6 py-2 rounded-lg font-bold text-sm transition-all duration-300 bg-white text-sky-600 shadow-sm';
+                document.getElementById('btn-water').className = 'px-6 py-2 rounded-lg font-bold text-sm transition-all duration-300 text-slate-500 hover:text-slate-700';
+            }
+            setPreset('normal');
+            phaseChart.update(); // グラフ全再描画
+        }
+
+        // --- Chart.js 完全カスタム描画プラグイン ---
+        const customPhasePlugin = {
+            id: 'customPhasePlugin',
+            beforeDraw: (chart) => {
+                const ctx = chart.ctx;
+                const m = substances[currentSubst];
+                const { left, right, top, bottom } = chart.chartArea;
+                
+                const getPixel = (vx, vy) => ({
+                    x: left + (vx / 100) * (right - left),
+                    y: bottom - (vy / 100) * (bottom - top)
+                });
+
+                // --- 領域の塗りつぶし (教科書カラー) ---
+                // 固体領域 (黄)
+                ctx.beginPath();
+                let p = getPixel(0, 100); ctx.moveTo(p.x, p.y);
+                p = getPixel(0, m.subPoints[0].vy); ctx.lineTo(p.x, p.y);
+                m.subPoints.forEach(pt => { p = getPixel(pt.vx, pt.vy); ctx.lineTo(p.x, p.y); });
+                m.meltPoints.forEach(pt => { p = getPixel(pt.vx, pt.vy); ctx.lineTo(p.x, p.y); });
+                p = getPixel(m.meltPoints[m.meltPoints.length-1].vx, 100); ctx.lineTo(p.x, p.y);
+                ctx.closePath(); ctx.fillStyle = 'rgba(254, 240, 138, 0.4)'; ctx.fill();
+
+                // 液体領域 (水色)
+                ctx.beginPath();
+                p = getPixel(m.meltPoints[m.meltPoints.length-1].vx, 100); ctx.moveTo(p.x, p.y);
+                for(let i=m.meltPoints.length-1; i>=0; i--) { p = getPixel(m.meltPoints[i].vx, m.meltPoints[i].vy); ctx.lineTo(p.x, p.y); }
+                m.vaporPoints.forEach(pt => { p = getPixel(pt.vx, pt.vy); ctx.lineTo(p.x, p.y); });
+                p = getPixel(m.critical.vx, 100); ctx.lineTo(p.x, p.y);
+                ctx.closePath(); ctx.fillStyle = 'rgba(186, 230, 253, 0.5)'; ctx.fill();
+
+                // 気体領域 (赤)
+                ctx.beginPath();
+                p = getPixel(100, 0); ctx.moveTo(p.x, p.y);
+                p = getPixel(0, 0); ctx.lineTo(p.x, p.y);
+                p = getPixel(0, m.subPoints[0].vy); ctx.lineTo(p.x, p.y);
+                m.subPoints.forEach(pt => { p = getPixel(pt.vx, pt.vy); ctx.lineTo(p.x, p.y); });
+                m.vaporPoints.forEach(pt => { p = getPixel(pt.vx, pt.vy); ctx.lineTo(p.x, p.y); });
+                p = getPixel(100, m.critical.vy); ctx.lineTo(p.x, p.y);
+                ctx.closePath(); ctx.fillStyle = 'rgba(254, 202, 202, 0.4)'; ctx.fill();
+
+                // 超臨界領域 (紫)
+                ctx.beginPath();
+                p = getPixel(m.critical.vx, m.critical.vy); ctx.moveTo(p.x, p.y);
+                p = getPixel(100, m.critical.vy); ctx.lineTo(p.x, p.y);
+                p = getPixel(100, 100); ctx.lineTo(p.x, p.y);
+                p = getPixel(m.critical.vx, 100); ctx.lineTo(p.x, p.y);
+                ctx.closePath(); ctx.fillStyle = 'rgba(233, 213, 255, 0.5)'; ctx.fill();
+
+                // --- 境界線の描画 ---
+                ctx.strokeStyle = '#0284c7'; ctx.lineWidth = 2.5; ctx.lineJoin = 'round';
+                [m.subPoints, m.vaporPoints, m.meltPoints].forEach(curve => {
+                    ctx.beginPath();
+                    curve.forEach((pt, i) => {
+                        p = getPixel(pt.vx, pt.vy);
+                        if(i===0) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y);
+                    });
+                    ctx.stroke();
+                });
+
+                // --- 軸とガイドライン ---
+                ctx.strokeStyle = '#1e293b'; ctx.lineWidth = 1.5; ctx.setLineDash([]);
+                ctx.beginPath(); ctx.moveTo(left, top); ctx.lineTo(left, bottom); ctx.stroke(); // Y軸
+                ctx.beginPath(); ctx.moveTo(left, bottom); ctx.lineTo(right, bottom); ctx.stroke(); // X軸
+                
+                // ガイドとラベル描画関数
+                const drawGuide = (vx, vy, textX, textY, alignX) => {
+                    let px = getPixel(vx, vy);
+                    ctx.save();
+                    // 水平線
+                    ctx.beginPath(); ctx.moveTo(left, px.y); ctx.lineTo(px.x, px.y);
+                    // 垂直線
+                    ctx.moveTo(px.x, bottom); ctx.lineTo(px.x, px.y);
+                    ctx.strokeStyle = '#64748b'; ctx.lineWidth = 1; ctx.setLineDash([4, 4]); ctx.stroke();
+                    
+                    ctx.fillStyle = '#334155'; ctx.font = '12px sans-serif';
+                    // Y軸ラベル
+                    ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+                    ctx.fillText(textY, left - 8, px.y);
+                    // X軸ラベル
+                    ctx.textAlign = alignX || 'center'; ctx.textBaseline = 'top';
+                    ctx.fillText(textX, px.x, bottom + 8);
+                    ctx.restore();
+                };
+
+                // ガイドの適用
+                drawGuide(m.critical.vx, m.critical.vy, m.critical.t, m.critical.pa);
+                drawGuide(m.normal.vx, m.normal.vy, m.id==='water'?'':m.normal.t, m.normal.pa);
+                drawGuide(m.triple.vx, m.triple.vy, m.triple.t, m.triple.pa);
+
+                // 水特有のラベル(沸点、融点)
+                if (m.id === 'water') {
+                    let p100 = getPixel(60, bottom);
+                    ctx.fillStyle = '#334155'; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+                    ctx.fillText('100', p100.x, bottom + 8);
+                    
+                    let p0 = getPixel(29, bottom);
+                    ctx.textAlign = 'right';
+                    ctx.fillText('融点(0℃)', p0.x - 5, bottom + 18);
+                    ctx.beginPath(); ctx.moveTo(p0.x-10, bottom+15); ctx.lineTo(p0.x, bottom+2);
+                    ctx.strokeStyle = '#334155'; ctx.setLineDash([]); ctx.stroke();
+                }
+
+                // 軸タイトル
+                ctx.fillStyle = '#1e293b'; ctx.font = '13px sans-serif';
+                ctx.textAlign = 'left'; ctx.textBaseline = 'bottom';
+                ctx.fillText('圧力 (Pa)', left - 30, top - 15);
+                ctx.textAlign = 'right'; ctx.textBaseline = 'top';
+                ctx.fillText('温度 (℃)', right + 10, bottom + 25);
+
+                // 特異点のマーク
+                let pt = getPixel(m.triple.vx, m.triple.vy);
+                ctx.beginPath(); ctx.arc(pt.x, pt.y, 4, 0, Math.PI*2); ctx.fillStyle='#0284c7'; ctx.fill();
+                pt = getPixel(m.critical.vx, m.critical.vy);
+                ctx.beginPath(); ctx.arc(pt.x, pt.y, 4, 0, Math.PI*2); ctx.fillStyle='#0284c7'; ctx.fill();
+
+                // 領域名テキスト
+                ctx.font = '16px "Noto Sans JP", sans-serif'; ctx.fillStyle = '#334155'; ctx.textAlign = 'center';
+                pt = getPixel(15, 60); ctx.fillText('固体', pt.x, pt.y);
+                pt = getPixel(50, 70); ctx.fillText('液体', pt.x, pt.y);
+                pt = getPixel(70, 20); ctx.fillText('気体', pt.x, pt.y);
+                
+                ctx.font = '12px "Noto Sans JP", sans-serif';
+                pt = getPixel(m.critical.vx, m.critical.vy);
+                ctx.fillText('臨界点', pt.x - 25, pt.y - 12);
+                pt = getPixel(m.triple.vx, m.triple.vy);
+                ctx.fillText('三重点', pt.x + 25, pt.y + 12);
+                
+                pt = getPixel(92, 95);
+                ctx.fillText('超臨界状態', pt.x, pt.y);
+                ctx.beginPath(); ctx.moveTo(pt.x-35, pt.y); ctx.lineTo(getPixel(m.critical.vx, m.critical.vy).x+5, getPixel(m.critical.vx, m.critical.vy).y-5);
+                ctx.strokeStyle = '#334155'; ctx.setLineDash([]); ctx.stroke();
+            }
+        };
+
+        // --- Chart.js 初期化 ---
+        const chartCtx = document.getElementById('chart-canvas').getContext('2d');
+        const phaseChart = new Chart(chartCtx, {
+            type: 'scatter',
+            plugins: [customPhasePlugin],
+            data: {
+                datasets: [{
+                    label: '現在地', data: [{x: 50, y: 50}],
+                    backgroundColor: '#ef4444', borderColor: '#ffffff', borderWidth: 3,
+                    pointRadius: 10, pointHoverRadius: 12
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false, animation: { duration: 0 },
+                layout: { padding: { left: 80, right: 20, top: 40, bottom: 40 } }, // ラベル用の余白
+                scales: {
+                    x: { min: 0, max: 100, display: false },
+                    y: { min: 0, max: 100, display: false }
+                },
+                plugins: { legend: { display: false }, tooltip: { enabled: false } }
+            }
+        });
+
+        const canvas = document.getElementById('sim-canvas');
+        const ctx = canvas.getContext('2d');
+        const cWidth = 280, cHeight = 480;
+        canvas.width = cWidth * window.devicePixelRatio; canvas.height = cHeight * window.devicePixelRatio;
+        ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+        canvas.style.width = `${cWidth}px`; canvas.style.height = `${cHeight}px`;
+
+        const particleRadius = 6;
+        const numParticles = 120;
+        const particles = [];
+        const cols = Math.floor((cWidth - 40) / (particleRadius * 2.2));
+        const startX = (cWidth - cols * (particleRadius * 2.2)) / 2 + particleRadius;
+        const startY = cHeight - Math.ceil(numParticles / cols) * (particleRadius * 2.2) - 10;
+
+        const pColor = {
+            Solid: '#fbbf24', Liquid: '#38bdf8', Gas: '#f87171', Supercritical: '#c084fc'
+        };
+
+        class Particle {
+            constructor(index) {
+                this.gridX = startX + (index % cols) * (particleRadius * 2.2);
+                this.gridY = startY + Math.floor(index / cols) * (particleRadius * 2.2);
+                this.x = this.gridX; this.y = this.gridY;
+                this.vx = 0; this.vy = 0;
+                this.tripleRole = index % 3 === 0 ? 'Solid' : (index % 3 === 1 ? 'Liquid' : 'Gas');
+            }
+
+            update(globalState, thermalSpeed, pY) {
+                let s = globalState === 'Triple' ? this.tripleRole : globalState;
+
+                if (s === 'Solid') {
+                    // 固体: その場で細かく振動 (バネの引力を強く)
+                    let dx = this.gridX - this.x; let dy = this.gridY - this.y;
+                    this.vx += dx * 0.4; this.vy += dy * 0.4;
+                    this.vx += (Math.random() - 0.5) * thermalSpeed * 1.5;
+                    this.vy += (Math.random() - 0.5) * thermalSpeed * 1.5;
+                    this.vx *= 0.5; this.vy *= 0.5; // 強めの減衰で位置を保つ
+
+                } else if (s === 'Liquid') {
+                    // 液体: 重力で底に溜まるが、ランダムに動き回る(流動性)
+                    this.vy += 0.15; // 弱い重力
+                    this.vx += (Math.random() - 0.5) * thermalSpeed * 2.0;
+                    this.vy += (Math.random() - 0.5) * thermalSpeed * 2.0;
+                    this.vx *= 0.95; this.vy *= 0.95; // 減衰を弱めにして流れるように
+
+                } else if (s === 'Gas' || s === 'Supercritical') {
+                    // 気体・超臨界: 重力無視で激しく飛び回る
+                    let speedMult = s === 'Supercritical' ? 3.0 : 2.0;
+                    this.vx += (Math.random() - 0.5) * thermalSpeed * speedMult;
+                    this.vy += (Math.random() - 0.5) * thermalSpeed * speedMult;
+                    // 完全弾性に近づけるため減衰はごく僅か
+                    let currentSpeed = Math.sqrt(this.vx*this.vx + this.vy*this.vy);
+                    if(currentSpeed > thermalSpeed * 3) {
+                        this.vx *= 0.9; this.vy *= 0.9; // 速度制限
+                    }
+                }
+
+                this.x += this.vx; this.y += this.vy;
+
+                // 壁の衝突処理
+                let bounce = (s === 'Gas' || s === 'Supercritical') ? 1.0 : 0.6; 
+                if (this.x < particleRadius) { this.x = particleRadius; this.vx *= -bounce; }
+                else if (this.x > cWidth - particleRadius) { this.x = cWidth - particleRadius; this.vx *= -bounce; }
+
+                if (this.y > cHeight - particleRadius) { this.y = cHeight - particleRadius; this.vy *= -bounce; }
+                else if (this.y < pY + particleRadius) { this.y = pY + particleRadius; this.vy *= -bounce; }
+            }
+
+            draw(ctx) {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, particleRadius, 0, Math.PI * 2);
+                let s = currentState === 'Triple' ? this.tripleRole : currentState;
+                ctx.fillStyle = pColor[s];
+                ctx.fill();
+                ctx.strokeStyle = 'rgba(0,0,0,0.1)'; ctx.stroke();
+            }
+        }
+
+        for (let i = 0; i < numParticles; i++) particles.push(new Particle(i));
+
+        function animate() {
+            ctx.clearRect(0, 0, cWidth, cHeight);
+            pistonY += (targetPistonY - pistonY) * 0.1;
+
+            let thermalSpeed = 0.5 + (currentVx / 100) * 4.0; // 温度(X軸)に比例した熱運動の激しさ
+
+            // 液体同士の分子間力 (引き合いと反発でまとまりを持たせる)
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    let p1 = particles[i]; let p2 = particles[j];
+                    let s1 = currentState === 'Triple' ? p1.tripleRole : currentState;
+                    let s2 = currentState === 'Triple' ? p2.tripleRole : currentState;
+                    
+                    if (s1 === 'Liquid' && s2 === 'Liquid') {
+                        let dx = p2.x - p1.x; let dy = p2.y - p1.y;
+                        let distSq = dx*dx + dy*dy;
+                        let minDist = particleRadius * 2.2;
+                        let inflDist = minDist * 2.0;
+                        
+                        if (distSq < inflDist*inflDist && distSq > 0.1) {
+                            let dist = Math.sqrt(distSq);
+                            let force = dist < minDist ? (minDist - dist) * 0.1 : -(dist - minDist) * 0.01;
+                            let nx = dx / dist; let ny = dy / dist;
+                            p1.vx -= nx * force; p1.vy -= ny * force;
+                            p2.vx += nx * force; p2.vy += ny * force;
+                        }
+                    } else if (s1 !== 'Gas' && s2 !== 'Gas' && s1 !== 'Supercritical' && s2 !== 'Supercritical') {
+                        // 固体と液体の物理的衝突
+                        let dx = p2.x - p1.x; let dy = p2.y - p1.y;
+                        let distSq = dx*dx + dy*dy;
+                        let minDist = particleRadius * 2;
+                        if(distSq < minDist*minDist && distSq > 0.1) {
+                            let dist = Math.sqrt(distSq); let overlap = minDist - dist;
+                            let nx = dx / dist; let ny = dy / dist;
+                            p1.x -= nx * overlap * 0.5; p1.y -= ny * overlap * 0.5;
+                            p2.x += nx * overlap * 0.5; p2.y += ny * overlap * 0.5;
+                        }
+                    }
+                }
+            }
+
+            for (let p of particles) {
+                p.update(currentState, thermalSpeed, pistonY);
+                p.draw(ctx);
+            }
+
+            // ピストンの描画
+            ctx.fillStyle = '#64748b'; ctx.fillRect(0, Math.max(0, pistonY - 15), cWidth, 15); // ピストン板
+            ctx.fillStyle = '#cbd5e1'; ctx.fillRect(cWidth / 2 - 6, 0, 12, Math.max(0, pistonY - 15)); // 軸
+            // 圧力(Y軸)に応じた重りの視覚化
+            let wHeight = Math.max(5, (currentVy / 100) * 40); 
+            ctx.fillStyle = '#94a3b8'; ctx.fillRect(cWidth / 2 - 25, Math.max(0, pistonY - 15) - wHeight, 50, wHeight);
+
+            requestAnimationFrame(animate);
+        }
+
+        // 初期化実行
+        setSubstance('water');
+        animate();
+
+    </script>
+</body>
+</html>
