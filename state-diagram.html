@@ -294,27 +294,68 @@
 
             let badge = document.getElementById('state-badge');
             let bgLabel = document.getElementById('state-bg-label');
+
+            // 温度に応じた容器の温感・冷感エフェクト
+            let tempGlow = document.getElementById('temp-glow');
+            if (tempGlow) {
+                let heat = (currentVx - 50) / 50; // -1 (低温) 〜 +1 (高温)
+                if (heat > 0) {
+                    tempGlow.style.backgroundColor = '#ef4444';
+                    tempGlow.style.opacity = (heat * 0.12).toFixed(2);
+                } else {
+                    tempGlow.style.backgroundColor = '#38bdf8';
+                    tempGlow.style.opacity = (Math.abs(heat) * 0.15).toFixed(2);
+                }
+            }
+
+            // 状態に応じたバッジとピストン目標位置 (targetPistonY) の計算
+            // 容器底面は y = 480。targetPistonY が小さいほどピストンが上がり「体積大」を表す
             if (currentState === 'Solid') {
-                badge.textContent = '🧊 固体'; badge.className = 'px-3 py-1 rounded-full text-xs font-black tracking-widest text-white transition-colors duration-300 bg-amber-500';
+                badge.textContent = '🧊 固体';
+                badge.className = 'px-3 py-1 rounded-full text-xs font-black tracking-widest text-white transition-colors duration-300 bg-amber-500';
                 bgLabel.textContent = 'SOLID';
-                targetPistonY = 380;
+                // 固体: 水は氷(固体)の方が水(液体)より体積大(密度小)のためピストンがやや高め、CO2は固体の方が体積小
+                if (currentSubst === 'water') {
+                    targetPistonY = 345 - (currentVx / 100) * 8 + (currentVy / 100) * 10;
+                } else {
+                    targetPistonY = 370 - (currentVx / 100) * 8 + (currentVy / 100) * 10;
+                }
             } else if (currentState === 'Liquid') {
-                badge.textContent = '💧 液体'; badge.className = 'px-3 py-1 rounded-full text-xs font-black tracking-widest text-white transition-colors duration-300 bg-sky-500';
+                badge.textContent = '💧 液体';
+                badge.className = 'px-3 py-1 rounded-full text-xs font-black tracking-widest text-white transition-colors duration-300 bg-sky-500';
                 bgLabel.textContent = 'LIQUID';
-                targetPistonY = 360; // 固体より少し体積が大きい(水の場合は例外だが表現上)
+                // 液体: 凝縮相のため体積変化はわずか(わずかな熱膨張と圧縮)
+                if (currentSubst === 'water') {
+                    targetPistonY = 360 - (currentVx / 100) * 12 + (currentVy / 100) * 8;
+                } else {
+                    targetPistonY = 350 - (currentVx / 100) * 12 + (currentVy / 100) * 8;
+                }
             } else if (currentState === 'Gas') {
-                badge.textContent = '💨 気体'; badge.className = 'px-3 py-1 rounded-full text-xs font-black tracking-widest text-white transition-colors duration-300 bg-rose-500';
+                badge.textContent = '💨 気体';
+                badge.className = 'px-3 py-1 rounded-full text-xs font-black tracking-widest text-white transition-colors duration-300 bg-rose-500';
                 bgLabel.textContent = 'GAS';
-                let vol = Math.min(420, Math.max(60, 420 - (T+273)/P * 0.5)); 
-                targetPistonY = 480 - vol;
+                // ボイル・シャルルの法則 (V ∝ T / P) の視覚的シミュレーション
+                // ・温度上昇 (currentVx大) → 熱膨張でピストン上昇 (targetPistonYが小さくなる)
+                // ・圧力低下 (currentVy小) → 減圧膨張でピストン上昇 (targetPistonYが小さくなる)
+                // ・圧力上昇 (currentVy大) → 加圧圧縮でピストン降下 (targetPistonYが大きくなる)
+                let tempExpansion = (currentVx / 100) * 140; // 温度による膨張量 (0〜140px)
+                let pressCompression = (currentVy / 100) * 180; // 圧力による圧縮量 (0〜180px)
+                let gasY = 220 - tempExpansion + pressCompression;
+                // ピストンの上下限界値 (最大膨張: 60px、最大圧縮: 320px)
+                targetPistonY = Math.max(60, Math.min(320, gasY));
             } else if (currentState === 'Supercritical') {
-                badge.textContent = '🌀 超臨界状態'; badge.className = 'px-3 py-1 rounded-full text-xs font-black tracking-widest text-white transition-colors duration-300 bg-purple-500';
+                badge.textContent = '🌀 超臨界状態';
+                badge.className = 'px-3 py-1 rounded-full text-xs font-black tracking-widest text-white transition-colors duration-300 bg-purple-500';
                 bgLabel.textContent = 'SUPERCRITICAL';
-                targetPistonY = 80;
+                // 超臨界流体: 高圧で強く押し込まれつつも、超高温の熱運動で激しく押し返す領域
+                let scY = 190 - (currentVx / 100) * 70 + (currentVy / 100) * 90;
+                targetPistonY = Math.max(90, Math.min(260, scY));
             } else {
-                badge.textContent = '✨ 三重点(共存)'; badge.className = 'px-3 py-1 rounded-full text-xs font-black tracking-widest text-white transition-colors duration-300 bg-teal-500';
+                // 三重点 (共存)
+                badge.textContent = '✨ 三重点(共存)';
+                badge.className = 'px-3 py-1 rounded-full text-xs font-black tracking-widest text-white transition-colors duration-300 bg-teal-500';
                 bgLabel.textContent = 'TRIPLE';
-                targetPistonY = 240;
+                targetPistonY = 290;
             }
 
             // グラフの現在地マーカー更新
@@ -593,7 +634,8 @@
 
         function animate() {
             ctx.clearRect(0, 0, cWidth, cHeight);
-            pistonY += (targetPistonY - pistonY) * 0.1;
+            // 追従係数を0.06にして物理的な重み・なめらかなシリンダー動作に改善
+            pistonY += (targetPistonY - pistonY) * 0.06;
 
             let thermalSpeed = 0.5 + (currentVx / 100) * 4.0; // 温度(X軸)に比例した熱運動の激しさ
 
