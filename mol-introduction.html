@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#4f46b8">
+  <title>まほうの数かぞえ 〜ダースから mol へ〜</title>
+  <style>
+    :root{--ink:#252445;--muted:#666282;--violet:#5146b8;--violet2:#7668dd;--paper:#fffefb;--line:#ddd9ef;--gold:#efbd45;--mint:#229f91;--red:#bf544f}
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;background:radial-gradient(circle at 2% 2%,#fff8d7 0 4%,transparent 18%),radial-gradient(circle at 98% 5%,#dfdbff 0 3%,transparent 22%),linear-gradient(145deg,#fbf9ff,#fbf5e9)}
+    button,input{font:inherit}button{cursor:pointer}.shell{width:min(980px,calc(100% - 30px));margin:auto;padding:22px 0 44px}.brand{display:flex;align-items:center;gap:12px;margin:3px 0 17px}.brand-mark{display:grid;place-items:center;width:46px;height:46px;border-radius:15px;color:white;background:linear-gradient(145deg,var(--violet2),var(--violet));box-shadow:0 9px 20px #5146b833;font-size:24px}.brand h1{margin:0;font-size:clamp(1.2rem,3vw,1.7rem)}.brand p{margin:2px 0 0;color:var(--muted);font-size:.82rem}
+    .panel{padding:clamp(20px,4vw,38px);border:1px solid white;border-radius:27px;background:rgba(255,254,251,.95);box-shadow:0 18px 50px #39315c18}.screen[hidden],.modal[hidden]{display:none!important}.welcome{text-align:center}.tower{font-size:clamp(4.5rem,13vw,7.6rem);line-height:1;filter:drop-shadow(0 10px 12px #5045a72c)}h2{margin:8px 0 12px;font-size:clamp(1.45rem,4vw,2.1rem)}.lead{max-width:650px;margin:0 auto 22px;color:#504d6f;line-height:1.8}.name-row{display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;margin:22px auto 7px}.name-row label{font-weight:800}.name-row input{width:210px;border:2px solid var(--line);border-radius:12px;padding:12px 14px;background:white;color:var(--ink);letter-spacing:.12em}.name-row input:focus{outline:3px solid #dcd7ff;border-color:var(--violet)}.input-error{min-height:1.5em;margin:0 0 10px;color:var(--red);font-weight:700;font-size:.9rem}.small{color:#75718d;font-size:.84rem;line-height:1.6}
+    .primary,.secondary{border:0;border-radius:14px;padding:13px 20px;font-weight:800}.primary{color:white;background:linear-gradient(135deg,var(--violet2),var(--violet));box-shadow:0 8px 17px #5146b83b}.primary:hover{transform:translateY(-1px)}.secondary{color:#3f378e;background:#eeecff}.primary:focus-visible,.secondary:focus-visible,.answer:focus-visible,.hint:focus-visible{outline:4px solid #c9c2ff;outline-offset:2px}
+    .topbar{display:grid;grid-template-columns:1fr auto;gap:15px;align-items:end;margin-bottom:14px}.room{color:var(--violet);font-weight:900;font-size:.9rem;letter-spacing:.06em}.progress-label{color:var(--muted);font-size:.87rem;text-align:right}.progress{height:9px;margin-top:7px;border-radius:99px;background:#e8e5f4;overflow:hidden}.progress span{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--violet2),#43b6a9);transition:width .3s}
+    .question-card{min-height:470px;display:flex;flex-direction:column}.question-number{display:inline-flex;align-items:center;gap:8px;color:#686389;font-weight:800;font-size:.86rem}.question-number b{padding:5px 10px;border-radius:99px;color:white;background:var(--violet)}.question-grid{display:grid;grid-template-columns:minmax(230px,.84fr) minmax(300px,1.16fr);gap:27px;align-items:center;flex:1;margin:18px 0}.art{position:relative;display:grid;place-items:center;min-height:235px;padding:18px;border-radius:23px;overflow:hidden;background:linear-gradient(150deg,#efedff,#fff8d8)}.art-note{position:absolute;right:12px;bottom:12px;left:12px;text-align:center;color:#5e587e;font-weight:800;font-size:.82rem}.formula h3{margin:0 0 14px;font-size:clamp(1.3rem,3.5vw,1.9rem);line-height:1.5}.formula p{margin:0;color:var(--muted);line-height:1.75}
+    .chocos{display:grid;grid-template-columns:repeat(4,39px);gap:7px;padding-bottom:18px}.choco{position:relative;width:39px;height:31px;border:2px solid #41251f;border-radius:6px;background:linear-gradient(135deg,#b77b59,#5e382d);box-shadow:inset 0 0 0 1px #ddb082}.choco:before,.choco:after{content:"";position:absolute;background:#44261f;opacity:.7}.choco:before{top:50%;right:0;left:0;height:2px}.choco:after{top:0;bottom:0;left:50%;width:2px}.choco.dim{opacity:.2;filter:grayscale(.65)}.bundle-row{display:flex;gap:11px;padding-bottom:20px}.bundle{position:relative;width:60px;height:49px;border:3px solid #542e28;border-radius:10px;background:#81503f;box-shadow:inset 0 0 0 2px #cb966f}.bundle:after{content:"12";position:absolute;inset:0;display:grid;place-items:center;color:#fff7cf;font-weight:900}.dozen-scale{display:flex;align-items:center;gap:15px;padding-bottom:25px;font-size:55px}.dozen-scale b{font-size:1.15rem;color:#5146b8}.stardust{position:relative;width:195px;height:138px;margin-bottom:18px}.grain{position:absolute;width:15px;height:15px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fffde7,#f4bd3f 50%,#c78920);box-shadow:0 1px 3px #8d64194c}.stardust.half{clip-path:inset(0 50% 0 0)}.mole-stack{display:flex;align-items:flex-end;gap:2px;transform:scale(.78)}.mole-stack .stardust{margin:0 -35px 15px}.balance{font-size:90px;padding-bottom:24px}.oxygen{display:flex;align-items:center;justify-content:center;gap:8px;padding-bottom:25px}.oxygen i{display:grid;place-items:center;width:55px;height:55px;border:3px solid #4b84c4;border-radius:50%;color:white;background:radial-gradient(circle at 35% 30%,#aee8ff,#4388cf 60%,#285da4);box-shadow:0 5px 12px #366fa844;font-style:normal;font-weight:900}.gateway{font-size:80px;padding-bottom:22px}
+    .answers{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:18px}.answer{display:flex;align-items:center;gap:11px;min-height:61px;padding:11px 14px;text-align:left;color:var(--ink);font-weight:800;border:2px solid var(--line);border-radius:15px;background:white}.answer:hover:not(:disabled){border-color:#9b92e4;background:#faf9ff}.answer .letter{display:grid;place-items:center;flex:0 0 27px;width:27px;height:27px;border-radius:50%;color:#655c98;background:#efedfb;font-size:.8rem}.answer.correct{border-color:var(--mint);background:#e5f8f4}.answer.wrong{border-color:var(--red);background:#fff0ee}.answer:disabled{cursor:default}.feedback{display:none;margin-top:15px;padding:14px 16px;border-radius:15px;line-height:1.65}.feedback.show{display:block}.feedback.good{border:1px solid #92d8cf;background:#e6f8f4}.feedback.bad{border:1px solid #e5aaa6;background:#fff0ee}.feedback strong{display:block;margin-bottom:2px}.actions{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-top:14px}.hint-area{min-height:42px}.hint{padding:10px 13px;border:0;border-radius:11px;color:#40368f;background:#efedff;font-weight:800}.hint:disabled{opacity:.58;cursor:default}.hint-text{max-width:590px;margin-top:7px;color:#5e597a;font-size:.91rem;line-height:1.55}
+    .retry{text-align:center}.retry-icon{font-size:4.4rem}.retry-list{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:18px 0 24px}.retry-list span{padding:7px 12px;border-radius:99px;color:#8b3d39;background:#fff0ee;font-weight:800}
+    .completion{padding:clamp(13px,3vw,28px)}.certificate{position:relative;isolation:isolate;overflow:hidden;padding:clamp(30px,7vw,68px) clamp(20px,7vw,72px);text-align:center;border:8px double #c49328;border-radius:24px;background:radial-gradient(circle at 50% 20%,#fffef1,#fff9dd 65%,#f7e8b4);box-shadow:inset 0 0 0 5px #fffdf4,0 18px 45px #9a721e2c}.certificate:before,.certificate:after{content:"✦";position:absolute;color:#d2a12d;font-size:5rem;opacity:.25;z-index:-1}.certificate:before{top:5px;left:18px}.certificate:after{right:18px;bottom:5px}.ribbon{display:inline-block;padding:7px 25px;border-radius:99px;color:#fff8db;background:linear-gradient(135deg,#9c6b13,#d6a936,#8f5e0b);font-weight:900;letter-spacing:.16em}.seal{display:grid;place-items:center;width:116px;height:116px;margin:20px auto 10px;border:8px solid #f2d36d;outline:2px solid #b77b16;border-radius:50%;color:#7b5106;background:radial-gradient(#fffce8,#efbd45);box-shadow:0 10px 25px #9d741d30;font-size:3rem}.certificate h2{margin:10px 0 4px;font-family:"Yu Mincho","Hiragino Mincho ProN",serif;font-size:clamp(2rem,6vw,3.4rem);letter-spacing:.12em}.certificate-title{color:#6e531b;font-weight:900;letter-spacing:.08em}.student-line{margin:25px auto 14px;padding-bottom:9px;max-width:430px;border-bottom:2px solid #b28a34;font-size:clamp(1.25rem,4vw,1.7rem);font-weight:900}.certificate-copy{max-width:590px;margin:0 auto;line-height:1.9}.perfect{display:inline-block;margin:18px 0 8px;padding:8px 19px;border-radius:12px;color:#624406;background:#f6d66d;font-weight:900}.issued{margin-top:18px;color:#6b5b35;font-size:.9rem}.submit-note{text-align:center;margin:18px 0 4px;color:#4f4a69;font-weight:800}.certificate-actions{text-align:center;margin-top:15px}
+    .modal{position:fixed;inset:0;z-index:10;display:grid;place-items:center;padding:20px;background:#27214a91}.modal-box{width:min(470px,100%);padding:28px;text-align:center;border-radius:23px;background:var(--paper);box-shadow:0 22px 55px #17122f55}.modal-box p{color:#565171;line-height:1.75}
+    @media(max-width:640px){.shell{width:min(100% - 20px,980px);padding-top:10px}.panel{padding:20px 15px;border-radius:21px}.topbar{grid-template-columns:1fr}.progress-label{text-align:left}.question-grid{grid-template-columns:1fr;gap:16px}.question-card{min-height:0}.art{min-height:195px}.answers{grid-template-columns:1fr}.actions{flex-direction:column}.actions .primary{width:100%}.certificate{border-width:5px}.brand p{display:none}}
+    @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="brand"><div class="brand-mark" aria-hidden="true">✦</div><div><h1>まほうの数かぞえ</h1><p>ダースから mol へ</p></div></header>
+
+    <section id="welcome" class="screen panel welcome">
+      <div class="tower" aria-hidden="true">♜</div>
+      <h2>数かぞえの塔へようこそ</h2>
+      <p class="lead">チョコレートをダースで数えるように、目に見えないほど小さな粒も「まとまり」で数えられます。星屑の魔法をたどりながら、<b>mol</b>を見つけよう。</p>
+      <div class="name-row"><label for="student-id">出席番号</label><input id="student-id" type="text" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="例：2901" aria-describedby="id-error"></div>
+      <p id="id-error" class="input-error" aria-live="polite"></p>
+      <button id="start" class="primary">塔に入る　→</button>
+      <p class="small">全15問・約15分　／　全問正解すると修了証が現れます</p>
+    </section>
+
+    <section id="quiz" class="screen" hidden>
+      <div class="topbar"><div><div id="room" class="room"></div><div class="progress"><span id="progress-fill"></span></div></div><div id="progress-label" class="progress-label"></div></div>
+      <div class="panel question-card">
+        <div id="question-number" class="question-number"></div>
+        <div class="question-grid"><div id="art" class="art" aria-label="問題のイラスト"></div><div class="formula"><h3 id="prompt"></h3><p id="subprompt"></p></div></div>
+        <div id="answers" class="answers"></div>
+        <div id="feedback" class="feedback" aria-live="polite"></div>
+        <div class="actions"><div class="hint-area"><button id="hint" class="hint">ヒントを使う（あと2回）</button><div id="hint-text" class="hint-text"></div></div><button id="next" class="primary" hidden>次の部屋へ　→</button></div>
+      </div>
+    </section>
+
+    <section id="retry" class="screen panel retry" hidden>
+      <div class="retry-icon" aria-hidden="true">🔁</div><h2>間違えた問題をやり直してください</h2>
+      <p class="lead">修了証は、すべての問題に正解すると表示されます。次の問題をもう一度考えてみよう。</p>
+      <div id="retry-list" class="retry-list"></div><button id="retry-start" class="primary">再挑戦する　→</button>
+    </section>
+
+    <section id="complete" class="screen completion" hidden>
+      <div class="certificate">
+        <div class="ribbon">MOL QUEST</div><div class="seal" aria-hidden="true">✦</div><div class="certificate-title">数かぞえの塔</div><h2>学習修了証</h2>
+        <div id="certificate-student" class="student-line"></div>
+        <p class="certificate-copy">あなたは、ダースと mol が「決まった個数をひとまとまりとして数える」考え方であることを学び、すべての試練を修了しました。</p>
+        <div class="perfect">全15問 正解</div><div id="issued" class="issued"></div>
+      </div>
+      <p class="submit-note">必要があればこの画面をスクショして提出してください。</p>
+      <div class="certificate-actions"><button id="restart" class="secondary">最初からもう一度</button></div>
+    </section>
+  </main>
+
+  <div id="answer-modal" class="modal" hidden><div class="modal-box"><h2>答えを確認しよう</h2><p id="modal-text"></p><button id="modal-next" class="primary">次へ進む　→</button></div></div>
+
+  <script>
+    const KEY='chemistry-mol-intro-v3';
+    const grains=Array.from({length:72},(_,i)=>`<i class="grain" style="left:${17+(i*37)%160}px;bottom:${4+Math.floor(i/9)*14+((i*17)%9)}px"></i>`).join('');
+    const art={
+      chocolates:(lit=12)=>`<div class="chocos" aria-hidden="true">${Array.from({length:12},(_,i)=>`<i class="choco ${i>=lit?'dim':''}"></i>`).join('')}</div><div class="art-note">チョコレート 12個</div>`,
+      bundles:n=>`<div class="bundle-row" aria-hidden="true">${Array.from({length:n},()=>'<i class="bundle"></i>').join('')}</div><div class="art-note">1箱 = 1ダース = 12個</div>`,
+      dust:type=>type==='many'?`<div class="mole-stack" aria-hidden="true"><div class="stardust">${grains}</div><div class="stardust">${grains}</div><div class="stardust">${grains}</div></div><div class="art-note">星屑のまとまりが10個分</div>`:`<div class="stardust ${type==='half'?'half':''}" aria-hidden="true">${grains}</div><div class="art-note">${type==='half'?'星屑の山の半分':'見えないほどたくさんの星屑'}</div>`,
+      chocoWeight:'<div class="dozen-scale" aria-hidden="true"><span>🍫</span><b>1ダース</b><span>⚖️</span><b>8 g</b></div><div class="art-note">チョコレート 1ダース分の質量</div>',
+      chocoCount:'<div class="dozen-scale" aria-hidden="true"><span>🍫🍫</span><b>5ダース = 40 g</b></div><div class="art-note">1ダース = 12個</div>',
+      balance:'<div class="balance" aria-hidden="true">⚖️</div><div class="art-note">月光ビーズを1 mol集めると10 g</div>',
+      oxygen:'<div class="oxygen" aria-hidden="true"><i>O</i><i>O</i><i>O</i><i>O</i></div><div class="art-note">酸素原子の世界へ</div>',
+      gateway:'<div class="gateway" aria-hidden="true">🍫 ✦ ✨</div><div class="art-note">2つの「まとまり札」</div>'
+    };
+    const questions=[
+      {room:'ダースの部屋',prompt:'12個のチョコレートのまとまりを、何といいますか？',sub:'身近な「まとまり」から始めよう。',choices:['1ダース','1 mol','1 g','1 L'],answer:0,visual:art.chocolates(),hints:['チョコを1個ずつではなく、まとめて呼ぶ言葉です。','12個のまとまりは「1ダース」です。'],explain:'12個をまとめて <b>1ダース</b> といいます。'},
+      {room:'ダースの部屋',prompt:'3ダースのチョコは何個ですか？',sub:'1ダースは12個です。',choices:['24個','30個','36個','48個'],answer:2,visual:art.bundles(3),hints:['1ダースが何個かを思い出そう。','12個が3つあるので、12 × 3 を考えます。'],explain:'<b>12 × 3 = 36</b>。3ダースは36個です。'},
+      {room:'ダースの部屋',prompt:'チョコ6個は何ダースですか？',sub:'1ダースは12個です。',choices:['0.25ダース','0.5ダース','1.5ダース','6ダース'],answer:1,visual:art.chocolates(6),hints:['6個は12個のどれくらいでしょう？','12個の半分は6個。6 ÷ 12 = 0.5です。'],explain:'6個は12個の半分なので、<b>0.5ダース</b>です。'},
+      {room:'星屑の部屋',prompt:'星屑が6000垓個集まった「1つのまとまり」を、何と呼びますか？',sub:'とても大きな数も、まとまりに名前を付けて数えます。',choices:['1 mol','1ダース','1 g','1 m'],answer:0,visual:art.dust(),hints:['ダースは12個のまとまりでした。星屑用のまとまりの名前を選ぼう。','6000垓個をまとめたものを、ここでは1 molとして考えます。'],explain:'<b>約6000垓個のまとまりが1 mol</b>です。'},
+      {room:'molの部屋',prompt:'molは何の単位ですか？',sub:'単位の名前と、何を表すかをつなげよう。',choices:['質量','体積','物質量','力'],answer:2,visual:art.dust(),hints:['gは質量、Lは体積を表します。','molは、粒子のまとまりを数える「物質量」の単位です。'],explain:'molは<b>物質量</b>の単位です。質量そのものを表す単位ではありません。'},
+      {room:'molの部屋',prompt:'6000垓個と同じ数は、どれですか？',sub:'科学では、とても大きな数を指数で短く表します。',choices:['6 × 10²¹個','6 × 10²²個','6 × 10²³個','6 × 10²⁴個'],answer:2,visual:art.dust(),hints:['1垓は10²⁰です。6000は6 × 10³です。','10³ × 10²⁰ = 10²³。つまり6 × 10²³です。'],explain:'<b>6000垓 = 6 × 10²³</b>。1 molの粒子数は約6 × 10²³個です。'},
+      {room:'つなげる部屋',prompt:'0.5 molの粒子は何垓個ですか？',sub:'1 molの粒子を6000垓個として考えます。',choices:['300垓個','3000垓個','6000垓個','12000垓個'],answer:1,visual:art.dust('half'),hints:['0.5は「半分」を表します。','6000垓の半分は3000垓です。'],explain:'0.5 molは1 molの半分。6000垓の半分なので、<b>3000垓個</b>です。'},
+      {room:'つなげる部屋',prompt:'問7で求めた3000垓個を、指数を使って表すとどれですか？',sub:'1垓 = 10²⁰です。',choices:['3 × 10²²個','3 × 10²³個','6 × 10²³個','3 × 10²⁴個'],answer:1,visual:art.dust('half'),hints:['3000は3 × 10³です。','3 × 10³ × 10²⁰ = 3 × 10²³です。'],explain:'3000垓は3000 × 10²⁰、つまり<b>3 × 10²³個</b>です。'},
+      {room:'つなげる部屋',prompt:'10 molの粒子は何個ですか？',sub:'1 mol = 6 × 10²³個として考えます。',choices:['6 × 10²³個','12 × 10²³個','60 × 10²³個','600 × 10²³個'],answer:2,visual:art.dust('many'),hints:['1 mol分が10個あると考えよう。','6 × 10²³ × 10 = 60 × 10²³です。'],explain:'1 mol分が10個あるので、<b>60 × 10²³個</b>です。これは<b>6.0 × 10²⁴個</b>と同じ数です。'},
+      {room:'ダースと質量の部屋',prompt:'チョコレートを1ダース集めたところ、8 gでした。5ダースのチョコレートは何 gですか？',sub:'1ダース分の質量を使って考えよう。',choices:['13 g','32 g','40 g','96 g'],answer:2,visual:art.chocoWeight,hints:['1ダース分が8 gです。同じまとまりが5つあります。','8 gのまとまりが5つなので、8 × 5を考えます。'],explain:'1ダース分が8 gです。5ダースはその5つ分なので、<b>8 g × 5 = 40 g</b>です。'},
+      {room:'ダースと質量の部屋',prompt:'先ほどの問題で、5ダースのチョコレートは40 gでした。40 gは、チョコレート何個分ですか？',sub:'1ダース = 12個です。',choices:['5個','12個','40個','60個'],answer:3,visual:art.chocoCount,hints:['40 gは、5ダース分の質量でした。','1ダースは12個。5ダースは12 × 5個です。'],explain:'40 gは5ダース分です。1ダースは12個なので、<b>12 × 5 = 60個</b>です。'},
+      {room:'molと質量の部屋',prompt:'月光ビーズを1 mol集めると10 gになります。月光ビーズを3 mol集めると、質量は何 gですか？',sub:'「1 mol分の質量」を使って考えよう。',choices:['3 g','13 g','30 g','300 g'],answer:2,visual:art.balance,hints:['1 mol分が10 gです。同じまとまりが3つあります。','10 gのまとまりが3つなので、10 × 3を考えます。'],explain:'1 mol分が10 gです。3 molはその3つ分なので、<b>10 g × 3 = 30 g</b>です。'},
+      {room:'原子の世界',prompt:'1 molの酸素原子の質量を16 gとします。4 molの酸素原子は何 gですか？',sub:'月光ビーズと同じように、「1 mol分の質量」から考えよう。',choices:['16 g','32 g','64 g','80 g'],answer:2,visual:art.oxygen,hints:['1 mol分が16 gです。同じまとまりが4つあります。','16 gのまとまりが4つなので、16 × 4を考えます。'],explain:'1 mol分が16 gです。4 molはその4つ分なので、<b>16 g × 4 = 64 g</b>です。'},
+      {room:'原子の世界',prompt:'先ほど、4 molの酸素原子の質量は64 gということでした。この64 gは、何個の酸素原子の集まりですか？',sub:'1 mol = 6 × 10²³個として考えます。',choices:['6 × 10²³個','12 × 10²³個','24 × 10²³個','64 × 10²³個'],answer:2,visual:art.oxygen,hints:['64 gは、酸素原子4 mol分の質量でした。','1 molが6 × 10²³個なので、6 × 10²³ × 4を考えます。'],explain:'64 gは酸素原子4 mol分です。したがって、<b>6 × 10²³ × 4 = 24 × 10²³個</b>です。これは<b>2.4 × 10²⁴個</b>と同じ数です。'},
+      {room:'原子の世界・まとめ',prompt:'酸素原子のような、とても小さくて数の多い粒子をmolで表すのはなぜですか？',sub:'ダースから始めた「まとまり」の考えを、化学の世界につなげよう。',choices:['粒子の温度を表すため','粒子の色を表すため','決まった個数をひとまとまりとして数えるため','粒子を大きくするため'],answer:2,visual:art.gateway,hints:['ダースは12個、molは約6 × 10²³個のまとまりでした。','一つずつ数えにくい粒子を、決まったまとまりで扱います。'],explain:'その通り！ molを使うと、原子や分子を<b>決まった個数のまとまり</b>として数えられます。'}
+    ];
+    const fresh=()=>({index:0,studentId:'',run:questions.map((_,i)=>i),mastered:{},answers:{},hints:{},revealed:{},retrying:false});
+    let state=fresh();
+    const $=id=>document.getElementById(id);
+    function save(){localStorage.setItem(KEY,JSON.stringify(state))}
+    function load(){try{const stored=JSON.parse(localStorage.getItem(KEY));if(stored&&Array.isArray(stored.run))state={...fresh(),...stored}}catch(e){state=fresh()}}
+    function show(id){['welcome','quiz','retry','complete'].forEach(name=>$(name).hidden=name!==id)}
+    function start(){const id=$('student-id').value.trim();if(!/^\d{4}$/.test(id)){$('id-error').textContent='4桁の出席番号を入力してください（例：2901）。';$('student-id').focus();return}state.studentId=id;$('id-error').textContent='';save();show('quiz');render()}
+    function render(){const qi=state.run[state.index];if(qi===undefined)return finish();const q=questions[qi],given=state.answers[qi],count=state.run.length,used=state.hints[qi]||0;$('room').textContent='✦ '+q.room;$('progress-label').textContent=state.retrying?`再挑戦 ${state.index+1} / ${count}　（全体の問題 ${qi+1}）`:`${state.index+1} / ${count} 問　 ヒント ${Object.values(state.hints).reduce((a,b)=>a+b,0)}回`;$('progress-fill').style.width=`${(state.index+1)/count*100}%`;$('question-number').innerHTML=`<b>問題 ${qi+1}</b><span>${state.retrying?'再挑戦':'まほうの数かぞえ'}</span>`;$('prompt').textContent=q.prompt;$('subprompt').textContent=q.sub;$('art').innerHTML=q.visual;
+      const box=$('answers');box.innerHTML='';q.choices.forEach((choice,i)=>{const b=document.createElement('button');b.className='answer';b.innerHTML=`<span class="letter">${'ABCD'[i]}</span><span>${choice}</span>`;b.disabled=given!==undefined;if(given!==undefined){if(i===given)b.classList.add(given===q.answer?'correct':'wrong');if(state.revealed[qi]&&i===q.answer)b.classList.add('correct')}b.onclick=()=>respond(qi,i);box.append(b)});
+      const feedback=$('feedback');feedback.className='feedback';feedback.innerHTML='';if(given!==undefined){const correct=given===q.answer;feedback.className='feedback show '+(correct?'good':'bad');feedback.innerHTML=correct?`<strong>○ 正解！</strong>${q.explain}`:'<strong>× この問題は、あとでもう一度挑戦します。</strong>答えを確認して、次へ進みましょう。'}
+      $('next').hidden=given===undefined;$('next').textContent=given===q.answer?(state.index===count-1?'結果を確認する　→':'次の部屋へ　→'):'答えを確認して次へ　→';$('hint').disabled=given!==undefined||used>=2;$('hint').textContent=used>=2?'ヒントを使い切りました':`ヒントを使う（あと${2-used}回）`;$('hint-text').textContent=used?q.hints.slice(0,used).join('　'):'';
+    }
+    function respond(qi,choice){state.answers[qi]=choice;const correct=choice===questions[qi].answer;if(correct)state.mastered[qi]=true;else state.mastered[qi]=false;save();render()}
+    $('hint').onclick=()=>{const qi=state.run[state.index],used=state.hints[qi]||0;if(used>=2||state.answers[qi]!==undefined)return;state.hints[qi]=used+1;save();render()};
+    $('next').onclick=()=>{const qi=state.run[state.index],q=questions[qi];if(state.answers[qi]!==q.answer&&!state.revealed[qi]){state.revealed[qi]=true;state.mastered[qi]=false;save();$('modal-text').innerHTML=`正解は <b>${q.choices[q.answer]}</b> です。<br>${q.explain}<br><small>この問題は最後にもう一度挑戦します。</small>`;$('answer-modal').hidden=false;return}advance()};
+    $('modal-next').onclick=()=>{$('answer-modal').hidden=true;advance()};
+    function advance(){state.index++;save();render()}
+    function finish(){const missing=questions.map((_,i)=>i).filter(i=>state.mastered[i]!==true);if(missing.length){$('retry-list').innerHTML=missing.map(i=>`<span>問題 ${i+1}</span>`).join('');state.pendingRetry=missing;save();show('retry');return}const today=new Intl.DateTimeFormat('ja-JP',{dateStyle:'long',timeZone:'Asia/Tokyo'}).format(new Date());$('certificate-student').textContent=`出席番号 ${state.studentId}`;$('issued').textContent=`修了日　${today}`;show('complete')}
+    $('retry-start').onclick=()=>{const retry=state.pendingRetry||questions.map((_,i)=>i).filter(i=>state.mastered[i]!==true);retry.forEach(i=>{delete state.answers[i];delete state.revealed[i];delete state.hints[i]});state.run=retry;state.index=0;state.retrying=true;delete state.pendingRetry;save();show('quiz');render()};
+    $('restart').onclick=()=>{if(confirm('記録を消して、最初から始めますか？')){localStorage.removeItem(KEY);state=fresh();$('student-id').value='';$('start').textContent='塔に入る　→';show('welcome')}};
+    $('student-id').addEventListener('input',e=>{e.target.value=e.target.value.replace(/\D/g,'').slice(0,4);$('id-error').textContent=''});$('student-id').addEventListener('keydown',e=>{if(e.key==='Enter')start()});$('start').onclick=start;
+    load();$('student-id').value=state.studentId||'';if(state.studentId&&Object.keys(state.answers).length)$('start').textContent='前回の続きから　→';show('welcome');
+  </script>
+</body>
+</html>
