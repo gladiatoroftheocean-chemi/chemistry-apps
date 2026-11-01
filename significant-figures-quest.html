@@ -1,0 +1,3062 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>有効数字の冒険 — 測定の精度を守る旅</title><style>
+:root{--ink:#eeeefa;--muted:#bbc5e6;--gold:#f8d77a;--edge:#536497;--panel:#152447;--green:#72e6b3;--red:#ff9fa8}*{box-sizing:border-box}body{margin:0;color:var(--ink);font:16px/1.75 system-ui,-apple-system,"Hiragino Kaku Gothic ProN",sans-serif;background:#080f28;background-image:radial-gradient(ellipse at 12% 0%,#303772 0,transparent 50%),radial-gradient(ellipse at 90% 50%,#173e50 0,transparent 60%);min-height:100vh}button,input,select{font:inherit}button,select{cursor:pointer}button{min-height:46px;border:1px solid #7186bb;background:#243860;color:white;border-radius:10px;padding:10px 18px;font-weight:700;transition:transform .12s,background .15s}button:hover:not(:disabled){background:#354f83;transform:translateY(-1px)}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #ffe099;outline-offset:3px}button:disabled{opacity:.45;cursor:default}button.primary{background:linear-gradient(135deg,#ffe7a1,#dfae4f);color:#28203b;border-color:#ffedc0;box-shadow:0 4px 0 #8d692b}button.danger{color:#ffb5bd;border-color:#a65f79}button.small{padding:7px 12px;font-size:14px}input,select{font-size:16px;min-height:46px;border:1px solid #8298c4;border-radius:8px;background:#0c1835;color:#fff;padding:10px;max-width:100%}input{position:relative;z-index:1}input[readonly]{color:#e8d08e}h1,h2,h3,p{margin-top:0}h1{font-size:clamp(30px,5vw,54px);line-height:1.4;letter-spacing:.08em}h2{font-size:24px;line-height:1.5}h3{font-size:19px}p{margin-bottom:16px}small,.muted{color:var(--muted)}.shell{width:min(1100px,100%);margin:auto;padding:24px 24px 60px}.topline{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:22px}.brand{font-size:14px;letter-spacing:.15em;color:var(--gold)}.panel{border:1px solid var(--edge);border-radius:18px;background:linear-gradient(135deg,#1c2e53ee,#111b39f5);box-shadow:0 12px 40px #0003;padding:28px;margin-bottom:20px;position:relative}.panel::after{content:'';pointer-events:none;position:absolute;inset:5px;border:1px solid #60709b33;border-radius:13px}.eyebrow{color:var(--gold);font-size:13px;letter-spacing:.15em;font-weight:bold;margin-bottom:9px}.hero{display:grid;grid-template-columns:1.1fr 1fr;gap:30px;align-items:center}.lead{font-size:18px;color:#d5dff5}.art{width:100%;height:auto;display:block;pointer-events:none}.pills{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.pill{display:inline-flex;padding:4px 11px;background:#42527c55;border:1px solid #778aba66;border-radius:20px;font-size:13px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}.notice{border-left:3px solid var(--gold);background:#ead38d0c;padding:12px 16px;margin:15px 0}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.area{margin:0;min-height:240px;display:flex;flex-direction:column;border-top:3px solid #8d9eda}.area.locked{opacity:.6}.area.done{border-color:var(--green)}.area .actions{margin-top:auto;padding-top:16px}.area h2{font-size:20px;margin:10px 0}.badge{font-size:28px;color:var(--gold)}.maphead{display:flex;align-items:center;justify-content:space-between;gap:20px}.bar{height:14px;background:#080e22;border:1px solid #5d6c8f;border-radius:20px;overflow:hidden}.bar>span{display:block;height:100%;background:linear-gradient(90deg,#538fbd,#8aead4);transition:width .35s}.hpbar{height:22px}.hpbar>span{background:linear-gradient(90deg,#f5a44d,#8beba7);transition:width .18s ease-out}.hpbar.low>span{background:linear-gradient(90deg,#d94061,#ff8f8b)}.status{display:grid;grid-template-columns:1fr 1fr;gap:20px}.hptext{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}.question{max-width:850px;margin:0 auto}.question h2{font-size:23px;line-height:1.7;overflow-wrap:anywhere}.answers{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:22px 0}.answer{text-align:left;background:#1b2d50;border-color:#4f668d;display:flex;align-items:center;gap:10px;position:relative}.answer .key{color:#b3c9ef;border:1px solid #60779c;border-radius:6px;min-width:28px;text-align:center;font-size:13px}.answer.selected{border:2px solid var(--gold);background:#555035}.answer.correct{border:2px solid var(--green);background:#1d5148;opacity:1}.answer.wrong{border:2px solid var(--red);background:#602e43;opacity:1}.feedback{border:2px solid var(--green);border-radius:14px;background:#123b35;padding:22px;margin-top:20px;scroll-margin-top:20px}.feedback.bad{border-color:var(--red);background:#44243b}.feedback h3{font-size:29px;color:var(--green);margin:0 0 10px}.feedback.bad h3{color:var(--red)}.hintbox{border:1px solid #8c80c4;border-radius:10px;padding:14px 18px;margin-top:15px;background:#312b5666}.hintbox p:last-child{margin:0}.lesson{background:#e6efff;color:#1b2d4b;border-radius:12px;padding:20px;margin:15px 0}.lesson strong{color:#7a2a62}.place{border-collapse:collapse;margin:12px auto;font-family:ui-monospace,monospace;font-size:22px}.place td{padding:3px 9px;text-align:center}.place .last{background:#efbf6544;border:1px solid #e9bc68}.place tr:last-child{border-top:2px solid #a1b1cd}.diagram{background:#edf3ff;color:#1b2e4e;border-radius:14px;padding:18px;margin:20px 0}.diagram svg{width:100%;display:block;max-height:240px}.diagram figcaption{font-size:14px;text-align:center;color:#3e5271}.science{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin:22px 0;font-size:25px}.science select{font-size:22px}.science .exp{align-self:flex-start;margin-top:-8px}.progressnote{font-size:14px}.loss{animation:shake .3s ease-in-out}.hit{animation:flash .4s}.success{animation:shine .7s}.certificate{border:3px double var(--gold);outline:1px solid #f9d77a66;outline-offset:-10px;background:radial-gradient(ellipse at top,#51437b,#182542 65%);text-align:center;padding:50px 22px;overflow:hidden}.certificate h1{color:#ffe5a3;font-size:42px}.crest{font-size:76px;line-height:1.2;color:var(--gold);text-shadow:0 0 30px #f6cb7099}.certgrid{display:grid;grid-template-columns:1fr 1fr;max-width:500px;margin:25px auto;gap:12px}.certgrid>div{padding:10px;background:#ffffff0b;border-radius:10px}.certgrid strong{display:block;font-size:24px;color:#fff3c8}.sparkles{position:absolute;inset:0;pointer-events:none;overflow:hidden}.sparkles i{position:absolute;top:-20px;width:6px;height:13px;background:var(--gold);animation:fall 2.2s ease-in forwards}.calc{margin:24px auto 0;max-width:420px}.calc summary{cursor:pointer;padding:12px;border:1px solid #5c709c;border-radius:10px}.calcpad{padding:15px;background:#111c37;border-radius:10px}.calckeys{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px}.calckeys button{padding:7px}.calcout{width:100%;font-family:monospace}.history{font-size:14px;max-height:140px;overflow:auto;color:#c3cee9;padding-top:10px}.foot{font-size:12px;text-align:center;color:#9eadd1;margin-top:30px}dialog{background:#182644;color:white;border:1px solid #b7a174;border-radius:15px;padding:25px;width:min(440px,90vw)}dialog::backdrop{background:#060b1ec9}a{color:#f8dd97}.hidden{display:none!important}@keyframes shake{20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}@keyframes flash{50%{box-shadow:0 0 45px #f3415688;background:#5e233a}}@keyframes shine{50%{box-shadow:0 0 45px #e5c98466}}@keyframes fall{to{transform:translateY(650px) rotate(600deg);opacity:0}}@media(max-width:700px){.shell{padding:16px 14px 35px}.panel{padding:21px 18px}.hero{grid-template-columns:1fr;gap:8px}.hero .art{max-height:220px}.grid{grid-template-columns:1fr}.status{grid-template-columns:1fr;gap:12px}.answers{grid-template-columns:1fr}.maphead{align-items:flex-start;flex-direction:column;gap:8px}.question h2{font-size:20px}.area{min-height:0}.hero h1{font-size:34px}.topline{margin-bottom:15px}.certgrid strong{font-size:21px}.certificate h1{font-size:34px}.science{font-size:21px}.actions>button{flex:1 1 auto}.place td{padding:3px 7px}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+.route{background:radial-gradient(ellipse at 50% 90%,#254d60,#122342);border:1px solid #526b8a;border-radius:15px;margin-top:20px;padding:10px}.route svg{width:100%;height:auto;display:block}.boss-scene{display:flex;align-items:center;justify-content:center;gap:20px;border:1px solid #b15a80;border-radius:14px;background:radial-gradient(ellipse,#58385a,#15203e 70%);padding:10px 15px;margin-bottom:18px}.boss-scene svg{width:125px;height:115px;flex-shrink:0;filter:drop-shadow(0 0 14px #c86f9a66)}.boss-scene strong{color:#ffccad}.boss-scene p{font-size:13px;margin:4px 0 0}@media(max-width:700px){.certificate{padding:22px 15px}.certificate .crest{font-size:46px}.certificate h1{font-size:30px;margin:8px 0}.certificate h2{font-size:21px;margin-bottom:12px}.certificate p{font-size:13px;line-height:1.65;margin-bottom:12px}.certificate .eyebrow{font-size:10px}.certificate .certgrid{margin:14px auto;gap:8px}.certificate .certgrid>div{font-size:13px;padding:7px 4px}.certificate .certgrid strong{font-size:22px}.certificate .notice{font-size:13px;margin:12px 0 0;padding:9px 10px}.boss-scene{gap:12px}.boss-scene svg{width:95px;height:95px}.boss-scene p{font-size:12px}}:root{--ink:#e9fff4;--muted:#adccbc;--gold:#9effbd;--edge:#36795a;--panel:#071b12;--green:#79f5ad;--red:#ff9caa}body{background:#020b07;color:var(--ink)}#matrixCanvas{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.74}.shell{position:relative;z-index:1}.brand{font-family:ui-monospace,monospace;color:#8affb9}.panel{background:linear-gradient(135deg,#081c13f5,#04100cee);border-color:#36795a;box-shadow:0 14px 45px #0008,inset 0 1px #c0ffcf10}.panel::after{border-color:#63e49a22}.hero{min-height:365px;overflow:hidden;background:linear-gradient(110deg,#031109f5 10%,#081d13b8 100%);border-color:#5ca978;box-shadow:0 0 70px #16de7620}.hero h1{color:#d9ffe9;text-shadow:0 0 35px #42e49150}.eyebrow{color:#94f8b6}.lead{color:#c6f3dd}.pill{background:#22624033;border-color:#63a87d66}.primary,button.primary{background:linear-gradient(135deg,#aaffbd,#49d58a);border-color:#baffd3;color:#042513;box-shadow:0 4px 0 #166840,0 0 24px #38c47d22}button{background:#103923;border-color:#468d65;color:#edfff4}button:hover:not(:disabled){background:#1e5638}button.small{color:#d5ffe8}button.danger{color:#ffb2bd;border-color:#a45c70}input,select{background:#030f09;border-color:#5b9c76}.answer{background:#0b291b;border-color:#3f7756}.answer .key{color:#b0e9c9;border-color:#458060}.answer.selected{background:#224d2c;border-color:#b1ffb4}.answer.correct{background:#154e33}.answer.wrong{background:#582538}.bar{background:#020906;border-color:#427957}.bar>span{background:linear-gradient(90deg,#198653,#85f9b4)}.hpbar>span{background:linear-gradient(90deg,#37c780,#a4f89c)}.hpbar.low>span{background:linear-gradient(90deg,#d94061,#ff8f8b)}.notice{background:#58bd6c0c;border-left-color:#86edaa}.hintbox{background:#112d2377;border-color:#59a181}.feedback{background:#123e29}.feedback.bad{background:#3b1b2b}.lesson{background:#e1f9e8;color:#123c27;border:1px solid #a7e9bc}.lesson strong{color:#15663a}.lesson p:last-child{margin:7px 0 0}.diagram{background:#e8f7ed;color:#163c27}.diagram figcaption{color:#325a42}.route{background:radial-gradient(ellipse,#0e3624,#03110a);border-color:#397b52}.boss-scene{background:radial-gradient(ellipse,#163c2a,#04110a 75%);border-color:#75ac86}.boss-scene strong{color:#c6ffc7}.boss-scene svg{filter:drop-shadow(0 0 12px #53e89477)}.calcpad{background:#071b11}.calc summary{border-color:#488361}.history{color:#b9deca}.calcout{color:#d9ffe8}.certificate{background:radial-gradient(ellipse at top,#1a5735,#05140d 70%);border-color:#aaffbd;outline-color:#6ecf8d88}.certificate h1,.crest{color:#c0ffcd}.certgrid strong{color:#d1ffde}.foot{color:#97baa6}dialog{background:#092516;border-color:#7fcc98}.terminal-art{min-height:270px;position:relative;border:1px solid #7aeda35c;border-radius:16px;padding:24px;background:#020d08aa;overflow:hidden;display:flex;flex-direction:column;justify-content:center;box-shadow:inset 0 0 40px #2ada6c11;pointer-events:none}.terminal-code{position:absolute;inset:0;display:flex;justify-content:space-around;overflow:hidden;opacity:.38;font:15px/1.55 ui-monospace,monospace;color:#35fa8f;letter-spacing:4px}.terminal-code span{writing-mode:vertical-rl;white-space:nowrap;animation:codefall 12s linear infinite}.terminal-code span:nth-child(2n){animation-delay:-6s;color:#9dffe4}.terminal-display{position:relative;text-align:center;font-family:ui-monospace,monospace;text-shadow:0 0 22px #1cfc7c}.terminal-display .big-code{font-size:64px;letter-spacing:.1em;color:#b6ffce;font-weight:bold}.terminal-display p{font-size:16px;letter-spacing:.12em;color:#a5ffd0;margin:0}.terminal-footer{position:relative;color:#80c8a0;font:11px ui-monospace,monospace;letter-spacing:.15em;margin-top:18px;text-align:center}.matrix-toggle{font-size:12px;min-height:36px;padding:6px 10px}.condition{font-size:13px;line-height:1.7;color:#bad9c8;padding:10px 13px;background:#15362477;border-left:2px solid #68ac83;margin:12px 0}.learning-intro{max-width:950px;margin:0 auto 20px;border:2px solid #9cedb4}.learning-intro h1{font-size:38px;margin-top:18px;letter-spacing:.02em}.learning-label{display:inline-block;border:1px solid #8beaac;border-radius:5px;padding:3px 10px;color:#b3ffcb;font-size:14px}.rule-compare{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin:24px 0}.rule-compare>div{padding:20px;background:#123324;border:1px solid #397b56;border-radius:12px}.rule-compare .new-rule{background:#d8f8e3;color:#17432b;border-color:#adf9c2}.rule-compare .new-rule small{color:#276641}.rule-compare h2{font-size:21px;margin-top:8px}.rule-compare p{margin:0}.learning-page .panel{border-color:#7fc693}.learning-page #questionPanel{border-width:2px}.learning-page .eyebrow{font-size:15px}.learning-memory{border:1px solid #528b65;background:#163d2799;padding:13px 17px;border-radius:10px;margin:15px 0}.learning-memory strong{color:#9eecb9}.learning-memory p{margin:5px 0 0}.learning-memory b{color:#e2ffed}.learning-figure .expression{text-align:center;font-size:23px;font-weight:bold;margin:0}.learning-figure .place{margin:15px auto 8px}.learning-figure .place tr:last-child{border:0}.learning-figure .last{background:#a0e5b5;border:2px solid #448d5d}.place-key{text-align:center;font-size:14px}.review-banner{border:1px solid #84e7bc;padding:15px;border-radius:10px;background:#184b35;margin:12px 0 22px}.review-banner strong{color:#c1ffdf}.migration{border:1px solid #74c99a;padding:14px;border-radius:10px;margin-bottom:20px;background:#0e3524}.area.locked{opacity:.8}.area.locked button{opacity:.55}@keyframes codefall{from{transform:translateY(-28%)}to{transform:translateY(12%)}}@media(max-width:700px){.hero{gap:22px;min-height:0}.terminal-art{min-height:190px;padding:18px}.terminal-display .big-code{font-size:44px}.terminal-display p{font-size:13px}.terminal-code{font-size:12px;letter-spacing:2px}.rule-compare{grid-template-columns:1fr}.learning-intro h1{font-size:27px}.learning-intro .lead{font-size:16px}.learning-figure .expression{font-size:19px}.learning-memory{padding:12px;font-size:14px}.hptext{flex-wrap:wrap;gap:4px}.topline .matrix-toggle{min-height:44px}.certificate .muted{font-size:11px}.certificate p{margin-bottom:10px}}@media(prefers-reduced-motion:reduce){.terminal-code span{animation:none}}body.motion-paused .terminal-code span{animation-play-state:paused}
+
+.terminal-code span{text-orientation:upright}.learning-figure .place td:nth-child(2){text-align:right;min-width:45px}
+</style></head><body><canvas id="matrixCanvas" aria-hidden="true"></canvas><main id="app" class="shell"></main><dialog id="resetDialog"><h2>この冒険をはじめから始める？</h2><p>このアプリの出席番号・突破記録・回答・魔法・合格証を初期化します。他の教材の記録は消しません。</p><div class="actions"><button id="cancelReset">戻る</button><button class="danger" id="confirmReset">記録を消して始める</button></div></dialog><script>
+'use strict';
+const BANK=[
+  {
+    "id": "q01",
+    "area": 0,
+    "prompt": "計量器を使って測った値を「［　］」という。",
+    "options": [
+      {
+        "id": "o0",
+        "text": "測定値"
+      },
+      {
+        "id": "o1",
+        "text": "真の値"
+      },
+      {
+        "id": "o2",
+        "text": "定義値"
+      },
+      {
+        "id": "o3",
+        "text": "最小目盛り"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "測定値は計器で測った値。真の値そのものとは限らず、計器や読み取りによるずれを含む。",
+    "hints": [
+      "計器から読み取った値と、真の値を区別しよう。",
+      "用語が指す対象を、文章の前後から確認しよう。"
+    ],
+    "kind": "blank",
+    "diagram": null,
+    "magic": null,
+    "practice": false
+  },
+  {
+    "id": "q02",
+    "area": 0,
+    "prompt": "測定値と真の値との差を「［　］」という。",
+    "options": [
+      {
+        "id": "o0",
+        "text": "誤差"
+      },
+      {
+        "id": "o1",
+        "text": "有効数字"
+      },
+      {
+        "id": "o2",
+        "text": "目盛り"
+      },
+      {
+        "id": "o3",
+        "text": "存在比"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "測定値と真の値との差を誤差という。有効数字は測定値の意味のある数字。",
+    "hints": [
+      "計器から読み取った値と、真の値を区別しよう。",
+      "用語が指す対象を、文章の前後から確認しよう。"
+    ],
+    "kind": "blank",
+    "diagram": null,
+    "magic": null,
+    "practice": false
+  },
+  {
+    "id": "q03",
+    "area": 0,
+    "prompt": "ものさしを目分量で読むとき、最小目盛りのどこまで読み取る？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "10分の1まで"
+      },
+      {
+        "id": "o1",
+        "text": "目盛りと同じ位まで"
+      },
+      {
+        "id": "o2",
+        "text": "100分の1まで必ず読む"
+      },
+      {
+        "id": "o3",
+        "text": "整数だけ読む"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "この授業では最小目盛りの10分の1まで目分量で読む。最後の桁は多少不確かだが、有効数字に含める。",
+    "hints": [
+      "まず最小目盛りを確認しよう。",
+      "目盛りと目盛りの間を目分量で分けて読む。"
+    ],
+    "kind": "choice",
+    "diagram": null,
+    "magic": null,
+    "practice": false
+  },
+  {
+    "id": "q04",
+    "area": 0,
+    "prompt": "1 cm = 10 mmなので、1 mm = 0.1 cmです。最小目盛りが1 mmのものさしを使い、cmで記録します。どの位まで目分量で読みますか？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "0.01 cmの位"
+      },
+      {
+        "id": "o1",
+        "text": "0.1 cmの位"
+      },
+      {
+        "id": "o2",
+        "text": "1 cmの位"
+      },
+      {
+        "id": "o3",
+        "text": "0.001 cmの位"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "1 mm＝0.1 cm。その10分の1は0.01 cmなので、cmでは小数第2位まで読む。",
+    "hints": [
+      "単位をcmにそろえよう。",
+      "最小目盛りをcmに直し、その10分の1の位を考える。"
+    ],
+    "kind": "choice",
+    "diagram": null,
+    "magic": null,
+    "practice": false
+  },
+  {
+    "id": "q05",
+    "area": 0,
+    "prompt": "図の物体の右端を、最小目盛りの10分の1まで目分量で読むと？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "2.27 cm"
+      },
+      {
+        "id": "o1",
+        "text": "2.2 cm"
+      },
+      {
+        "id": "o2",
+        "text": "2.270 cm"
+      },
+      {
+        "id": "o3",
+        "text": "2.3 cm"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "最小目盛りは0.1 cm。右端は2.2と2.3の間の約7割なので2.27 cmと記録する。2.270 cmはこの目盛りから読むには細かすぎる。",
+    "hints": [
+      "右端をはさむ2本の目盛りを見よう。",
+      "その間を10等分すると、右端がどのあたりか考えよう。"
+    ],
+    "kind": "choice",
+    "diagram": "ruler",
+    "magic": null,
+    "practice": false
+  },
+  {
+    "id": "q06",
+    "area": 0,
+    "prompt": "測定値「1.0 cm」の誤差範囲は？ 真の値をxとして、あてはまる範囲を選ぼう。",
+    "options": [
+      {
+        "id": "o0",
+        "text": "0.95 ≤ x < 1.05 cm"
+      },
+      {
+        "id": "o1",
+        "text": "0.5 ≤ x < 1.5 cm"
+      },
+      {
+        "id": "o2",
+        "text": "0.995 ≤ x < 1.005 cm"
+      },
+      {
+        "id": "o3",
+        "text": "1.0 ≤ x < 1.1 cm"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "末尾の位は0.1 cm。その半分の0.05 cmを境界に使う。0.95は1.0に、1.05は1.1に丸めるので上端は含まない。この範囲は、四捨五入という仮定の下での範囲。",
+    "hints": [
+      "末尾の位を確認しよう。",
+      "丸める前の境界は、その位の幅の半分だけ上下にある。"
+    ],
+    "kind": "choice",
+    "diagram": null,
+    "magic": null,
+    "practice": false,
+    "condition": "この演習では、測定値を末尾の位で四捨五入して表したものとし、誤差範囲を考えます。計器そのものの誤差は含めません。"
+  },
+  {
+    "id": "q07",
+    "area": 0,
+    "prompt": "測定値「1.00 cm」の誤差範囲は？ 「±」を使った表し方を選ぼう。",
+    "options": [
+      {
+        "id": "o0",
+        "text": "±0.005 cm"
+      },
+      {
+        "id": "o1",
+        "text": "±0.05 cm"
+      },
+      {
+        "id": "o2",
+        "text": "±0.5 cm"
+      },
+      {
+        "id": "o3",
+        "text": "±0.001 cm"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "1.00 cmの末尾は0.01 cmの位。その半分の0.005 cmが誤差範囲の目安なので、±0.005 cmと表します。真の値xの範囲で書くと、0.995 cm ≤ x < 1.005 cmです。",
+    "hints": [
+      "まず測定値の末尾の数字が、何cmの位かを確かめよう。",
+      "末尾の位の間隔の半分を、上下の誤差範囲の目安にする。"
+    ],
+    "kind": "choice",
+    "diagram": null,
+    "magic": null,
+    "practice": false,
+    "condition": "この演習では、測定値を末尾の位で四捨五入して表したものとし、誤差範囲を考えます。計器そのものの誤差は含めません。"
+  },
+  {
+    "id": "q08",
+    "area": 0,
+    "prompt": "測定値2.27 cmの最後の「7」は、目分量で読んだ多少不確かな数字。この7は？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "有効数字に含む"
+      },
+      {
+        "id": "o1",
+        "text": "有効数字に含まない"
+      },
+      {
+        "id": "o2",
+        "text": "必ず0に置き換える"
+      },
+      {
+        "id": "o3",
+        "text": "真の値だと保証される"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "推定して読んだ最後の数字も有効数字に含む。ただし真の値と一致する保証はない。",
+    "hints": [
+      "有効数字は、完全に確実な数字だけだろうか。",
+      "測定では、確かな桁に加えて推定した最後の桁まで記録する。"
+    ],
+    "kind": "choice",
+    "diagram": null,
+    "magic": null,
+    "practice": false
+  },
+  {
+    "id": "q09",
+    "area": 1,
+    "prompt": "測定値 82.38 の有効数字は何桁？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "1桁"
+      },
+      {
+        "id": "o1",
+        "text": "2桁"
+      },
+      {
+        "id": "o2",
+        "text": "3桁"
+      },
+      {
+        "id": "o3",
+        "text": "4桁"
+      },
+      {
+        "id": "o4",
+        "text": "5桁"
+      },
+      {
+        "id": "o5",
+        "text": "6桁"
+      }
+    ],
+    "correct": "o3",
+    "explanation": "82.38は有効数字4桁。すべての数字が有効。",
+    "hints": [
+      "最初の0でない数字を探そう。",
+      "最初の0でない数字から、記録された最後の数字までを数える。"
+    ],
+    "kind": "digits",
+    "diagram": null,
+    "magic": "82.38：最初の0でない数字以降が対象。",
+    "practice": false,
+    "variant": {
+      "prompt": "測定値 37.26 の有効数字は何桁？",
+      "options": [
+        {
+          "id": "o0",
+          "text": "1桁"
+        },
+        {
+          "id": "o1",
+          "text": "2桁"
+        },
+        {
+          "id": "o2",
+          "text": "3桁"
+        },
+        {
+          "id": "o3",
+          "text": "4桁"
+        },
+        {
+          "id": "o4",
+          "text": "5桁"
+        },
+        {
+          "id": "o5",
+          "text": "6桁"
+        }
+      ],
+      "correct": "o3",
+      "explanation": "37.26は4桁。最初の0でない数字より前の0は数えず、途中と小数部分の末尾の0は数える。",
+      "diagram": null
+    }
+  },
+  {
+    "id": "q10",
+    "area": 1,
+    "prompt": "測定値 82.230 の有効数字は何桁？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "1桁"
+      },
+      {
+        "id": "o1",
+        "text": "2桁"
+      },
+      {
+        "id": "o2",
+        "text": "3桁"
+      },
+      {
+        "id": "o3",
+        "text": "4桁"
+      },
+      {
+        "id": "o4",
+        "text": "5桁"
+      },
+      {
+        "id": "o5",
+        "text": "6桁"
+      }
+    ],
+    "correct": "o4",
+    "explanation": "82.230は有効数字5桁。小数部分の末尾の0も、そこまで測定したことを表す。",
+    "hints": [
+      "最初の0でない数字を探そう。",
+      "最初の0でない数字から、記録された最後の数字までを数える。"
+    ],
+    "kind": "digits",
+    "diagram": null,
+    "magic": "82.230：最初の0でない数字以降が対象。",
+    "practice": false,
+    "variant": {
+      "prompt": "測定値 45.670 の有効数字は何桁？",
+      "options": [
+        {
+          "id": "o0",
+          "text": "1桁"
+        },
+        {
+          "id": "o1",
+          "text": "2桁"
+        },
+        {
+          "id": "o2",
+          "text": "3桁"
+        },
+        {
+          "id": "o3",
+          "text": "4桁"
+        },
+        {
+          "id": "o4",
+          "text": "5桁"
+        },
+        {
+          "id": "o5",
+          "text": "6桁"
+        }
+      ],
+      "correct": "o4",
+      "explanation": "45.670は5桁。最初の0でない数字より前の0は数えず、途中と小数部分の末尾の0は数える。",
+      "diagram": null
+    }
+  },
+  {
+    "id": "q11",
+    "area": 1,
+    "prompt": "測定値 2.23005 の有効数字は何桁？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "1桁"
+      },
+      {
+        "id": "o1",
+        "text": "2桁"
+      },
+      {
+        "id": "o2",
+        "text": "3桁"
+      },
+      {
+        "id": "o3",
+        "text": "4桁"
+      },
+      {
+        "id": "o4",
+        "text": "5桁"
+      },
+      {
+        "id": "o5",
+        "text": "6桁"
+      }
+    ],
+    "correct": "o5",
+    "explanation": "2.23005は有効数字6桁。途中の0は位を保つ有効な数字。",
+    "hints": [
+      "最初の0でない数字を探そう。",
+      "最初の0でない数字から、記録された最後の数字までを数える。"
+    ],
+    "kind": "digits",
+    "diagram": null,
+    "magic": "2.23005：最初の0でない数字以降が対象。",
+    "practice": false,
+    "variant": {
+      "prompt": "測定値 1.02003 の有効数字は何桁？",
+      "options": [
+        {
+          "id": "o0",
+          "text": "1桁"
+        },
+        {
+          "id": "o1",
+          "text": "2桁"
+        },
+        {
+          "id": "o2",
+          "text": "3桁"
+        },
+        {
+          "id": "o3",
+          "text": "4桁"
+        },
+        {
+          "id": "o4",
+          "text": "5桁"
+        },
+        {
+          "id": "o5",
+          "text": "6桁"
+        }
+      ],
+      "correct": "o5",
+      "explanation": "1.02003は6桁。最初の0でない数字より前の0は数えず、途中と小数部分の末尾の0は数える。",
+      "diagram": null
+    }
+  },
+  {
+    "id": "q12",
+    "area": 1,
+    "prompt": "測定値 0.2 の有効数字は何桁？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "1桁"
+      },
+      {
+        "id": "o1",
+        "text": "2桁"
+      },
+      {
+        "id": "o2",
+        "text": "3桁"
+      },
+      {
+        "id": "o3",
+        "text": "4桁"
+      },
+      {
+        "id": "o4",
+        "text": "5桁"
+      },
+      {
+        "id": "o5",
+        "text": "6桁"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "0.2は有効数字1桁。先頭の0は小数点の位置を表すだけ。",
+    "hints": [
+      "最初の0でない数字を探そう。",
+      "最初の0でない数字から、記録された最後の数字までを数える。"
+    ],
+    "kind": "digits",
+    "diagram": null,
+    "magic": "0.2：最初の0でない数字以降が対象。",
+    "practice": false,
+    "variant": {
+      "prompt": "測定値 0.4 の有効数字は何桁？",
+      "options": [
+        {
+          "id": "o0",
+          "text": "1桁"
+        },
+        {
+          "id": "o1",
+          "text": "2桁"
+        },
+        {
+          "id": "o2",
+          "text": "3桁"
+        },
+        {
+          "id": "o3",
+          "text": "4桁"
+        },
+        {
+          "id": "o4",
+          "text": "5桁"
+        },
+        {
+          "id": "o5",
+          "text": "6桁"
+        }
+      ],
+      "correct": "o0",
+      "explanation": "0.4は1桁。最初の0でない数字より前の0は数えず、途中と小数部分の末尾の0は数える。",
+      "diagram": null
+    }
+  },
+  {
+    "id": "q13",
+    "area": 1,
+    "prompt": "測定値 0.200 の有効数字は何桁？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "1桁"
+      },
+      {
+        "id": "o1",
+        "text": "2桁"
+      },
+      {
+        "id": "o2",
+        "text": "3桁"
+      },
+      {
+        "id": "o3",
+        "text": "4桁"
+      },
+      {
+        "id": "o4",
+        "text": "5桁"
+      },
+      {
+        "id": "o5",
+        "text": "6桁"
+      }
+    ],
+    "correct": "o2",
+    "explanation": "0.200は有効数字3桁。先頭の0は数えず、2と小数部分の末尾の0を数える。",
+    "hints": [
+      "最初の0でない数字を探そう。",
+      "最初の0でない数字から、記録された最後の数字までを数える。"
+    ],
+    "kind": "digits",
+    "diagram": null,
+    "magic": "0.200：最初の0でない数字以降が対象。",
+    "practice": false,
+    "variant": {
+      "prompt": "測定値 0.500 の有効数字は何桁？",
+      "options": [
+        {
+          "id": "o0",
+          "text": "1桁"
+        },
+        {
+          "id": "o1",
+          "text": "2桁"
+        },
+        {
+          "id": "o2",
+          "text": "3桁"
+        },
+        {
+          "id": "o3",
+          "text": "4桁"
+        },
+        {
+          "id": "o4",
+          "text": "5桁"
+        },
+        {
+          "id": "o5",
+          "text": "6桁"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "0.500は3桁。最初の0でない数字より前の0は数えず、途中と小数部分の末尾の0は数える。",
+      "diagram": null
+    }
+  },
+  {
+    "id": "q14",
+    "area": 1,
+    "prompt": "測定値 0.000200 の有効数字は何桁？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "1桁"
+      },
+      {
+        "id": "o1",
+        "text": "2桁"
+      },
+      {
+        "id": "o2",
+        "text": "3桁"
+      },
+      {
+        "id": "o3",
+        "text": "4桁"
+      },
+      {
+        "id": "o4",
+        "text": "5桁"
+      },
+      {
+        "id": "o5",
+        "text": "6桁"
+      }
+    ],
+    "correct": "o2",
+    "explanation": "0.000200は有効数字3桁。最初の2より前の0は数えず、2以降の0は数える。",
+    "hints": [
+      "最初の0でない数字を探そう。",
+      "最初の0でない数字から、記録された最後の数字までを数える。"
+    ],
+    "kind": "digits",
+    "diagram": null,
+    "magic": "0.000200：最初の0でない数字以降が対象。",
+    "practice": false,
+    "variant": {
+      "prompt": "測定値 0.000600 の有効数字は何桁？",
+      "options": [
+        {
+          "id": "o0",
+          "text": "1桁"
+        },
+        {
+          "id": "o1",
+          "text": "2桁"
+        },
+        {
+          "id": "o2",
+          "text": "3桁"
+        },
+        {
+          "id": "o3",
+          "text": "4桁"
+        },
+        {
+          "id": "o4",
+          "text": "5桁"
+        },
+        {
+          "id": "o5",
+          "text": "6桁"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "0.000600は3桁。最初の0でない数字より前の0は数えず、途中と小数部分の末尾の0は数える。",
+      "diagram": null
+    }
+  },
+  {
+    "id": "q15",
+    "area": 1,
+    "prompt": "測定値 1.05 の有効数字は何桁？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "1桁"
+      },
+      {
+        "id": "o1",
+        "text": "2桁"
+      },
+      {
+        "id": "o2",
+        "text": "3桁"
+      },
+      {
+        "id": "o3",
+        "text": "4桁"
+      },
+      {
+        "id": "o4",
+        "text": "5桁"
+      },
+      {
+        "id": "o5",
+        "text": "6桁"
+      }
+    ],
+    "correct": "o2",
+    "explanation": "1.05は有効数字3桁。1と5の間の0も有効。",
+    "hints": [
+      "最初の0でない数字を探そう。",
+      "最初の0でない数字から、記録された最後の数字までを数える。"
+    ],
+    "kind": "digits",
+    "diagram": null,
+    "magic": "1.05：最初の0でない数字以降が対象。",
+    "practice": false,
+    "variant": {
+      "prompt": "測定値 2.04 の有効数字は何桁？",
+      "options": [
+        {
+          "id": "o0",
+          "text": "1桁"
+        },
+        {
+          "id": "o1",
+          "text": "2桁"
+        },
+        {
+          "id": "o2",
+          "text": "3桁"
+        },
+        {
+          "id": "o3",
+          "text": "4桁"
+        },
+        {
+          "id": "o4",
+          "text": "5桁"
+        },
+        {
+          "id": "o5",
+          "text": "6桁"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "2.04は3桁。最初の0でない数字より前の0は数えず、途中と小数部分の末尾の0は数える。",
+      "diagram": null
+    }
+  },
+  {
+    "id": "q16",
+    "area": 1,
+    "prompt": "測定値 0.010 の有効数字は何桁？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "1桁"
+      },
+      {
+        "id": "o1",
+        "text": "2桁"
+      },
+      {
+        "id": "o2",
+        "text": "3桁"
+      },
+      {
+        "id": "o3",
+        "text": "4桁"
+      },
+      {
+        "id": "o4",
+        "text": "5桁"
+      },
+      {
+        "id": "o5",
+        "text": "6桁"
+      }
+    ],
+    "correct": "o1",
+    "explanation": "0.010は有効数字2桁。1より前の0は数えず、末尾の0は数える。",
+    "hints": [
+      "最初の0でない数字を探そう。",
+      "最初の0でない数字から、記録された最後の数字までを数える。"
+    ],
+    "kind": "digits",
+    "diagram": null,
+    "magic": "0.010：最初の0でない数字以降が対象。",
+    "practice": false,
+    "variant": {
+      "prompt": "測定値 0.030 の有効数字は何桁？",
+      "options": [
+        {
+          "id": "o0",
+          "text": "1桁"
+        },
+        {
+          "id": "o1",
+          "text": "2桁"
+        },
+        {
+          "id": "o2",
+          "text": "3桁"
+        },
+        {
+          "id": "o3",
+          "text": "4桁"
+        },
+        {
+          "id": "o4",
+          "text": "5桁"
+        },
+        {
+          "id": "o5",
+          "text": "6桁"
+        }
+      ],
+      "correct": "o1",
+      "explanation": "0.030は2桁。最初の0でない数字より前の0は数えず、途中と小数部分の末尾の0は数える。",
+      "diagram": null
+    }
+  },
+  {
+    "id": "q17",
+    "area": 1,
+    "prompt": "測定値 1.00 の有効数字は何桁？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "1桁"
+      },
+      {
+        "id": "o1",
+        "text": "2桁"
+      },
+      {
+        "id": "o2",
+        "text": "3桁"
+      },
+      {
+        "id": "o3",
+        "text": "4桁"
+      },
+      {
+        "id": "o4",
+        "text": "5桁"
+      },
+      {
+        "id": "o5",
+        "text": "6桁"
+      }
+    ],
+    "correct": "o2",
+    "explanation": "1.00は有効数字3桁。小数部分の末尾の0を含めて数える。",
+    "hints": [
+      "最初の0でない数字を探そう。",
+      "最初の0でない数字から、記録された最後の数字までを数える。"
+    ],
+    "kind": "digits",
+    "diagram": null,
+    "magic": "1.00：最初の0でない数字以降が対象。",
+    "practice": false,
+    "variant": {
+      "prompt": "測定値 3.00 の有効数字は何桁？",
+      "options": [
+        {
+          "id": "o0",
+          "text": "1桁"
+        },
+        {
+          "id": "o1",
+          "text": "2桁"
+        },
+        {
+          "id": "o2",
+          "text": "3桁"
+        },
+        {
+          "id": "o3",
+          "text": "4桁"
+        },
+        {
+          "id": "o4",
+          "text": "5桁"
+        },
+        {
+          "id": "o5",
+          "text": "6桁"
+        }
+      ],
+      "correct": "o2",
+      "explanation": "3.00は3桁。最初の0でない数字より前の0は数えず、途中と小数部分の末尾の0は数える。",
+      "diagram": null
+    }
+  },
+  {
+    "id": "q18",
+    "area": 1,
+    "prompt": "測定値 10.02 の有効数字は何桁？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "1桁"
+      },
+      {
+        "id": "o1",
+        "text": "2桁"
+      },
+      {
+        "id": "o2",
+        "text": "3桁"
+      },
+      {
+        "id": "o3",
+        "text": "4桁"
+      },
+      {
+        "id": "o4",
+        "text": "5桁"
+      },
+      {
+        "id": "o5",
+        "text": "6桁"
+      }
+    ],
+    "correct": "o3",
+    "explanation": "10.02は有効数字4桁。数字の間の0も有効。",
+    "hints": [
+      "最初の0でない数字を探そう。",
+      "最初の0でない数字から、記録された最後の数字までを数える。"
+    ],
+    "kind": "digits",
+    "diagram": null,
+    "magic": "10.02：最初の0でない数字以降が対象。",
+    "practice": false,
+    "variant": {
+      "prompt": "測定値 20.04 の有効数字は何桁？",
+      "options": [
+        {
+          "id": "o0",
+          "text": "1桁"
+        },
+        {
+          "id": "o1",
+          "text": "2桁"
+        },
+        {
+          "id": "o2",
+          "text": "3桁"
+        },
+        {
+          "id": "o3",
+          "text": "4桁"
+        },
+        {
+          "id": "o4",
+          "text": "5桁"
+        },
+        {
+          "id": "o5",
+          "text": "6桁"
+        }
+      ],
+      "correct": "o3",
+      "explanation": "20.04は4桁。最初の0でない数字より前の0は数えず、途中と小数部分の末尾の0は数える。",
+      "diagram": null
+    }
+  },
+  {
+    "id": "q19",
+    "area": 1,
+    "prompt": "1 cmという測定値は、有効数字1桁です。1 cmをmに単位変換すると0.01 mになります。有効数字の桁数はどうなりますか？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "1桁のまま"
+      },
+      {
+        "id": "o1",
+        "text": "3桁に増える"
+      },
+      {
+        "id": "o2",
+        "text": "2桁に増える"
+      },
+      {
+        "id": "o3",
+        "text": "単位を変えると判断不能"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "有効数字は1桁のままです。1 cmを0.01 mと書き換えても、測定の精度は変わりません。0.01 mの先頭の0は、小数点の位置を示すための0で、有効数字には数えません。有効数字は「1」だけです。",
+    "hints": [
+      "単位を変えるだけで、測定が細かくなるだろうか。",
+      "位取りのための0と、測定の精度を示す0を区別する。"
+    ],
+    "kind": "choice",
+    "diagram": null,
+    "magic": null,
+    "practice": false
+  },
+  {
+    "id": "q20",
+    "area": 1,
+    "prompt": "有効数字と考えないものはどれ？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "数えて確認した5個の「5」"
+      },
+      {
+        "id": "o1",
+        "text": "測定した5.0 g"
+      },
+      {
+        "id": "o2",
+        "text": "測定した0.50 cm"
+      },
+      {
+        "id": "o3",
+        "text": "測定した5.00 s"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "数えて確認した5個の「5」は、測って得た測定値ではありません。個数が正確に決まっているので、有効数字としては扱いません。測定した5.0 g、0.50 cm、5.00 sは、有効数字を考えて扱います。",
+    "hints": [
+      "測って得た数と、数えて確定した数を区別しよう。",
+      "定義された換算関係や正確な個数には、測定の不確かさがない。"
+    ],
+    "kind": "choice",
+    "diagram": null,
+    "magic": null,
+    "practice": false
+  },
+  {
+    "id": "q21",
+    "area": 2,
+    "prompt": "縦123 cm、横2345 cmの長方形。面積は有効数字何桁で答える？ 積の計算は不要。",
+    "options": [
+      {
+        "id": "o0",
+        "text": "1桁"
+      },
+      {
+        "id": "o1",
+        "text": "2桁"
+      },
+      {
+        "id": "o2",
+        "text": "3桁"
+      },
+      {
+        "id": "o3",
+        "text": "4桁"
+      }
+    ],
+    "correct": "o2",
+    "explanation": "123 cmと2345 cmのうち、有効数字の少ない方にそろえて3桁で答える。積の大きさや整数部分の桁数では決めない。",
+    "hints": [
+      "まず2つの測定値それぞれの有効数字を数えよう。",
+      "掛け算では、有効数字の桁数が少ない測定値が答えの桁数を決める。"
+    ],
+    "kind": "choice",
+    "diagram": "rect:123:2345",
+    "magic": "123 cmと2345 cmの末尾の位に注目。",
+    "practice": false
+  },
+  {
+    "id": "q22",
+    "area": 2,
+    "prompt": "縦92 cm、横1234 cmの長方形。面積は有効数字何桁で答える？ 積の計算は不要。",
+    "options": [
+      {
+        "id": "o0",
+        "text": "1桁"
+      },
+      {
+        "id": "o1",
+        "text": "2桁"
+      },
+      {
+        "id": "o2",
+        "text": "3桁"
+      },
+      {
+        "id": "o3",
+        "text": "4桁"
+      }
+    ],
+    "correct": "o1",
+    "explanation": "92 cmと1234 cmのうち、有効数字の少ない方にそろえて2桁で答える。積の大きさや整数部分の桁数では決めない。",
+    "hints": [
+      "まず2つの測定値それぞれの有効数字を数えよう。",
+      "掛け算では、有効数字の桁数が少ない測定値が答えの桁数を決める。"
+    ],
+    "kind": "choice",
+    "diagram": "rect:92:1234",
+    "magic": "92 cmと1234 cmの末尾の位に注目。",
+    "practice": false
+  },
+  {
+    "id": "q23",
+    "area": 2,
+    "prompt": "縦1.234 cm、横5.6 cmの長方形。面積は有効数字何桁で答える？ 積の計算は不要。",
+    "options": [
+      {
+        "id": "o0",
+        "text": "1桁"
+      },
+      {
+        "id": "o1",
+        "text": "2桁"
+      },
+      {
+        "id": "o2",
+        "text": "3桁"
+      },
+      {
+        "id": "o3",
+        "text": "4桁"
+      }
+    ],
+    "correct": "o1",
+    "explanation": "1.234 cmと5.6 cmのうち、有効数字の少ない方にそろえて2桁で答える。積の大きさや整数部分の桁数では決めない。",
+    "hints": [
+      "まず2つの測定値それぞれの有効数字を数えよう。",
+      "掛け算では、有効数字の桁数が少ない測定値が答えの桁数を決める。"
+    ],
+    "kind": "choice",
+    "diagram": "rect:1.234:5.6",
+    "magic": "1.234 cmと5.6 cmの末尾の位に注目。",
+    "practice": false
+  },
+  {
+    "id": "q24",
+    "area": 2,
+    "prompt": "縦2.50 cm、横4.0 cmの長方形。面積は有効数字何桁で答える？ 積の計算は不要。",
+    "options": [
+      {
+        "id": "o0",
+        "text": "1桁"
+      },
+      {
+        "id": "o1",
+        "text": "2桁"
+      },
+      {
+        "id": "o2",
+        "text": "3桁"
+      },
+      {
+        "id": "o3",
+        "text": "4桁"
+      }
+    ],
+    "correct": "o1",
+    "explanation": "2.50 cmと4.0 cmのうち、有効数字の少ない方にそろえて2桁で答える。積の大きさや整数部分の桁数では決めない。",
+    "hints": [
+      "まず2つの測定値それぞれの有効数字を数えよう。",
+      "掛け算では、有効数字の桁数が少ない測定値が答えの桁数を決める。"
+    ],
+    "kind": "choice",
+    "diagram": "rect:2.50:4.0",
+    "magic": "2.50 cmと4.0 cmの末尾の位に注目。",
+    "practice": false
+  },
+  {
+    "id": "q25",
+    "area": 2,
+    "prompt": "次はすべて測定値。有効数字に注意して 2.0 × 3.0 を計算すると？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "6.0"
+      },
+      {
+        "id": "o1",
+        "text": "6"
+      },
+      {
+        "id": "o2",
+        "text": "6.00"
+      },
+      {
+        "id": "o3",
+        "text": "5.0"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "両方とも2桁。積は6で、2桁を示す6.0と書く。",
+    "hints": [
+      "各測定値の有効数字を確認しよう。",
+      "積・商を計算した後、少ない方の有効数字にそろえて四捨五入する。"
+    ],
+    "kind": "choice",
+    "diagram": null,
+    "magic": null,
+    "practice": false,
+    "variant": {
+      "prompt": "すべて測定値。有効数字に注意して 3.0 × 3.0 を計算すると？",
+      "options": [
+        {
+          "id": "o0",
+          "text": "9.0"
+        },
+        {
+          "id": "o1",
+          "text": "9"
+        },
+        {
+          "id": "o2",
+          "text": "9.00"
+        },
+        {
+          "id": "o3",
+          "text": "8.0"
+        }
+      ],
+      "correct": "o0",
+      "explanation": "両方2桁なので積9を9.0と書く。",
+      "diagram": null
+    }
+  },
+  {
+    "id": "q26",
+    "area": 2,
+    "prompt": "次はすべて測定値。有効数字に注意して 2.5 × 4.00 を計算すると？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "1.0 × 10¹"
+      },
+      {
+        "id": "o1",
+        "text": "1 × 10¹"
+      },
+      {
+        "id": "o2",
+        "text": "1.00 × 10¹"
+      },
+      {
+        "id": "o3",
+        "text": "1.1 × 10¹"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "2桁と3桁なので答えは2桁。積10は1.0 × 10¹と書くと2桁だと明確になる。",
+    "hints": [
+      "各測定値の有効数字を確認しよう。",
+      "積・商を計算した後、少ない方の有効数字にそろえて四捨五入する。"
+    ],
+    "kind": "choice",
+    "diagram": null,
+    "magic": null,
+    "practice": false,
+    "variant": {
+      "prompt": "すべて測定値。有効数字に注意して 2.0 × 5.00 を計算すると？",
+      "options": [
+        {
+          "id": "o0",
+          "text": "1.0 × 10¹"
+        },
+        {
+          "id": "o1",
+          "text": "1 × 10¹"
+        },
+        {
+          "id": "o2",
+          "text": "1.00 × 10¹"
+        },
+        {
+          "id": "o3",
+          "text": "1.1 × 10¹"
+        }
+      ],
+      "correct": "o0",
+      "explanation": "2桁と3桁なので、積10を2桁の1.0 × 10¹と書く。",
+      "diagram": null
+    }
+  },
+  {
+    "id": "q27",
+    "area": 2,
+    "prompt": "次はすべて測定値。有効数字に注意して 0.025 × 4.00 を計算すると？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "0.10"
+      },
+      {
+        "id": "o1",
+        "text": "0.1"
+      },
+      {
+        "id": "o2",
+        "text": "0.100"
+      },
+      {
+        "id": "o3",
+        "text": "1.0"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "2桁と3桁なので答えは2桁。0.10の先頭の0は数えず、1と末尾の0が有効。",
+    "hints": [
+      "各測定値の有効数字を確認しよう。",
+      "積・商を計算した後、少ない方の有効数字にそろえて四捨五入する。"
+    ],
+    "kind": "choice",
+    "diagram": null,
+    "magic": null,
+    "practice": false,
+    "variant": {
+      "prompt": "すべて測定値。有効数字に注意して 0.020 × 5.00 を計算すると？",
+      "options": [
+        {
+          "id": "o0",
+          "text": "0.10"
+        },
+        {
+          "id": "o1",
+          "text": "0.1"
+        },
+        {
+          "id": "o2",
+          "text": "0.100"
+        },
+        {
+          "id": "o3",
+          "text": "1.0"
+        }
+      ],
+      "correct": "o0",
+      "explanation": "2桁と3桁なので、積0.1を2桁の0.10と書く。",
+      "diagram": null
+    }
+  },
+  {
+    "id": "q28",
+    "area": 2,
+    "prompt": "次はすべて測定値。有効数字に注意して 6.0 ÷ 2.00 を計算すると？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "3.0"
+      },
+      {
+        "id": "o1",
+        "text": "3"
+      },
+      {
+        "id": "o2",
+        "text": "3.00"
+      },
+      {
+        "id": "o3",
+        "text": "0.30"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "2桁と3桁なので答えは2桁。割り算も少ない方の桁数にそろえる。",
+    "hints": [
+      "各測定値の有効数字を確認しよう。",
+      "積・商を計算した後、少ない方の有効数字にそろえて四捨五入する。"
+    ],
+    "kind": "choice",
+    "diagram": null,
+    "magic": null,
+    "practice": false,
+    "variant": {
+      "prompt": "すべて測定値。有効数字に注意して 8.0 ÷ 2.00 を計算すると？",
+      "options": [
+        {
+          "id": "o0",
+          "text": "4.0"
+        },
+        {
+          "id": "o1",
+          "text": "4"
+        },
+        {
+          "id": "o2",
+          "text": "4.00"
+        },
+        {
+          "id": "o3",
+          "text": "0.40"
+        }
+      ],
+      "correct": "o0",
+      "explanation": "2桁と3桁なので、商4を2桁の4.0と書く。",
+      "diagram": null
+    }
+  },
+  {
+    "id": "q29",
+    "area": 2,
+    "prompt": "次はすべて測定値。有効数字に注意して 1.2 × 1.2 を計算すると？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "1.4"
+      },
+      {
+        "id": "o1",
+        "text": "1.44"
+      },
+      {
+        "id": "o2",
+        "text": "1"
+      },
+      {
+        "id": "o3",
+        "text": "1.5"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "積は1.44。2桁にそろえるため、3桁目の4を四捨五入して1.4。",
+    "hints": [
+      "各測定値の有効数字を確認しよう。",
+      "積・商を計算した後、少ない方の有効数字にそろえて四捨五入する。"
+    ],
+    "kind": "choice",
+    "diagram": null,
+    "magic": null,
+    "practice": false,
+    "variant": {
+      "prompt": "すべて測定値。有効数字に注意して 1.3 × 1.3 を計算すると？",
+      "options": [
+        {
+          "id": "o0",
+          "text": "1.7"
+        },
+        {
+          "id": "o1",
+          "text": "1.69"
+        },
+        {
+          "id": "o2",
+          "text": "2"
+        },
+        {
+          "id": "o3",
+          "text": "1.6"
+        }
+      ],
+      "correct": "o0",
+      "explanation": "積1.69を2桁に丸めて1.7。",
+      "diagram": null
+    }
+  },
+  {
+    "id": "q30",
+    "area": 2,
+    "prompt": "次はすべて測定値。有効数字に注意して 2.5 × 5.0 を計算すると？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "13"
+      },
+      {
+        "id": "o1",
+        "text": "12.5"
+      },
+      {
+        "id": "o2",
+        "text": "12"
+      },
+      {
+        "id": "o3",
+        "text": "13.0"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "積は12.5。2桁にそろえるため3桁目の5を四捨五入し13。途中で必要以上に丸めない。",
+    "hints": [
+      "各測定値の有効数字を確認しよう。",
+      "積・商を計算した後、少ない方の有効数字にそろえて四捨五入する。"
+    ],
+    "kind": "choice",
+    "diagram": null,
+    "magic": null,
+    "practice": false,
+    "variant": {
+      "prompt": "すべて測定値。有効数字に注意して 2.5 × 6.0 を計算すると？",
+      "options": [
+        {
+          "id": "o0",
+          "text": "15"
+        },
+        {
+          "id": "o1",
+          "text": "15.0"
+        },
+        {
+          "id": "o2",
+          "text": "14"
+        },
+        {
+          "id": "o3",
+          "text": "1.5"
+        }
+      ],
+      "correct": "o0",
+      "explanation": "積15を2桁で答えるので15。",
+      "diagram": null
+    }
+  },
+  {
+    "id": "q31",
+    "area": 3,
+    "prompt": "12.3 cmの末尾の数字「3」は、何cmの位？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "0.1 cmの位（小数第1位）"
+      },
+      {
+        "id": "o1",
+        "text": "0.01 cmの位（小数第2位）"
+      },
+      {
+        "id": "o2",
+        "text": "1 cmの位（一の位）"
+      },
+      {
+        "id": "o3",
+        "text": "0.001 cmの位（小数第3位）"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "「末尾」は数のいちばん右の数字です。12.3の3は小数点のすぐ右なので、0.1 cmの位です。",
+    "hints": [
+      "小数点から右へ、0.1、0.01、0.001と位が下がることを確認しよう。",
+      "和と差は、末尾の位が高い方まで答えを残す。四捨五入では、その1つ右を見る。"
+    ],
+    "kind": "choice",
+    "diagram": "learning",
+    "magic": null,
+    "practice": true,
+    "lesson": "末尾とは、数のいちばん右に書かれた数字のこと。まず12.3 cmから確かめます。",
+    "step": 1
+  },
+  {
+    "id": "q32",
+    "area": 3,
+    "prompt": "もう一方の2.15 cm。末尾の数字「5」は、何cmの位？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "0.1 cmの位（小数第1位）"
+      },
+      {
+        "id": "o1",
+        "text": "0.01 cmの位（小数第2位）"
+      },
+      {
+        "id": "o2",
+        "text": "1 cmの位（一の位）"
+      },
+      {
+        "id": "o3",
+        "text": "0.001 cmの位（小数第3位）"
+      }
+    ],
+    "correct": "o1",
+    "explanation": "2.15の5は小数点の右から2番目なので、0.01 cmの位です。12.3 cmの末尾は0.1 cm、2.15 cmの末尾は0.01 cmと、位が異なります。",
+    "hints": [
+      "小数点から右へ、0.1、0.01、0.001と位が下がることを確認しよう。",
+      "和と差は、末尾の位が高い方まで答えを残す。四捨五入では、その1つ右を見る。"
+    ],
+    "kind": "choice",
+    "diagram": "learning",
+    "magic": null,
+    "practice": true,
+    "lesson": "次は2.15 cm。同じように、いちばん右の数字の位を調べます。",
+    "step": 2
+  },
+  {
+    "id": "q33",
+    "area": 3,
+    "prompt": "12.3 cmと2.15 cmでは、末尾の位が高いのはどちら？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "12.3 cm（末尾が0.1 cmの位）"
+      },
+      {
+        "id": "o1",
+        "text": "2.15 cm（末尾が0.01 cmの位）"
+      },
+      {
+        "id": "o2",
+        "text": "どちらも同じ位"
+      },
+      {
+        "id": "o3",
+        "text": "有効数字が多い方"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "0.1の位は0.01の位より高い位です。したがって、12.3 cmの方です。和と差ではこちらの位に答えの末尾をそろえます。",
+    "hints": [
+      "小数点から右へ、0.1、0.01、0.001と位が下がることを確認しよう。",
+      "和と差は、末尾の位が高い方まで答えを残す。四捨五入では、その1つ右を見る。"
+    ],
+    "kind": "choice",
+    "diagram": "learning",
+    "magic": null,
+    "practice": true,
+    "lesson": "和と差のルール：答えの末尾の位を、測定値の末尾の位が高い方にそろえます。高い位とは、1、0.1、0.01の順で、より左にある位です。",
+    "step": 3
+  },
+  {
+    "id": "q34",
+    "area": 3,
+    "prompt": "では、12.3 cm − 2.15 cmの答えは、どの位までにすればよい？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "0.1 cmの位まで（小数第1位）"
+      },
+      {
+        "id": "o1",
+        "text": "0.01 cmの位まで（小数第2位）"
+      },
+      {
+        "id": "o2",
+        "text": "有効数字2桁にする"
+      },
+      {
+        "id": "o3",
+        "text": "有効数字3桁にする"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "末尾の位が高いのは12.3 cmの0.1 cmの位でした。答えも0.1 cmの位までにします。有効数字の個数を数えてそろえるのではありません。",
+    "hints": [
+      "小数点から右へ、0.1、0.01、0.001と位が下がることを確認しよう。",
+      "和と差は、末尾の位が高い方まで答えを残す。四捨五入では、その1つ右を見る。"
+    ],
+    "kind": "choice",
+    "diagram": "learning",
+    "magic": null,
+    "practice": true,
+    "lesson": "前のステップで選んだ、高い方の末尾の位を使います。「何桁」ではなく「どの位まで」と考えます。",
+    "step": 4
+  },
+  {
+    "id": "q61",
+    "area": 3,
+    "kind": "choice",
+    "magic": null,
+    "practice": true,
+    "prompt": "12.3 − 2.15 = 10.15。答えを0.1の位までにするには、どの数字を見て四捨五入する？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "小数第2位の「5」"
+      },
+      {
+        "id": "o1",
+        "text": "小数第1位の「1」"
+      },
+      {
+        "id": "o2",
+        "text": "一の位の「0」"
+      },
+      {
+        "id": "o3",
+        "text": "十の位の「1」"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "残すのは小数第1位です。その1つ右、小数第2位の5を見て四捨五入します。残す位そのものの数字を見て丸めるのではありません。",
+    "hints": [
+      "小数点から右へ、0.1、0.01、0.001と位が下がることを確認しよう。",
+      "和と差は、末尾の位が高い方まで答えを残す。四捨五入では、その1つ右を見る。"
+    ],
+    "diagram": "learning",
+    "lesson": "計算すると10.15です。四捨五入では、残したい位の1つ右の数字を見ます。",
+    "step": 5
+  },
+  {
+    "id": "q62",
+    "area": 3,
+    "kind": "choice",
+    "magic": null,
+    "practice": true,
+    "prompt": "12.3 cm − 2.15 cmの計算結果を、和と差の有効数字のルールを守って答えなさい。",
+    "options": [
+      {
+        "id": "o0",
+        "text": "10.2 cm"
+      },
+      {
+        "id": "o1",
+        "text": "10.15 cm"
+      },
+      {
+        "id": "o2",
+        "text": "10 cm"
+      },
+      {
+        "id": "o3",
+        "text": "10.1 cm"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "10.15の小数第2位は5なので、小数第1位の1を繰り上げて10.2 cmとします。「末尾の位を比べる→高い方の位まで残す→1つ右の数字で四捨五入」の順です。",
+    "hints": [
+      "小数点から右へ、0.1、0.01、0.001と位が下がることを確認しよう。",
+      "和と差は、末尾の位が高い方まで答えを残す。四捨五入では、その1つ右を見る。"
+    ],
+    "diagram": "learning",
+    "lesson": "ここまでの考え方をつないで、自分で答えを完成させましょう。",
+    "step": 6
+  },
+  {
+    "id": "q63",
+    "area": 3,
+    "kind": "choice",
+    "magic": null,
+    "practice": true,
+    "prompt": "測定値5.0 cm − 4.8 cm。どちらも末尾は0.1 cmの位です。答えはどう書く？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "0.2 cm"
+      },
+      {
+        "id": "o1",
+        "text": "0.20 cm"
+      },
+      {
+        "id": "o2",
+        "text": "0.200 cm"
+      },
+      {
+        "id": "o3",
+        "text": "0 cm"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "計算値は0.2 cmで、答えも0.1 cmの位までなので、そのまま0.2 cmです。有効数字の個数を無理に2桁にして0.20 cmとは書きません。",
+    "hints": [
+      "小数点から右へ、0.1、0.01、0.001と位が下がることを確認しよう。",
+      "和と差は、末尾の位が高い方まで答えを残す。四捨五入では、その1つ右を見る。"
+    ],
+    "diagram": "learning",
+    "lesson": "引き算で答えが小さくなっても、末尾をそろえる位は変わりません。積と商の「桁数」のルールとは違います。",
+    "step": 7
+  },
+  {
+    "id": "q64",
+    "area": 3,
+    "kind": "choice",
+    "magic": null,
+    "practice": true,
+    "prompt": "足し算でも同じルールです。測定値3.2 cm + 1.25 cm = 4.45 cm。答えはどう書く？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "4.5 cm"
+      },
+      {
+        "id": "o1",
+        "text": "4.45 cm"
+      },
+      {
+        "id": "o2",
+        "text": "4.4 cm"
+      },
+      {
+        "id": "o3",
+        "text": "4 cm"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "末尾は3.2 cmが0.1 cmの位、1.25 cmが0.01 cmの位です。高い方の0.1 cmの位までにそろえます。4.45の小数第2位の5を四捨五入して、4.5 cmです。",
+    "hints": [
+      "小数点から右へ、0.1、0.01、0.001と位が下がることを確認しよう。",
+      "和と差は、末尾の位が高い方まで答えを残す。四捨五入では、その1つ右を見る。"
+    ],
+    "diagram": "learning",
+    "lesson": "最後に足し算で確認します。積と商は「有効数字の個数」、和と差は「末尾の位」を比べます。",
+    "step": 8
+  },
+  {
+    "id": "q35",
+    "area": 3,
+    "prompt": "すべて測定値。有効数字に注意して 8.4 − 2.13 を計算すると？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "6.3"
+      },
+      {
+        "id": "o1",
+        "text": "6.27"
+      },
+      {
+        "id": "o2",
+        "text": "6.2"
+      },
+      {
+        "id": "o3",
+        "text": "6"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "計算値は6.27。末尾の位が最も高い方は小数第1位なので、そこまでに丸めて6.3。有効数字の個数をそろえる方法ではない。",
+    "hints": [
+      "2つの測定値を小数点をそろえて並べよう。",
+      "末尾の位が粗い方まで残し、その次の位を四捨五入する。"
+    ],
+    "kind": "choice",
+    "diagram": null,
+    "magic": "答えを残す位は小数第1位。",
+    "practice": false,
+    "variant": {
+      "prompt": "すべて測定値。有効数字に注意して 9.4 − 3.13 を計算すると？",
+      "options": [
+        {
+          "id": "o0",
+          "text": "6.3"
+        },
+        {
+          "id": "o1",
+          "text": "6.27"
+        },
+        {
+          "id": "o2",
+          "text": "6.2"
+        },
+        {
+          "id": "o3",
+          "text": "6"
+        }
+      ],
+      "correct": "o0",
+      "explanation": "計算値6.27を、小数第1位までで6.3とする。",
+      "diagram": null
+    }
+  },
+  {
+    "id": "q36",
+    "area": 3,
+    "prompt": "すべて測定値。有効数字に注意して 5.00 − 2.0 を計算すると？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "3.0"
+      },
+      {
+        "id": "o1",
+        "text": "3.00"
+      },
+      {
+        "id": "o2",
+        "text": "3"
+      },
+      {
+        "id": "o3",
+        "text": "0.30"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "計算値は3.00。末尾の位が最も高い方は小数第1位なので、そこまでに丸めて3.0。有効数字の個数をそろえる方法ではない。",
+    "hints": [
+      "2つの測定値を小数点をそろえて並べよう。",
+      "末尾の位が粗い方まで残し、その次の位を四捨五入する。"
+    ],
+    "kind": "choice",
+    "diagram": null,
+    "magic": "答えを残す位は小数第1位。",
+    "practice": false,
+    "variant": {
+      "prompt": "すべて測定値。有効数字に注意して 6.00 − 2.0 を計算すると？",
+      "options": [
+        {
+          "id": "o0",
+          "text": "4.0"
+        },
+        {
+          "id": "o1",
+          "text": "4.00"
+        },
+        {
+          "id": "o2",
+          "text": "4"
+        },
+        {
+          "id": "o3",
+          "text": "0.40"
+        }
+      ],
+      "correct": "o0",
+      "explanation": "高い方の小数第1位までで4.0。",
+      "diagram": null
+    }
+  },
+  {
+    "id": "q37",
+    "area": 3,
+    "prompt": "すべて測定値。有効数字に注意して 10.0 − 9.8 を計算すると？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "0.2"
+      },
+      {
+        "id": "o1",
+        "text": "0.20"
+      },
+      {
+        "id": "o2",
+        "text": "0.200"
+      },
+      {
+        "id": "o3",
+        "text": "0"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "計算値は0.2。末尾の位が最も高い方は小数第1位なので、そこまでに丸めて0.2。有効数字の個数をそろえる方法ではない。",
+    "hints": [
+      "2つの測定値を小数点をそろえて並べよう。",
+      "末尾の位が粗い方まで残し、その次の位を四捨五入する。"
+    ],
+    "kind": "choice",
+    "diagram": null,
+    "magic": "答えを残す位は小数第1位。",
+    "practice": false,
+    "variant": {
+      "prompt": "すべて測定値。有効数字に注意して 20.0 − 19.8 を計算すると？",
+      "options": [
+        {
+          "id": "o0",
+          "text": "0.2"
+        },
+        {
+          "id": "o1",
+          "text": "0.20"
+        },
+        {
+          "id": "o2",
+          "text": "0.200"
+        },
+        {
+          "id": "o3",
+          "text": "0"
+        }
+      ],
+      "correct": "o0",
+      "explanation": "両方小数第1位までなので0.2。",
+      "diagram": null
+    }
+  },
+  {
+    "id": "q38",
+    "area": 3,
+    "prompt": "すべて測定値。有効数字に注意して 3.2 + 1.25 を計算すると？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "4.5"
+      },
+      {
+        "id": "o1",
+        "text": "4.45"
+      },
+      {
+        "id": "o2",
+        "text": "4.4"
+      },
+      {
+        "id": "o3",
+        "text": "4"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "計算値は4.45。末尾の位が最も高い方は小数第1位なので、そこまでに丸めて4.5。有効数字の個数をそろえる方法ではない。",
+    "hints": [
+      "2つの測定値を小数点をそろえて並べよう。",
+      "末尾の位が粗い方まで残し、その次の位を四捨五入する。"
+    ],
+    "kind": "choice",
+    "diagram": null,
+    "magic": "答えを残す位は小数第1位。",
+    "practice": false,
+    "variant": {
+      "prompt": "すべて測定値。有効数字に注意して 4.2 + 1.25 を計算すると？",
+      "options": [
+        {
+          "id": "o0",
+          "text": "5.5"
+        },
+        {
+          "id": "o1",
+          "text": "5.45"
+        },
+        {
+          "id": "o2",
+          "text": "5.4"
+        },
+        {
+          "id": "o3",
+          "text": "5"
+        }
+      ],
+      "correct": "o0",
+      "explanation": "計算値5.45を小数第1位に丸めて5.5。",
+      "diagram": null
+    }
+  },
+  {
+    "id": "q39",
+    "area": 3,
+    "prompt": "すべて測定値。有効数字に注意して 12 − 1.4 を計算すると？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "11"
+      },
+      {
+        "id": "o1",
+        "text": "10.6"
+      },
+      {
+        "id": "o2",
+        "text": "10.60"
+      },
+      {
+        "id": "o3",
+        "text": "10"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "計算値は10.6。末尾の位が最も高い方は一の位なので、そこまでに丸めて11。有効数字の個数をそろえる方法ではない。",
+    "hints": [
+      "2つの測定値を小数点をそろえて並べよう。",
+      "末尾の位が粗い方まで残し、その次の位を四捨五入する。"
+    ],
+    "kind": "choice",
+    "diagram": null,
+    "magic": "答えを残す位は一の位。",
+    "practice": false,
+    "variant": {
+      "prompt": "すべて測定値。有効数字に注意して 15 − 1.4 を計算すると？",
+      "options": [
+        {
+          "id": "o0",
+          "text": "14"
+        },
+        {
+          "id": "o1",
+          "text": "13.6"
+        },
+        {
+          "id": "o2",
+          "text": "13.60"
+        },
+        {
+          "id": "o3",
+          "text": "13"
+        }
+      ],
+      "correct": "o0",
+      "explanation": "末尾の位が高い方は一の位なので、13.6を丸めて14。",
+      "diagram": null
+    }
+  },
+  {
+    "id": "q40",
+    "area": 3,
+    "prompt": "すべて測定値。有効数字に注意して 2.35 + 0.4 を計算すると？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "2.8"
+      },
+      {
+        "id": "o1",
+        "text": "2.75"
+      },
+      {
+        "id": "o2",
+        "text": "2.7"
+      },
+      {
+        "id": "o3",
+        "text": "3"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "計算値は2.75。末尾の位が最も高い方は小数第1位なので、そこまでに丸めて2.8。有効数字の個数をそろえる方法ではない。",
+    "hints": [
+      "2つの測定値を小数点をそろえて並べよう。",
+      "末尾の位が粗い方まで残し、その次の位を四捨五入する。"
+    ],
+    "kind": "choice",
+    "diagram": null,
+    "magic": "答えを残す位は小数第1位。",
+    "practice": false,
+    "variant": {
+      "prompt": "すべて測定値。有効数字に注意して 3.35 + 0.4 を計算すると？",
+      "options": [
+        {
+          "id": "o0",
+          "text": "3.8"
+        },
+        {
+          "id": "o1",
+          "text": "3.75"
+        },
+        {
+          "id": "o2",
+          "text": "3.7"
+        },
+        {
+          "id": "o3",
+          "text": "4"
+        }
+      ],
+      "correct": "o0",
+      "explanation": "計算値3.75を小数第1位に丸めて3.8。",
+      "diagram": null
+    }
+  },
+  {
+    "id": "q41",
+    "area": 4,
+    "prompt": "1230を有効数字2桁で、A × 10ᴮ（1 ≤ A < 10）の形に表そう。",
+    "options": [
+      {
+        "id": "o0",
+        "text": "1.2 × 10^3"
+      },
+      {
+        "id": "o1",
+        "text": "1.20 × 10^3"
+      },
+      {
+        "id": "o2",
+        "text": "1.23 × 10^3"
+      },
+      {
+        "id": "o3",
+        "text": "1.2 × 10^4"
+      },
+      {
+        "id": "o4",
+        "text": "1.2 × 10^2"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "1230を指定の2桁に丸め、係数を1以上10未満にすると 1.2 × 10^3。係数の末尾の0は指定桁数を示す。繰り上がりがあれば指数も調整する。",
+    "hints": [
+      "まず小数点を動かし、係数を1以上10未満にしよう。",
+      "指定桁数の次の数字を四捨五入する。係数が10になったら、係数と指数を調整する。"
+    ],
+    "kind": "scientific",
+    "diagram": null,
+    "magic": "指定は2桁。係数の末尾の0も数える。",
+    "practice": false
+  },
+  {
+    "id": "q42",
+    "area": 4,
+    "prompt": "96490を有効数字3桁で、A × 10ᴮ（1 ≤ A < 10）の形に表そう。",
+    "options": [
+      {
+        "id": "o0",
+        "text": "9.65 × 10^4"
+      },
+      {
+        "id": "o1",
+        "text": "9.650 × 10^4"
+      },
+      {
+        "id": "o2",
+        "text": "1.23 × 10^4"
+      },
+      {
+        "id": "o3",
+        "text": "9.65 × 10^5"
+      },
+      {
+        "id": "o4",
+        "text": "9.65 × 10^3"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "96490を指定の3桁に丸め、係数を1以上10未満にすると 9.65 × 10^4。係数の末尾の0は指定桁数を示す。繰り上がりがあれば指数も調整する。",
+    "hints": [
+      "まず小数点を動かし、係数を1以上10未満にしよう。",
+      "指定桁数の次の数字を四捨五入する。係数が10になったら、係数と指数を調整する。"
+    ],
+    "kind": "scientific",
+    "diagram": null,
+    "magic": "指定は3桁。係数の末尾の0も数える。",
+    "practice": false
+  },
+  {
+    "id": "q43",
+    "area": 4,
+    "prompt": "0.00123を有効数字2桁で、A × 10ᴮ（1 ≤ A < 10）の形に表そう。",
+    "options": [
+      {
+        "id": "o0",
+        "text": "1.2 × 10^-3"
+      },
+      {
+        "id": "o1",
+        "text": "1.20 × 10^-3"
+      },
+      {
+        "id": "o2",
+        "text": "1.23 × 10^-3"
+      },
+      {
+        "id": "o3",
+        "text": "1.2 × 10^-2"
+      },
+      {
+        "id": "o4",
+        "text": "1.2 × 10^-4"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "0.00123を指定の2桁に丸め、係数を1以上10未満にすると 1.2 × 10^-3。係数の末尾の0は指定桁数を示す。繰り上がりがあれば指数も調整する。",
+    "hints": [
+      "まず小数点を動かし、係数を1以上10未満にしよう。",
+      "指定桁数の次の数字を四捨五入する。係数が10になったら、係数と指数を調整する。"
+    ],
+    "kind": "scientific",
+    "diagram": null,
+    "magic": "指定は2桁。係数の末尾の0も数える。",
+    "practice": false
+  },
+  {
+    "id": "q44",
+    "area": 4,
+    "prompt": "0.01636を有効数字3桁で、A × 10ᴮ（1 ≤ A < 10）の形に表そう。",
+    "options": [
+      {
+        "id": "o0",
+        "text": "1.64 × 10^-2"
+      },
+      {
+        "id": "o1",
+        "text": "1.640 × 10^-2"
+      },
+      {
+        "id": "o2",
+        "text": "1.23 × 10^-2"
+      },
+      {
+        "id": "o3",
+        "text": "1.64 × 10^-1"
+      },
+      {
+        "id": "o4",
+        "text": "1.64 × 10^-3"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "0.01636を指定の3桁に丸め、係数を1以上10未満にすると 1.64 × 10^-2。係数の末尾の0は指定桁数を示す。繰り上がりがあれば指数も調整する。",
+    "hints": [
+      "まず小数点を動かし、係数を1以上10未満にしよう。",
+      "指定桁数の次の数字を四捨五入する。係数が10になったら、係数と指数を調整する。"
+    ],
+    "kind": "scientific",
+    "diagram": null,
+    "magic": "指定は3桁。係数の末尾の0も数える。",
+    "practice": false
+  },
+  {
+    "id": "q45",
+    "area": 4,
+    "prompt": "240を有効数字2桁で、A × 10ᴮ（1 ≤ A < 10）の形に表そう。",
+    "options": [
+      {
+        "id": "o0",
+        "text": "2.4 × 10^2"
+      },
+      {
+        "id": "o1",
+        "text": "2.40 × 10^2"
+      },
+      {
+        "id": "o2",
+        "text": "1.23 × 10^2"
+      },
+      {
+        "id": "o3",
+        "text": "2.4 × 10^3"
+      },
+      {
+        "id": "o4",
+        "text": "2.4 × 10^1"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "240を指定の2桁に丸め、係数を1以上10未満にすると 2.4 × 10^2。係数の末尾の0は指定桁数を示す。繰り上がりがあれば指数も調整する。",
+    "hints": [
+      "まず小数点を動かし、係数を1以上10未満にしよう。",
+      "指定桁数の次の数字を四捨五入する。係数が10になったら、係数と指数を調整する。"
+    ],
+    "kind": "scientific",
+    "diagram": null,
+    "magic": "指定は2桁。係数の末尾の0も数える。",
+    "practice": false
+  },
+  {
+    "id": "q46",
+    "area": 4,
+    "prompt": "0.0200を有効数字3桁で、A × 10ᴮ（1 ≤ A < 10）の形に表そう。",
+    "options": [
+      {
+        "id": "o0",
+        "text": "2.00 × 10^-2"
+      },
+      {
+        "id": "o1",
+        "text": "2.0 × 10^-2"
+      },
+      {
+        "id": "o2",
+        "text": "1.23 × 10^-2"
+      },
+      {
+        "id": "o3",
+        "text": "2.00 × 10^-1"
+      },
+      {
+        "id": "o4",
+        "text": "2.00 × 10^-3"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "0.0200を指定の3桁に丸め、係数を1以上10未満にすると 2.00 × 10^-2。係数の末尾の0は指定桁数を示す。繰り上がりがあれば指数も調整する。",
+    "hints": [
+      "まず小数点を動かし、係数を1以上10未満にしよう。",
+      "指定桁数の次の数字を四捨五入する。係数が10になったら、係数と指数を調整する。"
+    ],
+    "kind": "scientific",
+    "diagram": null,
+    "magic": "指定は3桁。係数の末尾の0も数える。",
+    "practice": false
+  },
+  {
+    "id": "q47",
+    "area": 4,
+    "prompt": "999を有効数字2桁で、A × 10ᴮ（1 ≤ A < 10）の形に表そう。",
+    "options": [
+      {
+        "id": "o0",
+        "text": "1.0 × 10^3"
+      },
+      {
+        "id": "o1",
+        "text": "1 × 10^3"
+      },
+      {
+        "id": "o2",
+        "text": "1.23 × 10^3"
+      },
+      {
+        "id": "o3",
+        "text": "1.0 × 10^4"
+      },
+      {
+        "id": "o4",
+        "text": "1.0 × 10^2"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "999を指定の2桁に丸め、係数を1以上10未満にすると 1.0 × 10^3。係数の末尾の0は指定桁数を示す。繰り上がりがあれば指数も調整する。",
+    "hints": [
+      "まず小数点を動かし、係数を1以上10未満にしよう。",
+      "指定桁数の次の数字を四捨五入する。係数が10になったら、係数と指数を調整する。"
+    ],
+    "kind": "scientific",
+    "diagram": null,
+    "magic": "指定は2桁。係数の末尾の0も数える。",
+    "practice": false
+  },
+  {
+    "id": "q48",
+    "area": 4,
+    "prompt": "0.00996を有効数字2桁で、A × 10ᴮ（1 ≤ A < 10）の形に表そう。",
+    "options": [
+      {
+        "id": "o0",
+        "text": "1.0 × 10^-2"
+      },
+      {
+        "id": "o1",
+        "text": "1 × 10^-2"
+      },
+      {
+        "id": "o2",
+        "text": "1.23 × 10^-2"
+      },
+      {
+        "id": "o3",
+        "text": "1.0 × 10^-1"
+      },
+      {
+        "id": "o4",
+        "text": "1.0 × 10^-3"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "0.00996を指定の2桁に丸め、係数を1以上10未満にすると 1.0 × 10^-2。係数の末尾の0は指定桁数を示す。繰り上がりがあれば指数も調整する。",
+    "hints": [
+      "まず小数点を動かし、係数を1以上10未満にしよう。",
+      "指定桁数の次の数字を四捨五入する。係数が10になったら、係数と指数を調整する。"
+    ],
+    "kind": "scientific",
+    "diagram": null,
+    "magic": "指定は2桁。係数の末尾の0も数える。",
+    "practice": false
+  },
+  {
+    "id": "q49",
+    "area": 4,
+    "prompt": "有効数字2桁であることを明確に表しているのは？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "2.1 × 10²"
+      },
+      {
+        "id": "o1",
+        "text": "2.10 × 10²"
+      },
+      {
+        "id": "o2",
+        "text": "2.100 × 10²"
+      },
+      {
+        "id": "o3",
+        "text": "2 × 10²"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "係数2.1は2桁。2.10は3桁、2.100は4桁、2は1桁。指数は有効数字の桁数を変えない。",
+    "hints": [
+      "10の指数でなく、係数の数字を見よう。",
+      "係数の小数部分の末尾の0も有効数字に含む。"
+    ],
+    "kind": "choice",
+    "diagram": null,
+    "magic": null,
+    "practice": false
+  },
+  {
+    "id": "q50",
+    "area": 4,
+    "prompt": "0.020と2.0 × 10⁻²の関係として正しいものは？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "値も有効数字の桁数も同じ"
+      },
+      {
+        "id": "o1",
+        "text": "値は同じだが桁数が違う"
+      },
+      {
+        "id": "o2",
+        "text": "値が10倍違う"
+      },
+      {
+        "id": "o3",
+        "text": "どちらも有効数字3桁"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "どちらも値は0.02、有効数字は2桁。0.020は2と末尾の0、2.0 × 10⁻²は係数2.0を数える。",
+    "hints": [
+      "値の一致と、測定の精度の一致を別々に確かめよう。",
+      "先頭の0は数えず、係数の末尾の0は数える。"
+    ],
+    "kind": "choice",
+    "diagram": null,
+    "magic": null,
+    "practice": false
+  },
+  {
+    "id": "q51",
+    "area": 5,
+    "prompt": "測定値0.0300の有効数字は？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "1桁"
+      },
+      {
+        "id": "o1",
+        "text": "2桁"
+      },
+      {
+        "id": "o2",
+        "text": "3桁"
+      },
+      {
+        "id": "o3",
+        "text": "5桁"
+      }
+    ],
+    "correct": "o2",
+    "explanation": "最初の3より前の0は数えず、3と末尾の0を数えて3桁。",
+    "hints": [
+      "どのルールを使う問題か、まず見分けよう。",
+      "桁数を数える・積商は少ない桁数・和差は粗い位・目盛りは10分の1、を使い分ける。"
+    ],
+    "kind": "choice",
+    "diagram": null,
+    "magic": null,
+    "practice": false
+  },
+  {
+    "id": "q52",
+    "area": 5,
+    "prompt": "最小目盛り0.1 cmのものさしを目分量で読む。記録する末尾の位は？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "0.01 cmの位"
+      },
+      {
+        "id": "o1",
+        "text": "0.1 cmの位"
+      },
+      {
+        "id": "o2",
+        "text": "1 cmの位"
+      },
+      {
+        "id": "o3",
+        "text": "0.001 cmの位"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "最小目盛りの10分の1まで読むので0.01 cmの位。",
+    "hints": [
+      "どのルールを使う問題か、まず見分けよう。",
+      "桁数を数える・積商は少ない桁数・和差は粗い位・目盛りは10分の1、を使い分ける。"
+    ],
+    "kind": "choice",
+    "diagram": null,
+    "magic": null,
+    "practice": false
+  },
+  {
+    "id": "q53",
+    "area": 5,
+    "prompt": "測定した12.0 cm × 3.0 cmの面積は何桁で答える？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "1桁"
+      },
+      {
+        "id": "o1",
+        "text": "2桁"
+      },
+      {
+        "id": "o2",
+        "text": "3桁"
+      },
+      {
+        "id": "o3",
+        "text": "4桁"
+      }
+    ],
+    "correct": "o1",
+    "explanation": "12.0は3桁、3.0は2桁。積は少ない方の2桁。",
+    "hints": [
+      "どのルールを使う問題か、まず見分けよう。",
+      "桁数を数える・積商は少ない桁数・和差は粗い位・目盛りは10分の1、を使い分ける。"
+    ],
+    "kind": "choice",
+    "diagram": null,
+    "magic": null,
+    "practice": false
+  },
+  {
+    "id": "q54",
+    "area": 5,
+    "prompt": "測定値2.0 × 4.00を、有効数字に注意して計算すると？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "8"
+      },
+      {
+        "id": "o1",
+        "text": "8.0"
+      },
+      {
+        "id": "o2",
+        "text": "8.00"
+      },
+      {
+        "id": "o3",
+        "text": "0.80"
+      }
+    ],
+    "correct": "o1",
+    "explanation": "2桁と3桁なので2桁で答える。積8は8.0と書く。",
+    "hints": [
+      "どのルールを使う問題か、まず見分けよう。",
+      "桁数を数える・積商は少ない桁数・和差は粗い位・目盛りは10分の1、を使い分ける。"
+    ],
+    "kind": "choice",
+    "diagram": null,
+    "magic": null,
+    "practice": false
+  },
+  {
+    "id": "q55",
+    "area": 5,
+    "prompt": "測定値7.5 − 2.25の答えは？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "5.25"
+      },
+      {
+        "id": "o1",
+        "text": "5.2"
+      },
+      {
+        "id": "o2",
+        "text": "5.3"
+      },
+      {
+        "id": "o3",
+        "text": "5"
+      }
+    ],
+    "correct": "o2",
+    "explanation": "計算値5.25を、高い方の小数第1位に丸めて5.3。",
+    "hints": [
+      "どのルールを使う問題か、まず見分けよう。",
+      "桁数を数える・積商は少ない桁数・和差は粗い位・目盛りは10分の1、を使い分ける。"
+    ],
+    "kind": "choice",
+    "diagram": null,
+    "magic": null,
+    "practice": false
+  },
+  {
+    "id": "q56",
+    "area": 5,
+    "prompt": "測定値4.00 − 3.9の答えは？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "0.10"
+      },
+      {
+        "id": "o1",
+        "text": "0.1"
+      },
+      {
+        "id": "o2",
+        "text": "0.100"
+      },
+      {
+        "id": "o3",
+        "text": "0"
+      }
+    ],
+    "correct": "o1",
+    "explanation": "計算値0.10を小数第1位までで表すので0.1。積・商の桁数ルールとは異なる。",
+    "hints": [
+      "どのルールを使う問題か、まず見分けよう。",
+      "桁数を数える・積商は少ない桁数・和差は粗い位・目盛りは10分の1、を使い分ける。"
+    ],
+    "kind": "choice",
+    "diagram": null,
+    "magic": null,
+    "practice": false
+  },
+  {
+    "id": "q57",
+    "area": 5,
+    "prompt": "測定値1.25 + 2.1の答えは？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "3.35"
+      },
+      {
+        "id": "o1",
+        "text": "3.4"
+      },
+      {
+        "id": "o2",
+        "text": "3.3"
+      },
+      {
+        "id": "o3",
+        "text": "3.350"
+      }
+    ],
+    "correct": "o1",
+    "explanation": "計算値3.35を小数第1位に丸めて3.4。",
+    "hints": [
+      "どのルールを使う問題か、まず見分けよう。",
+      "桁数を数える・積商は少ない桁数・和差は粗い位・目盛りは10分の1、を使い分ける。"
+    ],
+    "kind": "choice",
+    "diagram": null,
+    "magic": null,
+    "practice": false
+  },
+  {
+    "id": "q58",
+    "area": 5,
+    "prompt": "測定値8.0 ÷ 4.00の答えは？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "2"
+      },
+      {
+        "id": "o1",
+        "text": "2.0"
+      },
+      {
+        "id": "o2",
+        "text": "2.00"
+      },
+      {
+        "id": "o3",
+        "text": "0.2"
+      }
+    ],
+    "correct": "o1",
+    "explanation": "2桁と3桁なので答えは2桁の2.0。",
+    "hints": [
+      "どのルールを使う問題か、まず見分けよう。",
+      "桁数を数える・積商は少ない桁数・和差は粗い位・目盛りは10分の1、を使い分ける。"
+    ],
+    "kind": "choice",
+    "diagram": null,
+    "magic": null,
+    "practice": false
+  },
+  {
+    "id": "q59",
+    "area": 5,
+    "prompt": "0.0126を有効数字2桁で指数表記すると？",
+    "options": [
+      {
+        "id": "o0",
+        "text": "1.3 × 10⁻²"
+      },
+      {
+        "id": "o1",
+        "text": "1.26 × 10⁻²"
+      },
+      {
+        "id": "o2",
+        "text": "1.3 × 10²"
+      },
+      {
+        "id": "o3",
+        "text": "1.2 × 10⁻²"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "1.26 × 10⁻²の係数を2桁に丸め、1.3 × 10⁻²。",
+    "hints": [
+      "どのルールを使う問題か、まず見分けよう。",
+      "桁数を数える・積商は少ない桁数・和差は粗い位・目盛りは10分の1、を使い分ける。"
+    ],
+    "kind": "choice",
+    "diagram": null,
+    "magic": null,
+    "practice": false
+  },
+  {
+    "id": "q60",
+    "area": 5,
+    "prompt": "測定値「2.0 cm」の誤差範囲は？ 真の値xが入る範囲を選ぼう。",
+    "options": [
+      {
+        "id": "o0",
+        "text": "1.95 ≤ x < 2.05 cm"
+      },
+      {
+        "id": "o1",
+        "text": "1.5 ≤ x < 2.5 cm"
+      },
+      {
+        "id": "o2",
+        "text": "1.995 ≤ x < 2.005 cm"
+      },
+      {
+        "id": "o3",
+        "text": "2.0 ≤ x < 2.1 cm"
+      }
+    ],
+    "correct": "o0",
+    "explanation": "最後の位0.1 cmの半分は0.05 cm。下端を含み上端は含まない。",
+    "hints": [
+      "どのルールを使う問題か、まず見分けよう。",
+      "桁数を数える・積商は少ない桁数・和差は粗い位・目盛りは10分の1、を使い分ける。"
+    ],
+    "kind": "choice",
+    "diagram": null,
+    "magic": null,
+    "practice": false,
+    "condition": "この演習では、測定値を末尾の位で四捨五入して表したものとし、誤差範囲を考えます。計器そのものの誤差は含めません。"
+  }
+];
+const AREAS=[{name:'測定の入口',icon:'◈',desc:'目盛りから、測定値の意味をつかむ。',count:8},{name:'数字の見極め',icon:'✧',desc:'0に惑わされず、有効な数字を見抜く。',count:12},{name:'積と商の関門',icon:'⚒',desc:'掛け算・割り算の答えの桁数を守る。',count:10},{name:'和と差の修行',icon:'✦',desc:'新しいルールを学び、術士へ昇格する。',count:6},{name:'指数表記の関門',icon:'⌁',desc:'係数と指数で、精度まで伝える。',count:10},{name:'最終ボス戦',icon:'♜',desc:'全分野を使い分ける、最後の10連戦。',count:10}];
+const KEY='significant-figures-quest-v2',LEGACY_KEY='significant-figures-quest-v1',VERSION=2,app=document.getElementById('app');
+const fresh=()=>({version:VERSION,started:false,number:'',done:[false,false,false,false,false,false],attempts:[0,0,0,0,0,0],training:false,session:null,view:'home',hints:0,certificateDate:null,history:[],migrated:false});
+let state=fresh(),saveError=false,invalidSave=false,rawBackup=null,calcExpr='';
+let matrixPaused=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function shuffle(a){let b=[...a];for(let i=b.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
+function resolveQ(id,s=state,review=false){let q=BANK.find(q=>q.id===id);let alternate=s.attempts[q?.area]>0&&s.attempts[q?.area]%2===0;if(review)alternate=!alternate;return q&&q.variant&&alternate?{...q,...q.variant}:q}
+function currentQ(){let a=state.session;return a?resolveQ(a.phase==='review'?a.reviewId:a.order[a.pos],state,a.phase==='review'):undefined}
+function correctText(q){return q.options.find(o=>o.id===q.correct).text}
+function validMeta(s,version){
+ if(!s||s.version!==version||typeof s.started!=='boolean'||typeof s.number!=='string'||!/^\d{4}$|^$/.test(s.number)||s.started&&!/^\d{4}$/.test(s.number))return false;
+ if(!Array.isArray(s.done)||s.done.length!==6||s.done.some(x=>typeof x!=='boolean')||s.done.some((x,i)=>x&&s.done.slice(0,i).some(y=>!y)))return false;
+ if(!Array.isArray(s.attempts)||s.attempts.length!==6||s.attempts.some(x=>!Number.isInteger(x)||x<0)||typeof s.training!=='boolean'||!Number.isInteger(s.hints)||s.hints<0)return false;
+ if(!Array.isArray(s.history)||s.history.length>20||s.history.some(x=>typeof x!=='string'||x.length>150)||!(s.certificateDate===null||typeof s.certificateDate==='string'&&/^\d{4}\/\d{2}\/\d{2}$/.test(s.certificateDate)))return false;
+ if(!s.started&&(s.done.some(Boolean)||s.session||s.number||s.view!=='home'))return false;
+ if(s.done.every(Boolean)&&!s.certificateDate)return false;
+ return true;
+}
+function validRecord(r,q){
+ if(!r||typeof r!=='object'||!Array.isArray(r.options)||r.options.length!==q.options.length||new Set(r.options).size!==q.options.length||r.options.some(o=>!q.options.some(x=>x.id===o)))return false;
+ if(!Number.isInteger(r.hints)||r.hints<0||r.hints>2||['graded','revealed','magic','correct'].some(k=>typeof r[k]!=='boolean')||typeof r.coeff!=='string'||typeof r.exponent!=='string')return false;
+ if(r.selected!==null&&!q.options.some(o=>o.id===r.selected)&&!(q.kind==='scientific'&&r.selected==='combination'))return false;
+ if(r.graded&&!r.revealed&&r.selected===null||!r.graded&&(r.correct||r.revealed))return false;
+ if(q.kind==='scientific'){
+  if(r.coeff&&!q.options.some(o=>o.text.split(' × 10^')[0]===r.coeff)||r.exponent&&!q.options.some(o=>o.text.split(' × 10^')[1]===r.exponent))return false;
+  if(r.graded&&!r.revealed){let id=q.options.find(o=>o.text===r.coeff+' × 10^'+r.exponent)?.id||'combination';if(!r.coeff||!r.exponent||r.selected!==id)return false}
+ }
+ return r.correct===!!(r.graded&&!r.revealed&&r.selected===q.correct);
+}
+function valid(s){
+ if(!validMeta(s,VERSION)||typeof s.migrated!=='boolean'||!['home','map','learning','question','end','result'].includes(s.view))return false;
+ if(s.session){let a=s.session;
+  if(!Number.isInteger(a.area)||a.area<0||a.area>5||s.done.slice(0,a.area).some(x=>!x)||typeof a.practice!=='boolean'||a.practice&&a.area!==3)return false;
+  let ids=BANK.filter(q=>q.area===a.area&&q.practice===a.practice).map(q=>q.id);
+  if(!Array.isArray(a.order)||a.order.length!==ids.length||new Set(a.order).size!==ids.length||a.order.some(id=>!ids.includes(id))||!Number.isInteger(a.pos)||a.pos<0||a.pos>=ids.length)return false;
+  if(a.practice&&a.order.some((id,i)=>id!==ids[i]))return false;
+  if(!Number.isInteger(a.hp)||a.hp<0||a.hp>(a.area===5?3:2)||!Number.isInteger(a.mistakes)||a.mistakes<0||a.mistakes>ids.length)return false;
+  if(['finished','passed','magicUsed','recovered','lessonStarted'].some(k=>typeof a[k]!=='boolean')||!['main','review'].includes(a.phase)||!a.records||typeof a.records!=='object'||Array.isArray(a.records))return false;
+  for(let [id,r]of Object.entries(a.records)){if(!ids.includes(id)||a.order.indexOf(id)>a.pos||!validRecord(r,resolveQ(id,s)))return false}
+  for(let i=0;i<a.pos;i++)if(!a.records[a.order[i]]?.graded)return false;
+  let wrong=a.order.filter(id=>a.records[id]?.graded&&!a.records[id].correct);
+  if(wrong.length!==a.mistakes)return false;
+  if(a.phase==='review'){
+   if(a.practice||wrong.length!==1||a.reviewId!==wrong[0]||a.pos!==ids.length-1||a.order.some(id=>!a.records[id]?.graded))return false;
+   if(a.reviewRecord!==null&&!validRecord(a.reviewRecord,resolveQ(a.reviewId,s,true)))return false;
+   if(a.recovered!==!!a.reviewRecord?.correct)return false;
+  }else if(a.reviewId!==null||a.reviewRecord!==null||a.recovered)return false;
+  let damage=a.area===5?2:1,expectedHp=a.practice?2:Math.max(0,(a.area===5?3:2)-damage*(a.mistakes+(a.reviewRecord?.graded&&!a.reviewRecord.correct?1:0)));
+  if(a.hp!==expectedHp)return false;
+  let r=a.phase==='review'?a.reviewRecord:a.records[a.order[a.pos]];
+  if((a.finished||s.view==='end')&&!r?.graded||s.view==='end'&&!a.finished)return false;
+  if(a.finished&&a.hp>0&&a.pos!==ids.length-1)return false;
+  if(a.passed&&(!a.finished||a.hp===0||a.pos!==ids.length-1||a.mistakes!==0&&!a.recovered))return false;
+  if(a.passed&&!s.done[a.area])return false;
+  if(s.view==='learning'&&(!a.practice||a.lessonStarted)||!a.practice&&!a.lessonStarted)return false;
+ }else if(['question','learning','end'].includes(s.view))return false;
+ if(s.view==='result'&&!s.done.every(Boolean))return false;
+ return true;
+}
+const LEGACY_META={"q01": {"area": 0, "practice": false, "options": [{"id": "o0", "text": "測定値"}, {"id": "o1", "text": "真の値"}, {"id": "o2", "text": "定義値"}, {"id": "o3", "text": "最小目盛り"}], "kind": "blank", "correct": "o0"}, "q02": {"area": 0, "practice": false, "options": [{"id": "o0", "text": "誤差"}, {"id": "o1", "text": "有効数字"}, {"id": "o2", "text": "目盛り"}, {"id": "o3", "text": "存在比"}], "kind": "blank", "correct": "o0"}, "q03": {"area": 0, "practice": false, "options": [{"id": "o0", "text": "10分の1まで"}, {"id": "o1", "text": "目盛りと同じ位まで"}, {"id": "o2", "text": "100分の1まで必ず読む"}, {"id": "o3", "text": "整数だけ読む"}], "kind": "choice", "correct": "o0"}, "q04": {"area": 0, "practice": false, "options": [{"id": "o0", "text": "0.01 cmの位"}, {"id": "o1", "text": "0.1 cmの位"}, {"id": "o2", "text": "1 cmの位"}, {"id": "o3", "text": "0.001 cmの位"}], "kind": "choice", "correct": "o0"}, "q05": {"area": 0, "practice": false, "options": [{"id": "o0", "text": "2.27 cm"}, {"id": "o1", "text": "2.2 cm"}, {"id": "o2", "text": "2.270 cm"}, {"id": "o3", "text": "2.3 cm"}], "kind": "choice", "correct": "o0"}, "q06": {"area": 0, "practice": false, "options": [{"id": "o0", "text": "0.95 ≤ x < 1.05 cm"}, {"id": "o1", "text": "0.5 ≤ x < 1.5 cm"}, {"id": "o2", "text": "0.995 ≤ x < 1.005 cm"}, {"id": "o3", "text": "1.0 ≤ x < 1.1 cm"}], "kind": "choice", "correct": "o0"}, "q07": {"area": 0, "practice": false, "options": [{"id": "o0", "text": "0.005 cm"}, {"id": "o1", "text": "0.05 cm"}, {"id": "o2", "text": "0.5 cm"}, {"id": "o3", "text": "0.001 cm"}], "kind": "choice", "correct": "o0"}, "q08": {"area": 0, "practice": false, "options": [{"id": "o0", "text": "有効数字に含む"}, {"id": "o1", "text": "有効数字に含まない"}, {"id": "o2", "text": "必ず0に置き換える"}, {"id": "o3", "text": "真の値だと保証される"}], "kind": "choice", "correct": "o0"}, "q09": {"area": 1, "practice": false, "options": [{"id": "o0", "text": "1桁"}, {"id": "o1", "text": "2桁"}, {"id": "o2", "text": "3桁"}, {"id": "o3", "text": "4桁"}, {"id": "o4", "text": "5桁"}, {"id": "o5", "text": "6桁"}], "kind": "digits", "correct": "o3"}, "q10": {"area": 1, "practice": false, "options": [{"id": "o0", "text": "1桁"}, {"id": "o1", "text": "2桁"}, {"id": "o2", "text": "3桁"}, {"id": "o3", "text": "4桁"}, {"id": "o4", "text": "5桁"}, {"id": "o5", "text": "6桁"}], "kind": "digits", "correct": "o4"}, "q11": {"area": 1, "practice": false, "options": [{"id": "o0", "text": "1桁"}, {"id": "o1", "text": "2桁"}, {"id": "o2", "text": "3桁"}, {"id": "o3", "text": "4桁"}, {"id": "o4", "text": "5桁"}, {"id": "o5", "text": "6桁"}], "kind": "digits", "correct": "o5"}, "q12": {"area": 1, "practice": false, "options": [{"id": "o0", "text": "1桁"}, {"id": "o1", "text": "2桁"}, {"id": "o2", "text": "3桁"}, {"id": "o3", "text": "4桁"}, {"id": "o4", "text": "5桁"}, {"id": "o5", "text": "6桁"}], "kind": "digits", "correct": "o0"}, "q13": {"area": 1, "practice": false, "options": [{"id": "o0", "text": "1桁"}, {"id": "o1", "text": "2桁"}, {"id": "o2", "text": "3桁"}, {"id": "o3", "text": "4桁"}, {"id": "o4", "text": "5桁"}, {"id": "o5", "text": "6桁"}], "kind": "digits", "correct": "o2"}, "q14": {"area": 1, "practice": false, "options": [{"id": "o0", "text": "1桁"}, {"id": "o1", "text": "2桁"}, {"id": "o2", "text": "3桁"}, {"id": "o3", "text": "4桁"}, {"id": "o4", "text": "5桁"}, {"id": "o5", "text": "6桁"}], "kind": "digits", "correct": "o2"}, "q15": {"area": 1, "practice": false, "options": [{"id": "o0", "text": "1桁"}, {"id": "o1", "text": "2桁"}, {"id": "o2", "text": "3桁"}, {"id": "o3", "text": "4桁"}, {"id": "o4", "text": "5桁"}, {"id": "o5", "text": "6桁"}], "kind": "digits", "correct": "o2"}, "q16": {"area": 1, "practice": false, "options": [{"id": "o0", "text": "1桁"}, {"id": "o1", "text": "2桁"}, {"id": "o2", "text": "3桁"}, {"id": "o3", "text": "4桁"}, {"id": "o4", "text": "5桁"}, {"id": "o5", "text": "6桁"}], "kind": "digits", "correct": "o1"}, "q17": {"area": 1, "practice": false, "options": [{"id": "o0", "text": "1桁"}, {"id": "o1", "text": "2桁"}, {"id": "o2", "text": "3桁"}, {"id": "o3", "text": "4桁"}, {"id": "o4", "text": "5桁"}, {"id": "o5", "text": "6桁"}], "kind": "digits", "correct": "o2"}, "q18": {"area": 1, "practice": false, "options": [{"id": "o0", "text": "1桁"}, {"id": "o1", "text": "2桁"}, {"id": "o2", "text": "3桁"}, {"id": "o3", "text": "4桁"}, {"id": "o4", "text": "5桁"}, {"id": "o5", "text": "6桁"}], "kind": "digits", "correct": "o3"}, "q19": {"area": 1, "practice": false, "options": [{"id": "o0", "text": "1桁のまま"}, {"id": "o1", "text": "3桁に増える"}, {"id": "o2", "text": "2桁に増える"}, {"id": "o3", "text": "単位を変えると判断不能"}], "kind": "choice", "correct": "o0"}, "q20": {"area": 1, "practice": false, "options": [{"id": "o0", "text": "数えて確認した5個の「5」"}, {"id": "o1", "text": "測定した5.0 g"}, {"id": "o2", "text": "測定した0.50 cm"}, {"id": "o3", "text": "測定した5.00 s"}], "kind": "choice", "correct": "o0"}, "q21": {"area": 2, "practice": false, "options": [{"id": "o0", "text": "1桁"}, {"id": "o1", "text": "2桁"}, {"id": "o2", "text": "3桁"}, {"id": "o3", "text": "4桁"}], "kind": "choice", "correct": "o2"}, "q22": {"area": 2, "practice": false, "options": [{"id": "o0", "text": "1桁"}, {"id": "o1", "text": "2桁"}, {"id": "o2", "text": "3桁"}, {"id": "o3", "text": "4桁"}], "kind": "choice", "correct": "o1"}, "q23": {"area": 2, "practice": false, "options": [{"id": "o0", "text": "1桁"}, {"id": "o1", "text": "2桁"}, {"id": "o2", "text": "3桁"}, {"id": "o3", "text": "4桁"}], "kind": "choice", "correct": "o1"}, "q24": {"area": 2, "practice": false, "options": [{"id": "o0", "text": "1桁"}, {"id": "o1", "text": "2桁"}, {"id": "o2", "text": "3桁"}, {"id": "o3", "text": "4桁"}], "kind": "choice", "correct": "o1"}, "q25": {"area": 2, "practice": false, "options": [{"id": "o0", "text": "6.0"}, {"id": "o1", "text": "6"}, {"id": "o2", "text": "6.00"}, {"id": "o3", "text": "5.0"}], "kind": "choice", "correct": "o0"}, "q26": {"area": 2, "practice": false, "options": [{"id": "o0", "text": "1.0 × 10¹"}, {"id": "o1", "text": "1 × 10¹"}, {"id": "o2", "text": "1.00 × 10¹"}, {"id": "o3", "text": "1.1 × 10¹"}], "kind": "choice", "correct": "o0"}, "q27": {"area": 2, "practice": false, "options": [{"id": "o0", "text": "0.10"}, {"id": "o1", "text": "0.1"}, {"id": "o2", "text": "0.100"}, {"id": "o3", "text": "1.0"}], "kind": "choice", "correct": "o0"}, "q28": {"area": 2, "practice": false, "options": [{"id": "o0", "text": "3.0"}, {"id": "o1", "text": "3"}, {"id": "o2", "text": "3.00"}, {"id": "o3", "text": "0.30"}], "kind": "choice", "correct": "o0"}, "q29": {"area": 2, "practice": false, "options": [{"id": "o0", "text": "1.4"}, {"id": "o1", "text": "1.44"}, {"id": "o2", "text": "1"}, {"id": "o3", "text": "1.5"}], "kind": "choice", "correct": "o0"}, "q30": {"area": 2, "practice": false, "options": [{"id": "o0", "text": "13"}, {"id": "o1", "text": "12.5"}, {"id": "o2", "text": "12"}, {"id": "o3", "text": "13.0"}], "kind": "choice", "correct": "o0"}, "q31": {"area": 3, "practice": true, "options": [{"id": "o0", "text": "小数第1位"}, {"id": "o1", "text": "小数第2位"}, {"id": "o2", "text": "一の位"}, {"id": "o3", "text": "小数第3位"}], "kind": "choice", "correct": "o0"}, "q32": {"area": 3, "practice": true, "options": [{"id": "o0", "text": "小数第1位"}, {"id": "o1", "text": "小数第2位"}, {"id": "o2", "text": "有効数字2桁に固定"}, {"id": "o3", "text": "一の位"}], "kind": "choice", "correct": "o0"}, "q33": {"area": 3, "practice": true, "options": [{"id": "o0", "text": "10.2"}, {"id": "o1", "text": "10.15"}, {"id": "o2", "text": "10"}, {"id": "o3", "text": "10.1"}], "kind": "choice", "correct": "o0"}, "q34": {"area": 3, "practice": true, "options": [{"id": "o0", "text": "測定値が小数第1位までだから"}, {"id": "o1", "text": "答えは必ず1桁だから"}, {"id": "o2", "text": "0はすべて無効だから"}, {"id": "o3", "text": "引き算では末尾に0を付けるから"}], "kind": "choice", "correct": "o0"}, "q35": {"area": 3, "practice": false, "options": [{"id": "o0", "text": "6.3"}, {"id": "o1", "text": "6.27"}, {"id": "o2", "text": "6.2"}, {"id": "o3", "text": "6"}], "kind": "choice", "correct": "o0"}, "q36": {"area": 3, "practice": false, "options": [{"id": "o0", "text": "3.0"}, {"id": "o1", "text": "3.00"}, {"id": "o2", "text": "3"}, {"id": "o3", "text": "0.30"}], "kind": "choice", "correct": "o0"}, "q37": {"area": 3, "practice": false, "options": [{"id": "o0", "text": "0.2"}, {"id": "o1", "text": "0.20"}, {"id": "o2", "text": "0.200"}, {"id": "o3", "text": "0"}], "kind": "choice", "correct": "o0"}, "q38": {"area": 3, "practice": false, "options": [{"id": "o0", "text": "4.5"}, {"id": "o1", "text": "4.45"}, {"id": "o2", "text": "4.4"}, {"id": "o3", "text": "4"}], "kind": "choice", "correct": "o0"}, "q39": {"area": 3, "practice": false, "options": [{"id": "o0", "text": "11"}, {"id": "o1", "text": "10.6"}, {"id": "o2", "text": "10.60"}, {"id": "o3", "text": "10"}], "kind": "choice", "correct": "o0"}, "q40": {"area": 3, "practice": false, "options": [{"id": "o0", "text": "2.8"}, {"id": "o1", "text": "2.75"}, {"id": "o2", "text": "2.7"}, {"id": "o3", "text": "3"}], "kind": "choice", "correct": "o0"}, "q41": {"area": 4, "practice": false, "options": [{"id": "o0", "text": "1.2 × 10^3"}, {"id": "o1", "text": "1.20 × 10^3"}, {"id": "o2", "text": "1.23 × 10^3"}, {"id": "o3", "text": "1.2 × 10^4"}, {"id": "o4", "text": "1.2 × 10^2"}], "kind": "scientific", "correct": "o0"}, "q42": {"area": 4, "practice": false, "options": [{"id": "o0", "text": "9.65 × 10^4"}, {"id": "o1", "text": "9.650 × 10^4"}, {"id": "o2", "text": "1.23 × 10^4"}, {"id": "o3", "text": "9.65 × 10^5"}, {"id": "o4", "text": "9.65 × 10^3"}], "kind": "scientific", "correct": "o0"}, "q43": {"area": 4, "practice": false, "options": [{"id": "o0", "text": "1.2 × 10^-3"}, {"id": "o1", "text": "1.20 × 10^-3"}, {"id": "o2", "text": "1.23 × 10^-3"}, {"id": "o3", "text": "1.2 × 10^-2"}, {"id": "o4", "text": "1.2 × 10^-4"}], "kind": "scientific", "correct": "o0"}, "q44": {"area": 4, "practice": false, "options": [{"id": "o0", "text": "1.64 × 10^-2"}, {"id": "o1", "text": "1.640 × 10^-2"}, {"id": "o2", "text": "1.23 × 10^-2"}, {"id": "o3", "text": "1.64 × 10^-1"}, {"id": "o4", "text": "1.64 × 10^-3"}], "kind": "scientific", "correct": "o0"}, "q45": {"area": 4, "practice": false, "options": [{"id": "o0", "text": "2.4 × 10^2"}, {"id": "o1", "text": "2.40 × 10^2"}, {"id": "o2", "text": "1.23 × 10^2"}, {"id": "o3", "text": "2.4 × 10^3"}, {"id": "o4", "text": "2.4 × 10^1"}], "kind": "scientific", "correct": "o0"}, "q46": {"area": 4, "practice": false, "options": [{"id": "o0", "text": "2.00 × 10^-2"}, {"id": "o1", "text": "2.0 × 10^-2"}, {"id": "o2", "text": "1.23 × 10^-2"}, {"id": "o3", "text": "2.00 × 10^-1"}, {"id": "o4", "text": "2.00 × 10^-3"}], "kind": "scientific", "correct": "o0"}, "q47": {"area": 4, "practice": false, "options": [{"id": "o0", "text": "1.0 × 10^3"}, {"id": "o1", "text": "1 × 10^3"}, {"id": "o2", "text": "1.23 × 10^3"}, {"id": "o3", "text": "1.0 × 10^4"}, {"id": "o4", "text": "1.0 × 10^2"}], "kind": "scientific", "correct": "o0"}, "q48": {"area": 4, "practice": false, "options": [{"id": "o0", "text": "1.0 × 10^-2"}, {"id": "o1", "text": "1 × 10^-2"}, {"id": "o2", "text": "1.23 × 10^-2"}, {"id": "o3", "text": "1.0 × 10^-1"}, {"id": "o4", "text": "1.0 × 10^-3"}], "kind": "scientific", "correct": "o0"}, "q49": {"area": 4, "practice": false, "options": [{"id": "o0", "text": "2.1 × 10²"}, {"id": "o1", "text": "2.10 × 10²"}, {"id": "o2", "text": "2.100 × 10²"}, {"id": "o3", "text": "2 × 10²"}], "kind": "choice", "correct": "o0"}, "q50": {"area": 4, "practice": false, "options": [{"id": "o0", "text": "値も有効数字の桁数も同じ"}, {"id": "o1", "text": "値は同じだが桁数が違う"}, {"id": "o2", "text": "値が10倍違う"}, {"id": "o3", "text": "どちらも有効数字3桁"}], "kind": "choice", "correct": "o0"}, "q51": {"area": 5, "practice": false, "options": [{"id": "o0", "text": "1桁"}, {"id": "o1", "text": "2桁"}, {"id": "o2", "text": "3桁"}, {"id": "o3", "text": "5桁"}], "kind": "choice", "correct": "o2"}, "q52": {"area": 5, "practice": false, "options": [{"id": "o0", "text": "0.01 cmの位"}, {"id": "o1", "text": "0.1 cmの位"}, {"id": "o2", "text": "1 cmの位"}, {"id": "o3", "text": "0.001 cmの位"}], "kind": "choice", "correct": "o0"}, "q53": {"area": 5, "practice": false, "options": [{"id": "o0", "text": "1桁"}, {"id": "o1", "text": "2桁"}, {"id": "o2", "text": "3桁"}, {"id": "o3", "text": "4桁"}], "kind": "choice", "correct": "o1"}, "q54": {"area": 5, "practice": false, "options": [{"id": "o0", "text": "8"}, {"id": "o1", "text": "8.0"}, {"id": "o2", "text": "8.00"}, {"id": "o3", "text": "0.80"}], "kind": "choice", "correct": "o1"}, "q55": {"area": 5, "practice": false, "options": [{"id": "o0", "text": "5.25"}, {"id": "o1", "text": "5.2"}, {"id": "o2", "text": "5.3"}, {"id": "o3", "text": "5"}], "kind": "choice", "correct": "o2"}, "q56": {"area": 5, "practice": false, "options": [{"id": "o0", "text": "0.10"}, {"id": "o1", "text": "0.1"}, {"id": "o2", "text": "0.100"}, {"id": "o3", "text": "0"}], "kind": "choice", "correct": "o1"}, "q57": {"area": 5, "practice": false, "options": [{"id": "o0", "text": "3.35"}, {"id": "o1", "text": "3.4"}, {"id": "o2", "text": "3.3"}, {"id": "o3", "text": "3.350"}], "kind": "choice", "correct": "o1"}, "q58": {"area": 5, "practice": false, "options": [{"id": "o0", "text": "2"}, {"id": "o1", "text": "2.0"}, {"id": "o2", "text": "2.00"}, {"id": "o3", "text": "0.2"}], "kind": "choice", "correct": "o1"}, "q59": {"area": 5, "practice": false, "options": [{"id": "o0", "text": "1.3 × 10⁻²"}, {"id": "o1", "text": "1.26 × 10⁻²"}, {"id": "o2", "text": "1.3 × 10²"}, {"id": "o3", "text": "1.2 × 10⁻²"}], "kind": "choice", "correct": "o0"}, "q60": {"area": 5, "practice": false, "options": [{"id": "o0", "text": "1.95 ≤ x < 2.05 cm"}, {"id": "o1", "text": "1.5 ≤ x < 2.5 cm"}, {"id": "o2", "text": "1.995 ≤ x < 2.005 cm"}, {"id": "o3", "text": "2.0 ≤ x < 2.1 cm"}], "kind": "choice", "correct": "o0"}};
+function validLegacy(s){
+ if(!validMeta(s,1)||!['home','map','question','end','result'].includes(s.view))return false;
+ if(!s.session)return !['question','end'].includes(s.view);
+ let a=s.session;if(!Number.isInteger(a.area)||a.area<0||a.area>5||typeof a.practice!=='boolean'||a.practice&&a.area!==3||s.done.slice(0,a.area).some(x=>!x))return false;
+ let ids=Object.keys(LEGACY_META).filter(id=>LEGACY_META[id].area===a.area&&LEGACY_META[id].practice===a.practice);
+ if(!Array.isArray(a.order)||a.order.length!==ids.length||new Set(a.order).size!==ids.length||a.order.some(id=>!ids.includes(id))||!Number.isInteger(a.pos)||a.pos<0||a.pos>=ids.length||!a.records||typeof a.records!=='object')return false;
+ if(!Number.isInteger(a.hp)||a.hp<0||a.hp>(a.area===5?3:2)||!Number.isInteger(a.mistakes)||a.mistakes<0||a.mistakes>ids.length||typeof a.finished!=='boolean'||typeof a.magicUsed!=='boolean')return false;
+ for(let [id,r]of Object.entries(a.records)){if(!ids.includes(id)||!validRecord(r,LEGACY_META[id]))return false}
+ return true;
+}
+try{
+ rawBackup=localStorage.getItem(KEY);
+ if(rawBackup){let s=JSON.parse(rawBackup);if(valid(s))state=s;else invalidSave=true}
+ else {rawBackup=localStorage.getItem(LEGACY_KEY);if(rawBackup){let old=JSON.parse(rawBackup);if(validLegacy(old)){state={...fresh(),started:old.started,number:old.number,done:old.done,attempts:old.attempts,training:old.done[3],hints:old.hints,certificateDate:old.certificateDate,history:old.history,migrated:true}}else invalidSave=true}}
+}catch(e){if(rawBackup)invalidSave=true;else saveError=true}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){saveError=true}}
+function commit(){save();render()}
+function header(){return `<div class="topline"><div class="brand">SIGNIFICANT FIGURES · 有効数字の冒険</div><button class="small matrix-toggle" data-action="motion" aria-pressed="${matrixPaused}">${matrixPaused?'背景の動きを再開':'背景の動きを止める'}</button>${state.started?`<span class="pill">出席番号 ${esc(state.number)} ／ ${state.done[3]?'術士':'見習い'}</span>`:''}</div>${state.migrated?'<div class="migration" role="status"><strong>旧版の記録を引き継ぎました。</strong><p>出席番号・突破済みエリア・ヒント回数を保持しました。ルールと学習ページが変わったため、挑戦途中のエリアは最初から再開します。旧記録も端末内に残しています。</p><button class="small" data-action="migrationOK">確認しました</button></div>':''}${saveError?'<div role="alert" class="notice">途中保存できないため、この画面を閉じず、結果画面を撮影してください。</div>':''}`}
+const art=`<div class="terminal-art" aria-hidden="true"><div class="terminal-code">${['010270100231406830052700123','20015602114002985002734015','32004507300215602010300025','00150302001324010081020502','20103345001002058000030121','09000134205001000203405603','00320400160152030340103241','12456020000023710423050060','40301020450010200320001234','02310005000231402006000123'].map(x=>`<span>${x.repeat(3)}</span>`).join('')}</div><div class="terminal-display"><div class="big-code">1.00</div><p>READ THE PRECISION.</p><p>数の奥にある、精度を見抜け。</p></div><div class="terminal-footer">0.010 · 2.0 × 10³ · ±0.005</div></div>`;
+function resetButton(){return '<button class="small danger" data-action="reset">はじめから始める</button>'}
+function home(){
+ if(invalidSave)return `<section class="panel"><h1>保存記録の確認が必要です</h1><p>このアプリの保存記録は、形式または仕様バージョンが異なるため読み込めません。記録は自動削除していません。</p><p>このアプリの記録だけを初期化すると、新しく始められます。</p>${resetButton()}</section>`;
+ return `<section class="panel hero"><div><div class="eyebrow">測定の精度を守る旅</div><h1>有効数字の<br>冒険</h1><p class="lead">数字の意味を見抜き、<br>最後の一桁まで、自分の判断で。</p><div class="pills"><span class="pill">高校1年・既習後演習</span><span class="pill">目安20〜30分</span><span class="pill">56問 ＋ 学習8ステップ</span></div></div>${art}</section><section class="panel"><h2>${state.started?'冒険の続きを始めよう':'冒険の準備'}</h2><p>測定・桁数・積と商・和と差・指数表記を学び、最後は総合ボス戦。暗算できる計算を中心に進みます。</p><label for="number">提出用の出席番号（半角4桁・必須）</label><div style="margin-top:8px"><input id="number" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" placeholder="例：0123" value="${esc(state.number)}" ${state.started?'readonly':''} autocomplete="off" aria-describedby="numberNote"></div><p id="numberNote" class="muted">開始後は番号を変更できません。別の番号にする場合は「はじめから始める」を使います。</p><p id="formError" role="alert" style="color:var(--red)"></p><div class="actions"><button class="primary" data-action="start">${state.started?'冒険マップへ':'冒険を始める'}</button>${state.started?resetButton():''}</div></section><section class="panel"><h2>冒険と合格のルール</h2><p>各エリアは、本編全問正解で突破。<strong>1問間違えても、最後の復習問題に正解すれば突破できます。</strong>2問間違うか、最後の復習で間違えるとゲームオーバー。このエリア全問に再挑戦します。突破済みエリアは消えません。</p><div class="status"><div class="notice"><strong>通常：HP 2 ／ 誤答 −1</strong><br>ボス：HP 3 ／ 誤答 −2<br>1問誤答ならHPを残して復習へ。<br>HP 0でゲームオーバー。</div><div class="notice"><strong>和と差は専用ページで学習</strong><br>8ステップの学習中は無傷。<br>積・商と異なる計算ルールを勉強します。<br>試練突破で職業昇格と魔法獲得。</div></div><p>ヒントはHP消費なし。「答えを見る」は未正解扱いで、試練ではダメージを受けます。復習で「答えを見る」を使うとゲームオーバーです。</p><p>全64問のうち8問は学習、56問が突破対象。誤答1問は最後の復習で補完します。全6エリア突破で合格。再挑戦・説明の確認で30分を超える場合があります。途中保存できます。</p><p class="muted">合格証をスクリーンショットで撮影して提出してください。未完了は提出不可です。</p></section>`
+}
+function score(){return state.done.reduce((s,d,i)=>s+(d?AREAS[i].count:0),0)}
+function route(){let xy=[[70,144],[235,94],[405,152],[570,80],[735,135],[900,64]];return `<div class="route"><svg viewBox="0 0 980 210" role="img" aria-label="6エリアを順にたどる冒険の道"><path d="M0 190Q130 110 240 170T480 140 730 165 980 120V210H0Z" fill="#14402a"/><path d="M70 144Q145 70 235 94T405 152 570 80 735 135 900 64" stroke="#65b88a" stroke-width="5" stroke-dasharray="8 10" fill="none"/>${xy.map(([x,y],i)=>`<g><circle cx="${x}" cy="${y}" r="24" fill="${state.done[i]?'#3d947b':i===0||state.done[i-1]?'#2a8253':'#153528'}" stroke="${state.done[i]?'#93ebc3':'#8addb0'}" stroke-width="2"/><text x="${x}" y="${y+7}" text-anchor="middle" font-size="21" fill="white">${state.done[i]?'✓':i+1}</text><text x="${x}" y="${y+47}" text-anchor="middle" font-size="13" fill="#d6fce5">${['測定','桁数','積と商','和と差','指数','ボス'][i]}</text></g>`).join('')}</svg></div>`}
+const bossArt=`<div class="boss-scene"><svg viewBox="0 0 150 140" role="img" aria-label="結晶の鎧をまとった独自デザインの最終ボス"><path d="M25 100L5 50 39 65 27 19 61 44 75 5 91 44 124 19 112 65 145 50 125 100Z" fill="#518a69" stroke="#b6e2cb" stroke-width="2"/><path d="M40 53L75 33 110 53 103 107 75 133 47 107Z" fill="#214935" stroke="#95d6ae" stroke-width="3"/><path d="M50 63L69 71 55 78M100 63L81 71 95 78" fill="#ffdf9a"/><path d="M75 58L87 91 75 111 63 91Z" fill="#9df7b8"/><path d="M75 58V111L87 91Z" fill="#3caa74"/><path d="M42 104L16 126 52 120M108 104L134 126 98 120" fill="#76b391" stroke="#c3ead0" stroke-width="2"/></svg><div><strong>最終ボス戦</strong><p>全分野を見抜く10連戦。<br>誤答の一撃で HP 3 → 1。<br>2回目でゲームオーバー！</p></div></div>`;
+function map(){return `<section class="panel"><div class="maphead"><div><div class="eyebrow">ADVENTURE MAP</div><h1 style="font-size:32px;margin-bottom:8px">冒険マップ</h1></div><div class="actions"><button class="small" data-action="home">ホームに戻る</button>${resetButton()}</div></div><div class="hptext"><span>突破 ${state.done.filter(Boolean).length} / 6 エリア</span><span>${score()} / 56問を突破</span></div><div class="bar"><span style="width:${score()/56*100}%"></span></div><p class="progressnote">${state.done.every(Boolean)?'全エリア突破・合格証を提出できます。':'未完了・提出不可。本編と必要時の復習で、全問を習得して突破。'}</p>${state.session?`<div class="notice">${esc(AREAS[state.session.area].name)}の挑戦を保存中。途中から再開できます。<div class="actions"><button class="primary" data-action="resume">保存した挑戦に戻る</button></div></div>`:''}${state.done[3]?'<p>✦ 職業：術士 ／ 魔法「位の灯」を習得済み</p>':''}${route()}${state.done[2]&&!state.session?'<div class="actions"><button class="small" data-action="study">和と差の学習ページへ</button></div>':''}</section><div class="grid">${AREAS.map((a,i)=>{let unlock=i===0||state.done[i-1],done=state.done[i];return `<section class="panel area ${!unlock?'locked':''} ${done?'done':''}"><span class="badge">${a.icon}</span><div class="eyebrow">AREA 0${i+1} ${done?'／ ○ 突破':''}</div><h2>${a.name}</h2><p class="muted">${a.desc}</p><p>${i===3?'学習8ステップ ＋ 試練6問':a.count+'問'} ／ ${i===5?'HP3・誤答−2':'HP2・誤答−1'}</p><small>挑戦回数 ${state.attempts[i]}${!unlock?' ／ 前のエリア突破で解放':''}</small><div class="actions"><button ${!unlock||!!state.session?'disabled':''} class="${!done?'primary':''}" data-action="area" data-area="${i}">${done?'もう一度練習する':i===3&&!state.training?'教わってから挑戦':'このエリアに挑む'}</button></div></section>`}).join('')}</div>${state.done.every(Boolean)?'<div class="actions"><button class="primary" data-action="result">合格証を表示する</button></div>':''}`}
+function begin(area,practice=false){
+ if(state.session||area>0&&!state.done[area-1])return;
+ if(area===3&&!state.training)practice=true;
+ let ids=BANK.filter(q=>q.area===area&&q.practice===practice).map(q=>q.id);
+ if(!practice)state.attempts[area]++;
+ state.session={area,practice,order:practice?ids:shuffle(ids),pos:0,hp:area===5?3:2,mistakes:0,magicUsed:false,finished:false,passed:false,records:{},phase:'main',reviewId:null,reviewRecord:null,recovered:false,lessonStarted:!practice};
+ state.view=practice?'learning':'question';commit();window.scrollTo(0,0)
+}
+function record(){let q=currentQ(),a=state.session;if(a.phase==='review'){if(!a.reviewRecord)a.reviewRecord=emptyRecord(q);return a.reviewRecord}if(!a.records[q.id])a.records[q.id]=emptyRecord(q);return a.records[q.id]}
+function diagram(q){
+ if(q.diagram==='ruler'){let ticks='';for(let i=0;i<=30;i++){let x=40+i*12;ticks+=`<line x1="${x}" y1="100" x2="${x}" y2="${i%10===0?145:i%5===0?135:123}" stroke="#263f64" stroke-width="${i%10===0?2:1}"/>`;if(i%10===0)ticks+=`<text x="${x}" y="165" text-anchor="middle" font-size="15">${i/10}</text>`}return `<figure class="diagram"><svg viewBox="0 0 450 190" role="img" aria-label="最小目盛り0.1cmのものさしと物体AB。左端は0、右端は2.2と2.3の間の約7割の位置"><rect x="40" y="48" width="272.4" height="50" fill="#82a2b6" stroke="#29445f"/><text x="40" y="35">A</text><text x="310" y="35">B</text><line x1="40" y1="100" x2="400" y2="100" stroke="#263f64"/>${ticks}<text x="417" y="165">cm</text></svg><figcaption>左端Aは0。最小目盛りは0.1 cm。右端Bを目分量で読む。</figcaption></figure>`}
+ if(q.diagram?.startsWith('rect:')){let [,a,b]=q.diagram.split(':');return `<figure class="diagram"><svg viewBox="0 0 430 210" role="img" aria-label="縦${a}cm、横${b}cmの長方形。図の比率は実寸とは異なる"><rect x="110" y="25" width="235" height="120" rx="4" fill="#cbdcf1" stroke="#496694" stroke-width="3"/><text x="90" y="90" text-anchor="end" font-size="16">${a} cm</text><text x="227" y="180" text-anchor="middle" font-size="18">${b} cm</text></svg><figcaption>模式図（縦横の比率は実寸とは異なります）</figcaption></figure>`}
+ if(q.diagram==='place'&&q.id==='q34')return `<div class="diagram"><p style="text-align:center;margin:0">5.0 − 4.8 = 0.2<br>どちらの測定値も小数第1位まで</p></div>`;
+ if(q.diagram==='place')return `<div class="diagram"><table class="place" aria-label="12.3と2.15の小数点をそろえた引き算"><tr><td></td><td>1</td><td>2</td><td>.</td><td class="last">3</td><td></td></tr><tr><td>−</td><td></td><td>2</td><td>.</td><td>1</td><td>5</td></tr><tr><td></td><td colspan="5" style="font-size:14px">小数点をそろえて比べる</td></tr></table><p style="margin:0;text-align:center;font-size:14px">色枠：12.3で最後に記録した位</p></div>`;
+ return '';
+}
+function formatScientific(s){return esc(s).replace(/10\^(-?\d+)/g,'10<sup>$1</sup>')}
+function choices(q,r){
+ if(q.kind==='scientific'){
+ let parsed=q.options.map(o=>o.text.split(' × 10^')),coeffs=[...new Set(parsed.map(x=>x[0]))],exps=[...new Set(parsed.map(x=>x[1]))];
+ // Independent controls: coefficient precision and exponent are both assessed.
+ return `<p class="muted">係数と指数をそれぞれ選ぶ。末尾の0も区別します。</p><div class="science"><label> <span class="hidden">係数A</span><select id="coeff" aria-label="係数A" ${r.graded?'disabled':''}><option value="">係数A</option>${shuffleStable(coeffs,r.options,q,'c').map(c=>`<option value="${c}" ${r.coeff===c?'selected':''}>${c}</option>`).join('')}</select></label><span>× 10</span><label class="exp"><span class="hidden">指数B</span><select id="exponent" aria-label="指数B" ${r.graded?'disabled':''}><option value="">指数B</option>${shuffleStable(exps,r.options,q,'e').map(e=>`<option value="${e}" ${r.exponent===e?'selected':''}>${e}</option>`).join('')}</select></label></div>`
+ }
+ return `<div class="answers ${q.kind==='digits'?'digits':''}" role="group" aria-label="解答候補">${r.options.map((id,i)=>{let o=q.options.find(x=>x.id===id);return `<button class="answer ${r.selected===id?'selected':''} ${r.graded&&id===q.correct?'correct':''} ${r.graded&&r.selected===id&&!r.correct?'wrong':''}" data-action="select" data-option="${id}" aria-pressed="${r.selected===id}" ${r.graded?'disabled':''}><span class="key">${i+1}</span><span>${formatScientific(o.text)}</span></button>`}).join('')}</div>`
+}
+function shuffleStable(values,order,q,type){let ids=order.map(id=>q.options.findIndex(x=>x.id===id));return [...values].sort((a,b)=>{let ap=q.options.findIndex(o=>o.text.split(' × 10^')[type==='c'?0:1]===a),bp=q.options.findIndex(o=>o.text.split(' × 10^')[type==='c'?0:1]===b);return ids.indexOf(ap)-ids.indexOf(bp)})}
+function question(){
+ let a=state.session,q=currentQ(),r=record(),max=a.area===5?3:2,graded=Object.values(a.records).filter(x=>x.graded).length,correct=Object.values(a.records).filter(x=>x.correct).length,review=a.phase==='review';
+ let progress=a.practice?`学習 STEP ${a.pos+1} / ${a.order.length}`:review?'本編終了 ／ 復習 1問':`本編 ${a.pos+1} / ${a.order.length}問`;
+ let notice=a.practice?'一つずつ学ぼう。間違えてもHPは減りません。':review?'この復習に正解すればエリア突破。誤答するとHP0。':a.mistakes===1?'まだ突破できます。最後に、この誤答の復習問題が出ます。':'全問正解、または1問誤答＋最後の復習正解で突破。';
+ return `<div class="question ${a.practice?'learning-page':''}">${a.area===5?bossArt:''}<section class="panel"><div class="topline"><div><div class="eyebrow">${a.practice?'LEARNING PAGE · 学習ページ':review?'REVIEW · 挽回のチャンス':a.area===5?'FINAL BOSS · 誤答で大ダメージ':'AREA 0'+(a.area+1)}</div><strong>${AREAS[a.area].icon} ${AREAS[a.area].name}</strong></div><button class="small" data-action="home">ホームに戻る</button></div><div class="status"><div><div class="hptext"><strong>${a.practice?'学習中・ダメージなし':a.area===5?'ボスの猛攻に備えよう':'冒険者のHP'}</strong><span>HP <b id="hpValue">${a.hp}</b> / ${max}</span></div><div role="progressbar" aria-label="HP" aria-valuemin="0" aria-valuemax="${max}" aria-valuenow="${a.hp}" class="bar hpbar ${a.hp<=1?'low':''}"><span id="hpFill" style="width:${a.hp/max*100}%"></span></div><small>${a.practice?'安心して、考え方を学ぼう。':`誤答・答えを見る：−${a.area===5?2:1} HP`}</small></div><div><div class="hptext"><span>${progress}</span><span>${a.practice?'':`本編正解 ${correct}/${a.order.length}`}</span></div><div class="bar"><span style="width:${graded/a.order.length*100}%"></span></div><small>${notice}</small></div></div></section><section class="panel" id="questionPanel"><div class="eyebrow">${a.practice?'学習 STEP '+q.step+' / 8':review?'間違えた問題の復習':'QUESTION '+String(a.pos+1).padStart(2,'0')}</div>${a.practice?`<div class="lesson"><strong>ここで学ぶこと</strong><p>${esc(q.lesson)}</p></div>`:''}${review?'<div class="review-banner"><strong>まだクリアできます。</strong><br>本編で間違えた内容を、もう一度確かめよう。<br>この1問に正解すれば突破。間違えるとHP0です。</div>':''}<h2>${esc(q.prompt)}</h2>${q.condition?`<aside class="condition">授業での考え方：${esc(q.condition)}</aside>`:''}${a.practice?learningDiagram(q):diagram(q)}${choices(q,r)}${!r.graded?`<div class="actions"><button class="primary" data-action="grade" ${q.kind==='scientific'?r.coeff&&r.exponent?'':'disabled':r.selected?'':'disabled'}>答え合わせ</button><button data-action="hint" ${r.hints===2?'disabled':''}>ヒント ${r.hints}/2</button><button class="small" data-action="reveal">答えを見る</button></div>${state.done[3]?`<div class="actions"><button class="small" data-action="magic" ${a.magicUsed?'disabled':''}>✦ 位の灯 ${a.magicUsed?'使用済み':'この挑戦で1回'}</button></div>`:''}`:''}${r.magic?`<aside class="hintbox"><strong>✦ 魔法「位の灯」</strong><p>${esc(q.magic||'測定値の末尾の位を見よう。積・商は有効数字の個数、和・差は末尾の位を比べる。')}</p></aside>`:''}${r.hints&&!r.graded?hintHTML(q,r.hints):''}${r.graded?`<div class="feedback ${r.correct?'':'bad'}" id="feedback" role="status"><h3>${r.revealed?'◇ 答えを確認':r.correct?'○ 正解':'× 不正解'}</h3><p><strong>正答：${formatScientific(correctText(q))}</strong></p>${!r.correct&&!r.revealed?`<p>あなたの解答：${q.kind==='scientific'?formatScientific(r.coeff+' × 10^'+r.exponent):formatScientific(q.options.find(x=>x.id===r.selected)?.text||'')}。下の説明で考え方を確認しましょう。</p>`:''}<p>${esc(q.explanation)}</p>${!a.practice&&!r.correct?`<p><strong>−${a.area===5?2:1} HP${a.hp===0?' ／ HP 0・ゲームオーバー':''}</strong><br>${a.hp===0?'このエリア全問に再挑戦します。':'まだ突破できます。エリア最後の復習に正解して挽回しよう。'}</p>`:review&&r.correct?'<p><strong>復習で正解！ 本編の誤答を補完できました。</strong><br>次のボタンで突破結果へ進みます。</p>':''}${hintHTML(q,2)}<div class="actions"><button class="primary" data-action="next">${nextLabel(a)}</button></div></div>`:''}</section>${calculator()}</div>`
+}
+function hintHTML(q,n){return `<aside class="hintbox"><strong>考え方のヒント</strong>${q.hints.slice(0,n).map((h,i)=>`<p>${i+1}. ${esc(h)}</p>`).join('')}</aside>`}
+function grade(reveal=false){
+ let a=state.session,q=currentQ(),r=record();if(r.graded)return;
+ if(!reveal&&q.kind==='scientific'){if(!r.coeff||!r.exponent)return;r.selected=q.options.find(x=>x.text===r.coeff+' × 10^'+r.exponent)?.id||'combination'}
+ if(!reveal&&!r.selected)return;
+ let hpBefore=a.hp;r.graded=true;r.revealed=reveal;r.correct=!reveal&&r.selected===q.correct;
+ if(a.phase==='review')a.recovered=r.correct;
+ else if(!r.correct)a.mistakes++;
+ if(!r.correct&&!a.practice)a.hp=Math.max(0,a.hp-(a.area===5?2:1));
+ save();render();
+ if(!r.correct&&!a.practice){let fill=document.getElementById('hpFill');fill.style.transition='none';fill.style.width=hpBefore/(a.area===5?3:2)*100+'%';requestAnimationFrame(()=>requestAnimationFrame(()=>{if(!fill.isConnected)return;fill.style.transition='width .18s ease-out';fill.style.width=a.hp/(a.area===5?3:2)*100+'%'}));document.querySelector('.question').classList.add('loss');document.querySelector('.hpbar').classList.add('hit')}
+ if(r.correct){document.getElementById('questionPanel').classList.add('success');confetti(10)}
+ document.getElementById('feedback')?.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function next(){
+ let a=state.session,r=record();if(!r.graded)return;
+ if(a.hp===0&&!a.practice){a.finished=true;state.view='end'}
+ else if(a.phase==='review'){if(r.correct)completeArea()}
+ else if(a.pos<a.order.length-1){a.pos++}
+ else if(a.practice){state.training=true;state.session=null;save();begin(3,false);return}
+ else if(a.mistakes===1){a.phase='review';a.reviewId=a.order.find(id=>!a.records[id].correct);a.reviewRecord=null}
+ else if(a.mistakes===0)completeArea();
+ commit();window.scrollTo(0,0)
+}
+function end(){let a=state.session,passed=a.passed,correct=Object.values(a.records).filter(r=>r.correct).length;
+ return `<section class="panel ${passed?'success':''}" style="max-width:760px;margin:auto;text-align:center"><div class="crest">${passed?'✦':'⚔'}</div><div class="eyebrow">${AREAS[a.area].name}</div><h1 style="font-size:36px">${passed?'○ エリア突破':'× GAME OVER'}</h1><p>${passed?a.recovered?'最後の復習に正解！ 誤答を補完してエリア突破です。':'本編を全問正解！ エリア突破です。':'HPが0になりました。このエリア全問に再挑戦しよう。'}</p><p>本編：${correct} / ${a.order.length}問正解${a.phase==='review'?` ／ 復習：${a.recovered?'○ 正解':'× 未正解'}`:''}<br>残りHP ${a.hp} ／ 全体 ${score()} / 56問を突破</p>${!passed?`<div class="notice">未完了・提出不可。<br>再挑戦はこのエリア全${a.order.length}問です。<br>本編全問正解、または1問誤答＋最後の復習正解で突破できます。</div>`:''}${passed&&a.area===3?'<div class="lesson"><h2>✦ 職業昇格：見習い → 術士</h2><p>魔法「位の灯」を習得！ 各挑戦で1回、測定値の末尾の位や判断の手掛かりを照らします。HPは消費しません。</p></div>':''}${passed&&a.area<5?`<p class="lead">次のエリア「${AREAS[a.area+1].name}」が解放されました。</p>`:''}<div class="actions" style="justify-content:center">${!passed?'<button class="primary" data-action="retry">エリア全問に再挑戦</button>':a.area===5?'<button class="primary" data-action="finish">合格証へ</button>':'<button class="primary" data-action="mapClear">冒険マップへ</button>'}<button data-action="home">ホームに戻る</button>${resetButton()}</div></section>`
+}
+function result(){return `<section class="panel certificate"><div class="eyebrow">CERTIFICATE OF ACHIEVEMENT</div><div class="crest">✧ ♜ ✧</div><h1>○ 合格</h1><h2>有効数字の冒険<br>全領域修了証</h2><p>測定の意味を理解し、<br>計算の最後の一桁まで守り抜きました。</p><div class="certgrid"><div>出席番号<strong>${state.number}</strong></div><div>到達得点<strong>56 / 56</strong></div><div>到達正答率<strong>100%</strong></div><div>合格日<strong style="font-size:19px">${esc(state.certificateDate)}</strong></div></div><p>称号：精度を守る術士<br>全6エリア突破・全問の習得を確認</p><p class="muted">得点は突破済みの試練56問（復習での補完を含む）。初回正答率ではありません。<br>ヒント使用：${state.hints}回 ／ 試練挑戦：${state.attempts.reduce((a,b)=>a+b,0)}回</p><div class="notice"><strong>この合格証をスクリーンショットで撮影して提出してください。</strong></div></section><div class="actions"><button data-action="home">ホームに戻る</button><button data-action="mapClear">冒険マップへ</button>${resetButton()}</div>`}
+function calculator(){return `<details class="calc"><summary>計算機を開く・履歴を見る</summary><div class="calcpad"><label for="calcOut">計算式</label><input class="calcout" id="calcOut" value="${esc(calcExpr)}" readonly placeholder="ボタンで入力"><div class="calckeys">${['7','8','9','÷','4','5','6','×','1','2','3','−','0','.','(',')','C','⌫','=','+'].map(k=>`<button data-action="calc" data-key="${k}">${k}</button>`).join('')}</div><p class="muted" style="font-size:13px">計算機は丸める前の値を表示します。有効数字は自分で判断しよう。</p><div class="history" id="calcHistory">${state.history.map(x=>`<div>${esc(x)}</div>`).join('')}</div></div></details>`}
+function calc(k){if(k==='C')calcExpr='';else if(k==='⌫')calcExpr=calcExpr.slice(0,-1);else if(k==='='){let clean=calcExpr.replace(/×/g,'*').replace(/÷/g,'/').replace(/−/g,'-');if(!/^[\d.()+*/\- ]+$/.test(clean))return;try{let value=Function('"use strict";return ('+clean+')')();if(!Number.isFinite(value))throw Error();let line=calcExpr+' = '+Number(value.toPrecision(12));state.history.unshift(line);state.history=state.history.slice(0,20);calcExpr=String(Number(value.toPrecision(12)));save();document.getElementById('calcHistory').innerHTML=state.history.map(x=>`<div>${esc(x)}</div>`).join('')}catch(e){document.getElementById('calcOut').value='式を確認してください';return}}else if(calcExpr.length<70)calcExpr+=k;document.getElementById('calcOut').value=calcExpr}
+function confetti(n=24){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;let host=document.querySelector('.certificate')||document.getElementById('questionPanel');if(!host)return;let div=document.createElement('div');div.className='sparkles';div.setAttribute('aria-hidden','true');for(let i=0;i<n;i++){let el=document.createElement('i');el.style.left=Math.random()*100+'%';el.style.background=['#f8d77a','#9de2d9','#c9b1ff'][i%3];el.style.animationDelay=Math.random()*.3+'s';div.append(el)}host.append(div);setTimeout(()=>div.remove(),2800)}
+function render(){app.innerHTML=header()+(state.view==='home'?home():state.view==='map'?map():state.view==='learning'?learningIntro():state.view==='question'?question():state.view==='end'?end():result())+'<footer class="foot">有効数字の冒険 · 途中保存はこの端末・このブラウザ内<br>授業ノートをもとに構成した独自教材</footer>';if(state.view==='question')save()}
+function emptyRecord(q){return {options:shuffle(q.options.map(x=>x.id)),selected:null,coeff:'',exponent:'',graded:false,correct:false,revealed:false,hints:0,magic:false}}
+function learningIntro(){return `<section class="panel learning-intro"><div class="eyebrow">LEARNING PAGE · ここからは学習ページ</div><span class="learning-label">HPは減りません ／ 8ステップ</span><h1>和と差の計算を<br>ここで勉強します。</h1><p class="lead"><strong>これまでの積と商と、これからの和と差では、<br>有効数字の取り扱い（計算方法）が違います。</strong></p><div class="rule-compare"><div><small>これまで：掛け算・割り算</small><h2>有効数字の「個数」</h2><p>個数が少ない方にそろえる。</p></div><div class="new-rule"><small>これから：足し算・引き算</small><h2>末尾の数字の「位」</h2><p>末尾の位が高い方に、<br>答えの末尾の位をそろえる。</p></div></div><p>「末尾」とは、いちばん右にある数字です。<br>「位が高い」とは、より左の位のこと。<strong>1の位 → 0.1の位 → 0.01の位</strong>の順に位が下がります。</p><div class="notice">12.3 cm − 2.15 cm を使い、<br>①それぞれの末尾の位 → ②高いのはどちら？ → ③計算の答えをどう書く？<br>と、一つずつ考えます。</div><p class="muted">ここは学ぶためのページです。間違えてもHPは減りません。説明を読んでから、次のステップへ進みましょう。最後の試練を突破すると、術士への昇格と魔法が待っています。</p><div class="actions"><button class="primary" data-action="learnStart">学習を始める</button><button data-action="home">ホームに戻る</button></div></section>`}
+function learningDiagram(q){
+ let step=q.step;
+ if(step>=7)return `<div class="learning-memory"><strong>ここまでの学習メモ</strong><p>積・商は「有効数字の個数」。<br>和・差は「末尾の位」を高い方にそろえる。</p></div>`;
+ let row=(prefix,int,dec,mark)=>`<tr><td>${prefix}</td><td>${int}</td><td>.</td>${dec.split('').map((x,i)=>`<td class="${i===mark?'last':''}">${x}</td>`).join('')}${dec.length===1?'<td class="empty-place"></td>':''}</tr>`;
+ return `<div class="diagram learning-figure"><p class="expression">12.3 cm − 2.15 cm${step>=5?' = 10.15 cm':''}</p><table class="place" aria-label="小数点をそろえた引き算。12.3の末尾は3、2.15の末尾は5">${row('','12','3',step===1?0:-1)}${row('−','2','15',step===2?1:-1)}</table><div class="place-key">末尾 ＝ いちばん右にある数字</div></div>${step>1?`<div class="learning-memory"><strong>前のステップで確かめたこと</strong><p>12.3 cmの末尾の3 → <b>0.1 cmの位</b>${step>2?'<br>2.15 cmの末尾の5 → <b>0.01 cmの位</b>':''}${step>3?'<br>高い方は <b>0.1 cmの位</b> → 答えもこの位まで':''}${step>5?'<br>10.15の小数第2位の5を見て、四捨五入する':''}</p></div>`:''}`
+}
+function nextLabel(a){if(a.hp===0&&!a.practice)return 'ゲームオーバー画面へ';if(a.phase==='review')return '復習の結果へ';if(a.pos===a.order.length-1)return a.practice?'学習を終えて試練へ':a.mistakes===1?'最後の復習問題へ':'突破結果へ';return a.practice?'次の学習ステップへ':'次の問題へ'}
+function completeArea(){let a=state.session;a.passed=true;a.finished=true;state.done[a.area]=true;if(state.done.every(Boolean)&&!state.certificateDate)state.certificateDate=new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());state.view='end'}
+app.addEventListener('change',e=>{if(['coeff','exponent'].includes(e.target.id)){let r=record();if(r.graded)return;r[e.target.id]=e.target.value;save();let open=document.querySelector('.calc')?.open;render();if(open)document.querySelector('.calc').open=true}});
+app.addEventListener('click',e=>{let b=e.target.closest('[data-action]');if(!b||b.disabled)return;let action=b.dataset.action;
+ if(action==='reset'){document.getElementById('resetDialog').showModal();return}
+ if(action==='motion'){matrixPaused=!matrixPaused;document.body.classList.toggle('motion-paused',matrixPaused);render();return}
+ if(action==='migrationOK'){state.migrated=false;commit()}
+ if(action==='start'){if(!state.started){let number=document.getElementById('number').value.trim();if(!/^\d{4}$/.test(number)){document.getElementById('formError').textContent='出席番号を半角数字4桁で入力してください。';document.getElementById('number').focus();return}state.number=number;state.started=true}state.view='map';commit()}
+ if(action==='home'){state.view='home';commit()}
+ if(action==='resume'){state.view=state.session.finished?'end':state.session.practice&&!state.session.lessonStarted?'learning':'question';commit()}
+ if(action==='area')begin(Number(b.dataset.area));
+ if(action==='study')begin(3,true);
+ if(action==='learnStart'){state.session.lessonStarted=true;state.view='question';commit()}
+ if(action==='select'){let r=record();if(!r.graded){r.selected=b.dataset.option;commit()}}
+ if(action==='grade')grade();
+ if(action==='reveal')grade(true);
+ if(action==='hint'){let r=record();if(r.hints<2){r.hints++;state.hints++;commit()}}
+ if(action==='magic'){let a=state.session;if(!a.magicUsed&&state.done[3]){a.magicUsed=true;record().magic=true;commit()}}
+ if(action==='next')next();
+ if(action==='retry'){let area=state.session.area;state.session=null;begin(area)}
+ if(action==='mapClear'){if(state.view==='end'||state.view==='result')state.session=null;state.view='map';commit()}
+ if(action==='finish'){state.session=null;state.view='result';commit();confetti(45)}
+ if(action==='result'){state.view='result';commit();confetti(45)}
+ if(action==='calc')calc(b.dataset.key);
+ if(['home','start','mapClear','finish','result','resume','learnStart'].includes(action))window.scrollTo(0,0)
+});
+document.getElementById('cancelReset').onclick=()=>document.getElementById('resetDialog').close();
+document.getElementById('confirmReset').onclick=()=>{try{localStorage.removeItem(KEY);localStorage.removeItem(LEGACY_KEY)}catch(e){saveError=true}state=fresh();invalidSave=false;calcExpr='';document.getElementById('resetDialog').close();commit();window.scrollTo(0,0)};
+function setupMatrix(){
+ const canvas=document.getElementById('matrixCanvas'),ctx=canvas.getContext('2d');if(!ctx)return;let width=0,height=0,columns=[],last=0;
+ function resize(){width=innerWidth;height=innerHeight;let scale=Math.min(devicePixelRatio||1,1.5);canvas.width=width*scale;canvas.height=height*scale;canvas.style.width=width+'px';canvas.style.height=height+'px';ctx.setTransform(scale,0,0,scale,0,0);columns=Array.from({length:Math.ceil(width/19)},(_,i)=>({x:i*19,y:Math.random()*height,speed:2+Math.random()*6,length:13+Math.floor(Math.random()*17)}));paintStatic()}
+ function glyph(x,y,alpha,head=false){ctx.font=(head?'19':'15')+'px ui-monospace, monospace';ctx.fillStyle=head?'rgba(181,255,221,'+alpha+')':'rgba(20,220,119,'+alpha+')';ctx.fillText(String(Math.floor(Math.random()*10)),x,y)}
+ function paintStatic(){ctx.fillStyle='#020b07';ctx.fillRect(0,0,width,height);for(let c of columns)for(let y=0;y<height;y+=21)glyph(c.x,y,Math.random()*.42+.07);for(let i=0;i<width/100;i++){ctx.font='38px ui-monospace,monospace';ctx.fillStyle='#24e78c55';ctx.fillText(String(Math.floor(Math.random()*10)),Math.random()*width,Math.random()*height)}}
+ function frame(t){if(!matrixPaused&&!document.hidden&&t-last>50){ctx.fillStyle='rgba(2,11,7,.16)';ctx.fillRect(0,0,width,height);for(let c of columns){glyph(c.x,c.y,.8,true);glyph(c.x,c.y-21,.4);c.y+=c.speed*3;if(c.y>height+40)c.y=-Math.random()*height*.4}last=t}requestAnimationFrame(frame)}
+ resize();addEventListener('resize',resize);requestAnimationFrame(frame)
+}
+setupMatrix();
+
+if(matrixPaused)document.body.classList.add('motion-paused');
+render();
+</script></body></html>
