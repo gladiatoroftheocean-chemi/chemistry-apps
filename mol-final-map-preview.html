@@ -182,7 +182,7 @@ dialog.battle-stage{background:#141e2b;border-color:#617083;color:#f6f5ef}
 #lessonCalcTools #sharedCalculator:not([open]),#battleCalcTools #sharedCalculator:not([open]){display:none}
 #calcKeys{grid-template-columns:repeat(5,minmax(0,1fr))}
 #calcKeys button{min-width:0;padding:5px 2px}#calcKeys #calcTransfer{font-size:13px;white-space:nowrap}
-#scientificInput:has(#answerCalculatorToggle[aria-expanded=true]) #powerHelp{display:none}
+
 .battle-stage:has(#scientificInput button[aria-expanded=true]) .battle-party-frame{position:static}
 #calcHistory:empty{display:none}
 .study-guide{border-left:3px solid #c5d9a6;padding:5px 10px;margin:6px 0;background:#21384a}
@@ -366,6 +366,26 @@ button[aria-pressed="true"] .choice-letter{background:#182741}
  .journey-services .location-card{padding:8px 7px;gap:6px}
  .location-art{min-height:190px}
 }
+/* Compact landmark tiles on the same artwork as the numbered chapters. */
+.painted-map{isolation:isolate;overflow:hidden;border:2px solid #a6b4cc;border-radius:14px;background:linear-gradient(180deg,#141e3655,#101a3070),var(--adventure-landscape) center 58% / cover;box-shadow:0 10px 28px #02091775}
+.painted-map .painted-route{background:none;border:0;border-radius:0;box-shadow:none}
+.painted-map .journey-services{margin:0;padding:11px 16px;border-bottom:1px solid #d1e0f766;background:#142438b8}
+.painted-map .journey-services h3{font-size:16px;margin:0 0 6px}
+.painted-map .journey-services-grid{grid-template-columns:repeat(8,minmax(0,1fr));gap:5px}
+.painted-map .journey-services .location-card{min-height:55px;padding:4px 5px;gap:5px;border-radius:7px}
+.painted-map .journey-services .location-mark{width:25px;height:25px;border-radius:5px;font-size:15px}
+.painted-map .journey-services strong{font-size:13px}
+.painted-map .journey-services .location-purpose{display:none}
+.painted-map .journey-services .location-state{font-size:11px}
+#sharedCalculator:has(#calcTransfer[hidden]) #calcTransferHelp{display:none}
+#calcExponent{background:#ffdda2;color:#281c14;border-color:#b8834b;font-weight:800}
+#calcKeys #calcTransfer{font-size:12px;white-space:normal;line-height:1.15}
+@media(max-width:1000px){.painted-map .journey-services-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:520px){
+ .painted-map .journey-services{padding:9px}
+ .painted-map .journey-services-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .painted-map .journey-services .location-card{min-height:50px}
+}
 </style></head>
 <body><section id="homeScreen" class="home-panel" aria-labelledby="gameTitle">
  <header class="title-cover">
@@ -418,8 +438,7 @@ button[aria-pressed="true"] .choice-letter{background:#182741}
 </dialog>
 <dialog id="placeDialog" aria-labelledby="dialogTitle"><p class="eyebrow" id="dialogEyebrow">訪問先</p><h2 id="dialogTitle"></h2><span id="dialogTag" class="tag"></span><div id="scene" class="location-art"><img id="locationImage" alt="" hidden><img id="speakerImage" alt="" hidden></div><div class="speaker" id="speaker"></div><p id="dialogBody" class="dialog-copy" aria-live="polite"></p><div id="facilityExtras" class="lesson-options" hidden></div><div id="battleChoices" class="battle-choices" hidden></div><div class="dialog-actions"><button id="startFoundation" class="gold" hidden>入口の基礎確認</button><button id="openShop" hidden>道具屋</button><button id="meetDilutionMage" hidden>伝説の魔法使いに希釈を教わる</button><button id="startMainCourse" class="gold" hidden>本編学習へ進む</button><button id="startPractice" hidden>追加の練習（経験値）</button><button id="startGuardian" hidden>地域の強敵に挑む</button><button id="joinAlly" class="gold" hidden>仲間と話す</button><button id="startBasicConversions" type="button" hidden>基本換算6問（個・g・L ↔ mol）</button><button id="startDrill" class="gold" hidden>安全なドリル（経験値）</button><button id="innConfirm" class="gold" hidden>料金を支払い泊まる</button><button id="innCancel" hidden>泊まらずに戻る</button><button id="receiveReward" class="gold" hidden>勝利報酬を受け取る</button><button id="enterFacility" class="gold" hidden>施設に入る</button><button id="nextLine" class="gold">次の話へ</button><button id="guideDestination" type="button" class="gold" hidden></button><button id="aboutPlace">場所を見渡す</button><button id="readAgain">もう一度聞く</button><button type="button" data-home>ホームに戻る</button><button id="closeDialog">地図に戻る</button></div></dialog>
 <dialog id="battleDialog" aria-labelledby="battleTitle"><p class="eyebrow">TRAINING BATTLE · モンスター討伐</p><h2 id="battleTitle">鍛錬の洞窟で戦う</h2><div class="battle-top"><div id="battleReference" class="battle-reference" hidden></div><div id="battleParty" class="battle-party-frame"></div></div><div id="battleDefeat" class="defeat-banner" role="status" hidden></div><div class="fight-columns"><section class="fight-scene" aria-label="戦場"><canvas id="battleEnemy" class="battle-enemy" width="480" height="100" aria-label="訓練の敵のドット絵"></canvas><div class="battle-health"><span id="enemyStatus"></span><span id="battleRewardHint">勝利報酬 12 G</span></div><section id="battleTurnResult" class="turn-result" aria-live="polite" hidden></section></section><section class="fight-question" aria-label="問題"><p id="battlePrompt" class="battle-question"></p><p id="battleConditions" class="battle-conditions"></p><form id="battleForm" class="battle-answer"><input id="battleInput" aria-describedby="battleInputNotice" maxlength="120" type="text" inputmode="decimal" autocomplete="off" aria-label="数値の解答" placeholder="数値を入力"><span id="battleUnit"></span><button id="battleSubmit" class="gold">答え合わせ</button></form><p id="battleInputNotice" class="answer-notice" role="status" hidden></p><div id="battleNumberTools"></div><div id="scientificInput" class="scientific-input">
-<button type="button" id="answerKeypadToggle" aria-controls="exponentKeys" aria-expanded="false">テンキー</button>
-<button type="button" id="answerCalculatorToggle" aria-controls="sharedCalculator" aria-expanded="false">計算機</button><button type="button" id="insertPower" aria-expanded="false" aria-controls="exponentKeys">×10の何乗をつける</button><p id="powerHelp">数値 → このボタン → 何乗か入力</p><output id="powerPreview" class="power-preview" hidden></output><div id="exponentKeys" class="exponent-keys" aria-label="解答入力用テンキー" hidden></div></div><div id="battleCalcTools"></div><details id="sharedCalculator" class="calc"><summary>計算機を開く</summary><output id="calcDisplay" aria-live="polite">0</output><div id="calcKeys" class="calc-keys"></div><p>eは「×10の何乗」の入力です。例：1.2e8。有効数字は最後に自分で整えます。</p><p id="calcHistory" class="calc-history" aria-label="計算履歴"></p></details><div id="battleCommands"></div><button id="battleHint" style="margin-top:9px;font-size:12px">考え方のヒント</button><p id="battleHintText" hidden></p><div id="battleFeedback" class="battle-feedback" hidden><strong id="battleJudgment"></strong><p id="battleExplanation"></p><details id="battleHintsAfter" open><summary>考え方のヒント</summary><p id="battleHintsBody"></p></details></div><details class="battle-log"><summary>戦闘・学習のくわしい記録</summary><p id="battleOutcome" class="battle-outcome" role="status"></p></details></section></div><div class="battle-controls"><button id="battleNext" class="gold" hidden>次の問いへ</button><button id="battleReward" class="gold" hidden>勝利報酬を受け取る</button><button type="button" data-home>中断して保存</button><button id="battleClose">地図へ戻る</button></div><p class="preview-note">戦闘中は、回答したときだけ行動が進みます。途中の状態は自動保存されます。</p></dialog>
+<button type="button" id="answerCalculatorToggle" aria-controls="sharedCalculator" aria-expanded="false">計算機</button><output id="powerPreview" class="power-preview" hidden></output></div><div id="battleCalcTools"></div><details id="sharedCalculator" class="calc"><summary>計算機を開く</summary><output id="calcDisplay" aria-live="polite">0</output><div id="calcKeys" class="calc-keys"></div><p id="calculatorHelp">「×10ⁿ」のあとに指数を入力します。<span id="calcTransferHelp">入力した桁を保つには、そのまま「解答欄へ」を押します。</span></p><p id="calcHistory" class="calc-history" aria-label="計算履歴"></p></details><div id="battleCommands"></div><button id="battleHint" style="margin-top:9px;font-size:12px">考え方のヒント</button><p id="battleHintText" hidden></p><div id="battleFeedback" class="battle-feedback" hidden><strong id="battleJudgment"></strong><p id="battleExplanation"></p><details id="battleHintsAfter" open><summary>考え方のヒント</summary><p id="battleHintsBody"></p></details></div><details class="battle-log"><summary>戦闘・学習のくわしい記録</summary><p id="battleOutcome" class="battle-outcome" role="status"></p></details></section></div><div class="battle-controls"><button id="battleNext" class="gold" hidden>次の問いへ</button><button id="battleReward" class="gold" hidden>勝利報酬を受け取る</button><button type="button" data-home>中断して保存</button><button id="battleClose">地図へ戻る</button></div><p class="preview-note">戦闘中は、回答したときだけ行動が進みます。途中の状態は自動保存されます。</p></dialog>
 <dialog id="lessonDialog" aria-labelledby="lessonTitle"><p id="lessonModeTag" class="eyebrow">LEARN · 基礎確認</p><h2 id="lessonTitle"></h2><p id="lessonProgress" class="battle-conditions"></p><div class="battle-top"><div id="lessonReference" class="battle-reference" hidden></div><div id="lessonPartyStatus" class="battle-party-frame" hidden></div></div><div id="lessonDefeat" class="defeat-banner" role="status" hidden></div><div class="fight-columns"><section class="fight-scene" aria-label="戦場"><div id="lessonBattleHud" hidden><canvas id="lessonEnemyCanvas" class="battle-enemy" width="480" height="80" aria-label="地域の強敵"></canvas><p id="lessonEnemyStatus"></p><section id="lessonTurnResult" class="turn-result" aria-live="polite" hidden></section></div></section><section class="fight-question" aria-label="問題"><p id="lessonPrompt" class="battle-question"></p><p id="lessonConditions" class="battle-conditions"></p><div id="lessonDiagram" hidden></div><div id="lessonActivity"></div><form id="lessonForm" class="battle-answer"><input id="lessonInput" aria-describedby="lessonInputNotice" maxlength="120" type="text" inputmode="decimal" autocomplete="off" placeholder="数値を入力" aria-label="基礎確認の数値解答"><span id="lessonUnit"></span><button id="lessonSubmit" class="gold">答え合わせ</button></form><p id="lessonInputNotice" class="answer-notice" role="status" hidden></p><details id="storyGuidance" class="study-guide" hidden><summary>考える順番</summary><p id="storyGuidanceText"></p></details><div id="lessonNumberTools"></div><div id="lessonCalcTools"></div><button id="lessonCheck" class="gold" hidden>答え合わせ</button><div id="lessonCommands" hidden></div><button id="lessonHint">考え方のヒント</button><p id="lessonHintText" class="battle-conditions" hidden></p><div id="lessonFeedback" class="battle-feedback" hidden><strong id="lessonJudgment"></strong><p id="lessonExplanation"></p><details open><summary>考え方のヒント</summary><p id="lessonHintsBody"></p></details></div><details class="battle-log"><summary>戦闘・学習のくわしい記録</summary><p id="lessonMessage" class="battle-outcome" role="status"></p></details></section></div><div class="battle-controls"><button id="lessonNext" class="gold">確認を始める</button><button type="button" data-home>中断して保存</button><button id="lessonClose">地図へ戻る</button></div><p id="lessonFooter" class="preview-note">入口の基礎確認です。全範囲の施設修了とは別です。記録は自動保存されます。</p></dialog>
 <dialog id="resetDialog" aria-labelledby="resetTitle"><h2 id="resetTitle">この冒険をやり直す</h2><p id="resetMessage"></p><div class="battle-controls"><button id="cancelReset">消さずに戻る</button><button id="confirmReset" class="gold">記録を消してやり直す</button></div></dialog><dialog id="underDialog" aria-labelledby="underTitle"><p class="eyebrow">UNDERGROUND</p><h2 id="underTitle">地下へ続く道</h2><p id="underStatus" class="battle-conditions"></p><div class="location-art"><img id="underPainting" alt="" hidden></div><canvas id="underCanvas" width="340" height="260" hidden inert></canvas><p id="underPrompt" class="battle-conditions"></p><button id="underAdvance" type="button" class="gold">魔王の間へ向かう</button><div class="battle-controls"><button id="challengeFinal" class="gold">魔王に挑む</button><button id="underExit">地上へ戻る</button><button data-home>ホームに戻る</button></div></dialog><dialog id="finalResultDialog" aria-labelledby="finalResultTitle">
  <section id="finalAward" aria-labelledby="finalResultTitle">
@@ -1195,18 +1214,19 @@ function renderDestinations(){
   card.querySelector('.location-copy').prepend(order);slot.append(card);board.append(slot);
  }
  $('mapChapterCount').textContent=adventure.completed.size+' / 6施設 修了';
- const sections=[board];
+ const map=document.createElement('div');map.className='painted-map';
+ const sections=[map];
  const underground=visiblePlaces().find(p=>p.id==='underworld');
  if(underground){
   const gate=document.createElement('div');gate.className='painted-final-route';
   gate.append(destinationCard(underground,utilityPlaceIcons.underworld,utilityPlaceCopy.underworld,{id:'underworld'},false));sections.push(gate);
  }
  const utility=document.createElement('section'),heading=document.createElement('h3'),items=document.createElement('div');
- utility.className='journey-services';heading.textContent='街と寄り道';items.className='journey-services-grid';
- for(const place of visiblePlaces().filter(p=>!coreIds.includes(p.id)&&p.id!=='underworld')){
+ utility.className='journey-services';heading.textContent='地図上の寄り道';items.className='journey-services-grid';
+ for(const place of places.filter(p=>p.id in utilityPlaceIcons&&p.id!=='underworld')){
   items.append(destinationCard(place,utilityPlaceIcons[place.id],utilityPlaceCopy[place.id],next,false));
  }
- utility.append(heading,items);sections.push(utility);
+ utility.append(heading,items);map.append(utility,board);
  container.replaceChildren(...sections);
  if(focused)container.querySelector('[data-place="'+focused+'"]')?.focus({preventScroll:true});
 }
@@ -1326,30 +1346,16 @@ function renderAnswerTools(calculator,numeric){
  $('scientificInput').hidden=!calculator;
  $('sharedCalculator').hidden=!calculator;
  $('calcTransfer').hidden=!numeric;
- for(const id of ['answerKeypadToggle','insertPower','powerHelp'])$(id).hidden=!numeric;
- if(!numeric){setAnswerKeypad(false);$('powerPreview').hidden=true}
+ if(!numeric)$('powerPreview').hidden=true;
  if(!calculator)setAnswerCalculator(false);
 }
 function renderScientificControls(){const editable=training?.phase==='answer';renderAnswerTools(editable,editable)}
-function setAnswerKeypad(open){
- $('exponentKeys').hidden=!open;
- $('answerKeypadToggle').setAttribute('aria-expanded',String(open));
- $('insertPower').setAttribute('aria-expanded',String(open));
-}
 function setAnswerCalculator(open){
  $('sharedCalculator').open=open;
  $('answerCalculatorToggle').setAttribute('aria-expanded',String(open));
 }
-function openAnswerKeypad(){
- if(!numberEntry().input)return;
- setAnswerCalculator(false);
- setAnswerKeypad(true);
-}
-$('answerKeypadToggle').onclick=()=>{$('exponentKeys').hidden?openAnswerKeypad():setAnswerKeypad(false)};
 $('answerCalculatorToggle').onclick=()=>{
- if($('scientificInput').hidden)return;
- setAnswerKeypad(false);
- setAnswerCalculator(!$('sharedCalculator').open);
+ if(!$('scientificInput').hidden)setAnswerCalculator(!$('sharedCalculator').open);
 };
 
 function updatePowerPreview(){const preview=$('powerPreview'),raw=normalizeNumber(numberEntry().input?.value||''),match=raw.match(/^([+-]?(?:\d+\.?\d*|\.\d+))[eE]([+-]?\d*)$/);preview.replaceChildren();preview.hidden=!match;if(!match)return;preview.append(document.createTextNode(match[1]));const accent=document.createElement('span');accent.className='power-accent';accent.append(document.createTextNode(' ×10'));const exponent=document.createElement('sup');exponent.textContent=match[2]||'□';accent.append(exponent);preview.append(accent)}
@@ -1376,16 +1382,40 @@ function writeAnswerText(text){
  updatePowerPreview();
  input.focus({preventScroll:true});
 }
-$('insertPower').onclick=()=>{if(numberEntry().state?.phase!=='answer')return;const input=numberEntry().input,text=input.value,match=text.match(/(?:[eE]|[×x*]\s*10\s*\^)\s*([+-]?\d*)$/);if(match){const prefix=text.slice(0,match.index)+'×10^';writeAnswerText(prefix+match[1]);input.setSelectionRange(prefix.length,input.value.length)}else {writeAnswerText(text+'×10^');input.setSelectionRange(input.value.length,input.value.length)}openAnswerKeypad()};
-for(const key of ['7','8','9','⌫','4','5','6','−','1','2','3','C','0','.']){const button=document.createElement('button');button.type='button';button.textContent=key;button.setAttribute('aria-label',key==='⌫'?'解答を1文字削除':key==='−'?'指数のマイナス':key);button.onclick=()=>{if(numberEntry().state?.phase!=='answer')return;const input=numberEntry().input,start=input.selectionStart??input.value.length,end=input.selectionEnd??start;let from=start,insert=key==='−'?'-':key;if(key==='C'){writeAnswerText('');return}if(key==='⌫'){insert='';if(start===end)from=Math.max(0,start-1)}const next=input.value.slice(0,from)+insert+input.value.slice(end);writeAnswerText(next);input.setSelectionRange(from+insert.length,from+insert.length)};$('exponentKeys').append(button)}
-
 let calcExpression='',calcHistory=[];
 function clearCalculatorEntry(){
  calcExpression='';
  $('calcDisplay').textContent='0';
 }
 function calculateExpression(expression){const tokens=expression.match(/(?:\d+\.?\d*|\.\d+)(?:e[+-]?\d+)?|[+*/-]/gi);if(!tokens||tokens.join('')!==expression)throw Error('式を確認してください');let pos=0;function value(){let sign=1;while(tokens[pos]==='+'||tokens[pos]==='-'){if(tokens[pos++]==='-')sign*=-1}const n=Number(tokens[pos++]);if(!Number.isFinite(n))throw Error('式を確認してください');return sign*n}function term(){let n=value();while(tokens[pos]==='*'||tokens[pos]==='/'){const op=tokens[pos++],r=value();n=op==='*'?n*r:n/r}return n}let result=term();while(pos<tokens.length){const op=tokens[pos++];if(op!=='+'&&op!=='-')throw Error('式を確認してください');const r=term();result=op==='+'?result+r:result-r}if(!Number.isFinite(result))throw Error('0除算や式を確認してください');return Number(result.toPrecision(12))}
-for(const key of ['7','8','9','÷','C','4','5','6','×','⌫','1','2','3','−','e','0','.','+','=','解答へ']){const button=document.createElement('button');button.type='button';button.textContent=key;if(key==='解答へ')button.id='calcTransfer';button.onclick=()=>{const output=$('calcDisplay');if(key==='C')calcExpression='';else if(key==='⌫')calcExpression=calcExpression.slice(0,-1);else if(key==='解答へ'){if(numberEntry().state?.phase==='answer'&&calcExpression){writeAnswerText(calcExpression);setAnswerCalculator(false)}return}else if(key==='='){try{const result=String(calculateExpression(calcExpression));calcHistory.push(calcExpression.replaceAll('*','×').replaceAll('/','÷')+' = '+result);calcHistory=calcHistory.slice(-8);$('calcHistory').textContent=calcHistory.join('\n');calcExpression=result}catch(e){output.textContent=e.message;return}}else calcExpression+=({'÷':'/','×':'*','−':'-'})[key]||key;output.textContent=calcExpression||'0'};$('calcKeys').append(button)}
+function renderCalculatorDisplay(){
+ $('calcDisplay').textContent=calcExpression.replaceAll('*','×').replaceAll('/','÷').replaceAll('e','×10^')||'0';
+}
+const calculatorKeys=['7','8','9','÷','C','4','5','6','×','⌫','1','2','3','−','×10ⁿ','0','.','+','=','解答欄へ'];
+for(const key of calculatorKeys){
+ const button=document.createElement('button');button.type='button';button.textContent=key;
+ if(key==='解答欄へ')button.id='calcTransfer';
+ if(key==='×10ⁿ')button.id='calcExponent';
+ button.onclick=()=>{
+  try{
+   if(key==='C')calcExpression='';
+   else if(key==='⌫')calcExpression=calcExpression.slice(0,-1);
+   else if(key==='='||key==='解答欄へ'){
+    if(!calcExpression||key==='解答欄へ'&&!numberEntry().input)return;
+    const literal=/^[+-]?(?:\d+\.?\d*|\.\d+)(?:e[+-]?\d+)?$/i.test(calcExpression);
+    if(key==='='||!literal){
+     const result=String(calculateExpression(calcExpression));
+     calcHistory.push(calcExpression.replaceAll('*','×').replaceAll('/','÷').replaceAll('e','×10^')+' = '+result);
+     calcHistory=calcHistory.slice(-8);$('calcHistory').textContent=calcHistory.join('\n');calcExpression=result;
+    }
+    if(key==='解答欄へ'){writeAnswerText(calcExpression);setAnswerCalculator(false)}
+   }else calcExpression+=({'÷':'/','×':'*','−':'-','×10ⁿ':'e'})[key]||key;
+   renderCalculatorDisplay();
+  }catch(error){$('calcDisplay').textContent=error.message}
+ };
+ $('calcKeys').append(button);
+}
+
 
 function grantGold(id,gold){if(economy.claimedVictories.has(id)||!Number.isSafeInteger(gold)||gold<=0)return false;economy.claimedVictories.add(id);economy.gold+=gold;renderEconomy();return true}
 function battleName(member){return member.battleName||memberTitle(member)}
@@ -2261,7 +2291,7 @@ function savedView(){
 }
 function packGame(){
  let activeLesson=null;if(lesson){const source=courseKind()==='temple'?'temple':courseKind()==='final'?'final':courseKind()==='guardian'?'guardSessions':courseKind()==='practice'?'standalone':'sessions',key=source==='guardSessions'?lesson.facility:courseKind()==='main'?'main:'+lesson.facility:lesson.facility;activeLesson=['final','temple'].includes(source)?{source}:source==='standalone'?{source,value:lesson}:{source,key}}
- return {combat:{...combatState,advanced:[...combatState.advanced],paidPurchases:[...combatState.paidPurchases]},app:MolSave.APP,schemaVersion:MolSave.VERSION,contentVersion:MolSave.CONTENT,profile:{...profile},economy:{...economy,xpAwards:[...economy.xpAwards],recoveredDefeats:[...economy.recoveredDefeats],claimedVictories:[...economy.claimedVictories],paidStays:[...economy.paidStays]},adventure:{foundations:[...adventure.foundations],learning:[...adventure.learning],guardians:[...adventure.guardians],mastered:[...adventure.mastered],completed:[...adventure.completed],sessions:[...adventure.sessions],guardSessions:[...adventure.guardSessions]},training,activeLesson,counters:{training:trainingSequence,drill:drillSequence,course:courseSequence},map:{player:{...player},trail:trail.map(p=>({...p})),face,overview,mode:mapMode},talked:[...talked],calculator:{expression:calcExpression,history:calcHistory.slice()},view:savedView(),numberPadOpen:!$('exponentKeys').hidden};
+ return {combat:{...combatState,advanced:[...combatState.advanced],paidPurchases:[...combatState.paidPurchases]},app:MolSave.APP,schemaVersion:MolSave.VERSION,contentVersion:MolSave.CONTENT,profile:{...profile},economy:{...economy,xpAwards:[...economy.xpAwards],recoveredDefeats:[...economy.recoveredDefeats],claimedVictories:[...economy.claimedVictories],paidStays:[...economy.paidStays]},adventure:{foundations:[...adventure.foundations],learning:[...adventure.learning],guardians:[...adventure.guardians],mastered:[...adventure.mastered],completed:[...adventure.completed],sessions:[...adventure.sessions],guardSessions:[...adventure.guardSessions]},training,activeLesson,counters:{training:trainingSequence,drill:drillSequence,course:courseSequence},map:{player:{...player},trail:trail.map(p=>({...p})),face,overview,mode:mapMode},talked:[...talked],calculator:{expression:calcExpression,history:calcHistory.slice()},view:savedView(),numberPadOpen:$('sharedCalculator').open};
 }
 function saveNotice(text,bad=false){if($('saveStatus').textContent!==text)$('saveStatus').textContent=text;$('saveStatus').classList.toggle('save-error',bad);$('saveWarning').hidden=!bad;$('saveWarning').textContent=bad?'途中保存できないため、この画面を閉じず、結果画面を撮影してください。':'';for(const node of document.querySelectorAll('[data-storage-warning]')){node.hidden=!bad;if(node.textContent!==$('saveWarning').textContent)node.textContent=$('saveWarning').textContent}}
 function saveGame(force=false){if(saveBooting||saveBlocked||!profile.started)return false;try{const data=packGame();MolSave.validate(data,saveCatalog());const body=JSON.stringify(data);if(!force&&body===lastSaveBody)return true;data.savedAt=new Date().toISOString();localStorage.setItem(SAVE_KEY,JSON.stringify(data));lastSaveBody=body;saveFailed=false;saveNotice('保存済み '+new Date().toLocaleTimeString('ja-JP',{timeZone:'Asia/Tokyo',hour:'2-digit',minute:'2-digit'}));return true}catch(e){lastSaveError=e.message;saveFailed=true;saveNotice('この環境では保存できません',true);return false}}
@@ -2270,9 +2300,9 @@ function restoreGame(data){
  for(const key of ['foundations','learning','guardians','mastered','completed'])adventure[key]=new Set(data.adventure[key]);for(const key of ['sessions','guardSessions'])adventure[key]=new Map(data.adventure[key]);
  lesson=data.activeLesson?data.activeLesson.source==='temple'?combatState.templeLesson:data.activeLesson.source==='final'?combatState.finalAttempt:data.activeLesson.source==='standalone'?data.activeLesson.value:adventure[data.activeLesson.source].get(data.activeLesson.key):null;
  training=data.training;if(training?.questions)training.questions=training.questions.map(q=>[...DRILL_QUESTIONS,...longNumericPractice].find(x=>x.id===q.id));trainingSequence=data.counters.training;drillSequence=data.counters.drill;courseSequence=data.counters.course;
- previewState.completed.clear();setProgress();player={...data.map.player};if(!pass(player.x,player.y))player={x:11,y:33};drawPlayer={...player};trail=data.map.trail.map(p=>({...p}));face=data.map.face||'down';overview=Boolean(data.map.overview);talked.clear();data.talked.forEach(id=>talked.add(id));calcExpression=data.calculator.expression;calcHistory=data.calculator.history.slice();$('calcDisplay').textContent=calcExpression||'0';$('calcHistory').textContent=calcHistory.join('\n');resumeView=data.view;restoredNumberPad=Boolean(data.numberPadOpen);renderEconomy();viewSize();updateNearby();
+ previewState.completed.clear();setProgress();player={...data.map.player};if(!pass(player.x,player.y))player={x:11,y:33};drawPlayer={...player};trail=data.map.trail.map(p=>({...p}));face=data.map.face||'down';overview=Boolean(data.map.overview);talked.clear();data.talked.forEach(id=>talked.add(id));calcExpression=data.calculator.expression;calcHistory=data.calculator.history.slice();renderCalculatorDisplay();$('calcHistory').textContent=calcHistory.join('\n');resumeView=data.view;restoredCalculator=Boolean(data.numberPadOpen);renderEconomy();viewSize();updateNearby();
 }
-let restoredNumberPad=false;
+let restoredCalculator=false;
 function showHome(capture=true){if(capture&&!homeOpen)resumeView=savedView();homeOpen=true;stop();moving=null;queue=[];drawPlayer={...player};for(const id of ['prologueDialog','lessonDialog','battleDialog','placeDialog','underDialog','finalResultDialog','filmDialog','dilutionDialog','densityDialog'])if($(id).open)$(id).close();$('homeScreen').hidden=false;$('gameMain').hidden=true;renderHome();saveGame();window.scrollTo(0,0)}
 function renderHome(){
  updateDiagnosticBadge(); $('heroJobSelect').value=profile.heroJob||(profile.started?'':'hero');$('heroJobSelect').disabled=saveBlocked||Boolean(profile.started&&profile.heroJob);renderJobHint(); $('attendanceInput').value=profile.attendance||'';$('attendanceInput').readOnly=profile.started;$('homeStart').textContent=profile.started?(profile.heroJob?'冒険を続ける':'職業を選んで再開'):'冒険を始める';$('homeStart').disabled=saveBlocked;$('homeReset').hidden=!profile.started&&!saveBlocked;$('homeBackup').hidden=!saveBlocked||invalidSaveRaw===null;
@@ -2312,8 +2342,8 @@ function continueGame(){
  if(saveBlocked)return;const raw=$('attendanceInput').value.normalize('NFKC').trim();if(!profile.started&&!/^\d{4}$/.test(raw)){$('homeError').textContent='出席番号は数字4桁で入力してください。';$('attendanceInput').focus();return}const heroJob=profile.heroJob||$('heroJobSelect').value;if(!HERO_JOBS.some(job=>job.id===heroJob)){$('homeError').textContent='主人公の職業を選んでください。';$('jobCards').querySelector('button')?.focus();return}if(!profile.started){profile={started:true,attendance:raw,debugUsed:false,heroJob,growthVersion:2,prologuePage:0};economy.party=initialParty();resumeView={type:'map'}}else if(!profile.heroJob)profile.heroJob=heroJob;activateJobGrowth();
  $('homeError').textContent='';homeOpen=false;$('homeScreen').hidden=true;$('gameMain').hidden=false;$('studentBadge').textContent='出席番号 '+profile.attendance;renderEconomy();viewSize();updateNearby();const view=resumeView;
  if(profile.prologuePage!==undefined){showPrologue();saveGame(true);return}
- if(view.type==='lesson'&&lesson){$('lessonDialog').showModal();renderLesson();if(restoredNumberPad&&lesson.phase==='answer'&&lessonQuestion().format==='number')openAnswerKeypad()}
- else if(view.type==='battle'&&training){$('battleDialog').showModal();renderTraining();if(restoredNumberPad&&training.phase==='answer')openAnswerKeypad()}
+ if(view.type==='lesson'&&lesson){$('lessonDialog').showModal();renderLesson();if(restoredCalculator&&!$('scientificInput').hidden)setAnswerCalculator(true)}
+ else if(view.type==='battle'&&training){$('battleDialog').showModal();renderTraining();if(restoredCalculator&&training.phase==='answer')setAnswerCalculator(true)}
  else if(view.type==='place')restorePlace(view);else if(view.type==='density')showDensity();else if(view.type==='dilution')showDilution();else if(view.type==='film')showFilm();else if(view.type==='underground')showUnderground();else if(view.type==='result')showFinalResult(view.which==='certificate');saveGame(true);
 }
 function askReset(){const label=profile.started?'出席番号 '+profile.attendance+' の冒険':'このアプリの保存記録';$('resetMessage').textContent=label+'だけを消して、はじめから始めます。職業・レベル・仲間・所持金・学習記録が消えます。';if(!$('resetDialog').open)$('resetDialog').showModal()}
